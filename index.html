@@ -38,7 +38,7 @@ nav a:hover{background:var(--accent-soft);color:var(--accent)}nav .partner-link{
 #formview{grid-column:1;grid-row:2;background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);position:relative}
 .formbody{padding:28px}.formbody>h2,.formbody>.eyebrow,.formbody>p,.formbody>.notice{display:none}
 .fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 16px}
-.field{min-width:0}.field label{display:block;font-size:14px;line-height:1.5;font-weight:550;color:#344c61;margin-bottom:8px}
+.field{min-width:0}.field label{overflow-wrap:anywhere;display:block;font-size:14px;line-height:1.5;font-weight:550;color:#344c61;margin-bottom:8px}
 .field input,.field select{display:block;width:100%;min-width:0;min-height:48px;height:48px;padding:11px 12px;border:1px solid #bdcbd5;background:#fff;border-radius:9px;font-size:16px;color:var(--ink);transition:border-color 120ms,box-shadow 120ms,background 120ms}
 .field input:hover,.field select:hover{border-color:#7e969f}.field input::placeholder{color:#6c7f90;font-size:15px}
 .field input[aria-invalid=true],.field select[aria-invalid=true]{border-color:#bb3e3e}
@@ -56,7 +56,7 @@ nav a:hover{background:var(--accent-soft);color:var(--accent)}nav .partner-link{
 .form-footer button:hover{background:var(--accent-hover)}.form-footer button:active{transform:translateY(1px)}
 #resultview{grid-column:2;grid-row:2;min-width:0;position:sticky;top:16px;align-self:start;max-height:calc(100dvh - 32px);overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;display:flex;flex-direction:column;gap:16px}
 #resultview>.eyebrow,#resultview>h2,#profile,.matrix-instruction,#price-table,.comparebox.hidden{display:none}
-.provider-details{position:relative;min-width:0;flex-shrink:0}
+#resultview>.provider-details{order:0}#resultview>.notice{order:1}#resultview>.comparebox{order:2}.provider-details{position:relative;min-width:0;flex-shrink:0}
 .cards{display:flex;gap:16px;align-items:stretch;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding:4px;padding:4px 4px 12px;scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:#b6ccc7 transparent}
 .provider{flex:0 0 280px;min-width:0;scroll-snap-align:start;display:flex;flex-direction:column;gap:16px;padding:24px;background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 3px 14px #18324f06;transition:border-color 140ms,box-shadow 140ms}
 .provider:hover{border-color:#a9c8c0;box-shadow:0 5px 18px #18324f0c}
