@@ -276,6 +276,22 @@ body{background:#f4f7fa}
 .fields>.field>input,.fields>.field>select{flex-shrink:0}
 .fields>.field>.field{display:flex;flex-direction:column;flex:1}
 .fields>.field>.field>label{flex:1}
+
+.date-entry{position:relative;display:flex;align-items:center;margin-top:auto}
+.date-entry input{padding-right:42px!important}
+.date-toggle{position:absolute;right:5px;top:50%;transform:translateY(-50%);width:34px;height:34px;border:0;background:transparent;color:#183456;border-radius:6px;display:grid;place-items:center}
+.date-toggle:hover{background:#e9f4f4}
+#lt-calendar{max-width:350px;padding:20px}
+.calendar-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:14px 0}
+.calendar-head button,.calendar-grid button,.calendar-close{border:0;background:#edf5f6;color:#183456;border-radius:7px;min-height:36px;padding:6px;cursor:pointer}
+.calendar-head select{padding:7px 3px;border:1px solid #dce5eb;border-radius:6px;background:white;color:#183456}
+.calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center}
+.calendar-grid span{font-size:12px;padding:6px 0;color:#65758a}
+.calendar-grid button{background:transparent;font-size:14px}
+.calendar-grid button:hover{background:#dff2f1}
+.calendar-grid button[aria-pressed=true]{background:#183456;color:white}
+.calendar-grid.months{grid-template-columns:repeat(3,1fr)}
+.calendar-close{float:right;padding:6px 12px}
 </style><meta name="2uno-build" content="compact-motion-20261030"></head><body>
 <header><a class="logo brand-logo" href="index.html" aria-label="2uno pradžia"><img src="assets/2uno-logo.jpg" alt="2UNO.lt"></a><nav><a href="#kaip">Kaip tai veikia</a><a href="#resultview">Įmonės</a><a href="#duk">Klausimai</a><a class="partner-link" href="buhalteriams.html">Buhalteriams</a></nav><a class="navcta" href="#skaiciuokle">Palyginti paslaugas</a></header>
 <main class="wrap"><section class="calculator-intro"><div class="eyebrow">Buhalterinių paslaugų kainų palyginimas</div><h1>Palyginkite apskaitos kainas.</h1><p>Nurodykite mėnesio apimtis ir palyginkite orientacines kainas. Faktinė suma kinta pagal dokumentų kiekį ir sutarties įkainius.</p></section><section class="workspace" id="skaiciuokle"><div class="workspace-heading heading-form"><span>01</span><h2>Aprašykite savo verslą.</h2></div><div class="workspace-heading heading-offers"><span>02</span><h2>Palyginkite įmones.</h2><div class="toolbar"><label style="font-size:13px">Rikiuoti <select id="sort"><option value="default">Pradinis sąrašas</option><option value="price-asc">Kaina: nuo mažiausios</option><option value="price-desc">Kaina: nuo didžiausios</option><option value="rating">Pagal reitingą</option><option value="clients">Pagal klientų pasirinkimus</option><option value="name">Pagal pavadinimą</option></select></label></div></div><div class="flowtop"><span id="s1" class="active">01 Jūsų verslas</span><span id="s2">02 Palyginimas</span><span id="s3">03 Sutartis</span></div><div id="formview" class="formgrid"><div class="formbody"><div class="eyebrow">Pradėkime nuo poreikių</div><h2>Aprašykite savo verslą.</h2><p style="color:var(--muted);font-size:14px">Nurodykite įprastas vieno mėnesio apimtis.</p><form id="business" action="#resultview">
@@ -323,4 +339,34 @@ el.setCustomValidity(valid?'':day?'Įveskite galiojančią datą formatu MMMM-MM
 });
 </script><script src="app.js?v=33" defer></script><script>document.getElementById('show-prices').onclick=()=>document.getElementById('resultview').scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});</script><script>
 (()=>{const track=document.getElementById('cards'),prev=document.querySelector('.carousel-prev'),next=document.querySelector('.carousel-next');function update(){prev.disabled=track.scrollLeft<2;next.disabled=track.scrollLeft+track.clientWidth>=track.scrollWidth-2}function move(direction){const card=track.querySelector('.provider');track.scrollBy({left:direction*((card?card.getBoundingClientRect().width:280)+16),behavior:'smooth'})}prev.onclick=()=>move(-1);next.onclick=()=>move(1);track.addEventListener('scroll',update,{passive:true});window.addEventListener('resize',update);new MutationObserver(update).observe(track,{childList:true});window.addEventListener('load',update);update()})();
+</script>
+<script>
+(()=>{
+const months=['Sausis','Vasaris','Kovas','Balandis','Gegužė','Birželis','Liepa','Rugpjūtis','Rugsėjis','Spalis','Lapkritis','Gruodis'];
+const dialog=document.createElement('dialog');dialog.id='lt-calendar';dialog.lang='lt';dialog.setAttribute('aria-label','Pasirinkite datą');document.body.append(dialog);
+let target,year,month;
+const pad=n=>String(n).padStart(2,'0');
+function choose(value){target.value=value;target.dispatchEvent(new Event('input',{bubbles:true}));target.dispatchEvent(new Event('change',{bubbles:true}));dialog.close();target.focus()}
+function render(){
+const monthOnly=target.dataset.ltDate==='month';
+dialog.innerHTML='<button type="button" class="calendar-close" aria-label="Uždaryti kalendorių">Uždaryti</button><h3 style="clear:both;padding-top:12px;font-size:18px">'+(monthOnly?'Pasirinkite mėnesį':'Pasirinkite datą')+'</h3><div class="calendar-head"><button type="button" data-nav="-1" aria-label="Ankstesnis '+(monthOnly?'metų laikotarpis':'mėnuo')+'">‹</button><div>'+(!monthOnly?'<select aria-label="Mėnuo" id="calendar-month">'+months.map((v,i)=>'<option value="'+i+'" '+(i===month?'selected':'')+'>'+v+'</option>').join('')+'</select> ':'')+'<select aria-label="Metai" id="calendar-year">'+Array.from({length:121},(_,i)=>1970+i).map(y=>'<option '+(y===year?'selected':'')+'>'+y+'</option>').join('')+'</select></div><button type="button" data-nav="1" aria-label="Kitas '+(monthOnly?'metų laikotarpis':'mėnuo')+'">›</button></div><div class="calendar-grid '+(monthOnly?'months':'')+'"></div>';
+const grid=dialog.querySelector('.calendar-grid');
+if(monthOnly){months.forEach((name,i)=>{const b=document.createElement('button');b.type='button';b.textContent=name;b.setAttribute('aria-pressed',String(target.value===year+'-'+pad(i+1)));b.onclick=()=>choose(year+'-'+pad(i+1));grid.append(b)})}
+else{
+['Pr','An','Tr','Kt','Pn','Št','Sk'].forEach(v=>{const e=document.createElement('span');e.textContent=v;grid.append(e)});
+const offset=(new Date(year,month,1).getDay()+6)%7;
+for(let i=0;i<offset;i++)grid.append(document.createElement('span'));
+for(let d=1;d<=new Date(year,month+1,0).getDate();d++){const value=year+'-'+pad(month+1)+'-'+pad(d),b=document.createElement('button');b.type='button';b.textContent=d;b.setAttribute('aria-label',year+' m. '+months[month]+' '+d+' d.');b.setAttribute('aria-pressed',String(target.value===value));b.onclick=()=>choose(value);grid.append(b)}
+}
+dialog.querySelector('.calendar-close').onclick=()=>dialog.close();
+dialog.querySelector('#calendar-year').onchange=e=>{year=Number(e.target.value);render()};
+const ms=dialog.querySelector('#calendar-month');if(ms)ms.onchange=e=>{month=Number(e.target.value);render()};
+dialog.querySelectorAll('[data-nav]').forEach(b=>b.onclick=()=>{const step=Number(b.dataset.nav);if(monthOnly)year+=step;else{const dt=new Date(year,month+step,1);year=dt.getFullYear();month=dt.getMonth()}year=Math.max(1970,Math.min(2090,year));render()});
+}
+document.querySelectorAll('[data-lt-date]').forEach(input=>{
+const wrap=document.createElement('div');wrap.className='date-entry';input.before(wrap);wrap.append(input);
+const button=document.createElement('button');button.type='button';button.className='date-toggle';button.setAttribute('aria-label','Atidaryti kalendorių: '+(document.querySelector('label[for="'+input.id+'"]')?.textContent||'data'));button.innerHTML='<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18M7 15h2M12 15h2M7 18h2"/></svg>';wrap.append(button);
+button.onclick=()=>{target=input;const now=new Date(),parts=input.value.split('-');year=Number(parts[0])||now.getFullYear();month=parts[1]?Number(parts[1])-1:now.getMonth();if(month<0||month>11)month=now.getMonth();year=Math.max(1970,Math.min(2090,year));render();dialog.showModal()};
+});
+})();
 </script></body></html>
