@@ -337,7 +337,7 @@ if(match){const y=Number(match[1]),m=Number(match[2]),d=day?Number(match[3]):1;c
 el.setCustomValidity(valid?'':day?'Įveskite galiojančią datą formatu MMMM-MM-DD.':'Įveskite galiojantį laikotarpį formatu MMMM-MM.');
 },true);
 });
-</script><script src="app.js?v=33" defer></script><script>document.getElementById('show-prices').onclick=()=>document.getElementById('resultview').scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});</script><script>
+</script><script src="app.js?v=34" defer></script><script>document.getElementById('show-prices').onclick=()=>document.getElementById('resultview').scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});</script><script>
 (()=>{const track=document.getElementById('cards'),prev=document.querySelector('.carousel-prev'),next=document.querySelector('.carousel-next');function update(){prev.disabled=track.scrollLeft<2;next.disabled=track.scrollLeft+track.clientWidth>=track.scrollWidth-2}function move(direction){const card=track.querySelector('.provider');track.scrollBy({left:direction*((card?card.getBoundingClientRect().width:280)+16),behavior:'smooth'})}prev.onclick=()=>move(-1);next.onclick=()=>move(1);track.addEventListener('scroll',update,{passive:true});window.addEventListener('resize',update);new MutationObserver(update).observe(track,{childList:true});window.addEventListener('load',update);update()})();
 </script>
 <script>
