@@ -249,6 +249,17 @@ body{background:#f4f7fa}
 .cardactions .btn{font-size:14px}
 
 .workspace-heading h2,#resultview>h2{font-size:21px;line-height:1.4}
+
+/* FAQ aligned with the page grid and compact section rhythm. */
+#duk{padding-top:32px;padding-bottom:40px}
+#duk .faq{max-width:none;margin:0}
+#duk .faq h2{font-size:26px;margin-bottom:12px}
+#duk .faq details{padding:18px 0}
+#duk .faq summary{display:flex;align-items:center;justify-content:space-between;gap:20px;list-style:none;font-size:14px}
+#duk .faq summary::-webkit-details-marker{display:none}
+#duk .faq summary::after{content:"+";font-size:22px;font-weight:400;color:var(--accent);flex-shrink:0}
+#duk .faq details[open] summary::after{content:"−"}
+#duk .faq p{max-width:850px}
 </style><meta name="2uno-build" content="compact-motion-20261030"></head><body>
 <header><a class="logo brand-logo" href="index.html" aria-label="2uno pradžia"><img src="assets/2uno-logo.jpg" alt="2UNO.lt"></a><nav><a href="#kaip">Kaip tai veikia</a><a href="#resultview">Įmonės</a><a href="#duk">Klausimai</a><a class="partner-link" href="buhalteriams.html">Buhalteriams</a></nav><a class="navcta" href="#skaiciuokle">Palyginti paslaugas</a></header>
 <main class="wrap"><section class="calculator-intro"><div class="eyebrow">Buhalterinių paslaugų kainų palyginimas</div><h1>Palyginkite apskaitos kainas.</h1><p>Nurodykite mėnesio apimtis ir palyginkite orientacines kainas. Faktinė suma kinta pagal dokumentų kiekį ir sutarties įkainius.</p></section><section class="workspace" id="skaiciuokle"><div class="workspace-heading heading-form"><span>01</span><h2>Aprašykite savo verslą.</h2></div><div class="workspace-heading heading-offers"><span>02</span><h2>Palyginkite įmones.</h2><div class="toolbar"><label style="font-size:13px">Rikiuoti <select id="sort"><option value="default">Pradinis sąrašas</option><option value="price-asc">Kaina: nuo mažiausios</option><option value="price-desc">Kaina: nuo didžiausios</option><option value="rating">Pagal reitingą</option><option value="clients">Pagal klientų pasirinkimus</option><option value="name">Pagal pavadinimą</option></select></label></div></div><div class="flowtop"><span id="s1" class="active">01 Jūsų verslas</span><span id="s2">02 Palyginimas</span><span id="s3">03 Sutartis</span></div><div id="formview" class="formgrid"><div class="formbody"><div class="eyebrow">Pradėkime nuo poreikių</div><h2>Aprašykite savo verslą.</h2><p style="color:var(--muted);font-size:14px">Nurodykite įprastas vieno mėnesio apimtis.</p><form id="business" action="#resultview">
