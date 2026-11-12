@@ -20,6 +20,6 @@ assert.equal(responseDeadline(v('2027-03-26T10:00:00+02:00')), '2027-03-30T14:00
 assert.equal(isHoliday({ y: 2026, m: 4, d: 6 }), true); // 2026 m. Velykų pirmadienis
 assert.equal(isHoliday({ y: 2026, m: 7, d: 6 }), true);
 assert.equal(isHoliday({ y: 2026, m: 7, d: 7 }), false);
-// Vietinis 23:30 UTC+2 jau kita diena UTC atržvilgiu: penktadienis 23:30 → pirmadienį gauta → antradienis
+// Vietinis 23:30 UTC+2 jau kita diena UTC atžvilgiu: penktadienis 23:30 → pirmadienį gauta → antradienis
 assert.equal(responseDeadline(v('2026-11-13T23:30:00+02:00')), '2026-11-17T15:00:00.000Z');
 console.log('Visi termino testai praėjo');

@@ -2,6 +2,7 @@ import { renderDemoContract } from '../../_lib/contract-template.js';
 import { encryptBytes, encryptField, sha256Hex, randomId } from '../../_lib/crypto.js';
 import { normEmail } from '../../_lib/auth.js';
 import { json, notFound, isProduction, readJson, sameOrigin, audit } from '../../_lib/http.js';
+import { responseDeadline } from '../../_lib/deadline.js';
 
 const DEMO_PARTNER_ID = 'demo-partner-0001';
 const CLIENTS = [
@@ -46,7 +47,7 @@ export async function onRequestPost({ request, env }) {
     env.DB.prepare(
       "INSERT INTO requests (id, status, partner_id, client_enc, summary, price_eur, deadline_at) VALUES (?, 'laukia_apmokejimo', ?, ?, ?, 150, ?)"
     ).bind(requestId, DEMO_PARTNER_ID, await encryptField(env, JSON.stringify(client), `request:${requestId}`),
-      JSON.stringify({ ...summary, number }), new Date(now.getTime() + 24 * 3600e3).toISOString()),
+      JSON.stringify({ ...summary, number }), responseDeadline(now)),
     env.DB.prepare(
       "INSERT INTO contracts (id, request_id, file_key, wrapped_key, sha256, signing_provider, client_signed_at, delete_after) VALUES (?, ?, ?, ?, ?, 'internal', ?, ?)"
     ).bind(contractId, requestId, fileKey, box.wrappedKey, await sha256Hex(pdf), now.toISOString(), new Date(now.getTime() + 90 * 864e5).toISOString()),

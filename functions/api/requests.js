@@ -2,6 +2,7 @@ import { renderDemoContract, validateClient } from '../_lib/contract-template.js
 import { encryptBytes, encryptField, sha256Hex, randomId, b64encode } from '../_lib/crypto.js';
 import { json, notFound, isProduction, readJson, sameOrigin, audit } from '../_lib/http.js';
 import { sendMail, newRequestMail, partnerRecipients } from '../_lib/mail.js';
+import { responseDeadline } from '../_lib/deadline.js';
 
 // Kol tikrų partnerių nėra, testinėje aplinkoje visos užklausos keliauja demo partneriui.
 const DEMO_PARTNER_ID = 'demo-partner-0001';
@@ -10,13 +11,6 @@ function clean(v, max = 120) {
   return String(v ?? '').replace(/[\u0000-\u001f\u007f]/g, ' ').trim().slice(0, max);
 }
 
-// Kitos darbo dienos pabaiga (17:00 Vilniaus laiku ≈ 15:00 UTC), praleidžiant savaitgalius.
-function nextBusinessDayDeadline(from = new Date()) {
-  const d = new Date(from);
-  do { d.setUTCDate(d.getUTCDate() + 1); } while ([0, 6].includes(d.getUTCDay()));
-  d.setUTCHours(15, 0, 0, 0);
-  return d.toISOString();
-}
 
 // POST /api/requests – klientas pasirašo sutartį su pasirinktu partneriu.
 // Sukuriama užklausa (laukia apmokėjimo), sutartis sugeneruojama, užšifruojama ir išsaugoma.
@@ -47,6 +41,7 @@ export async function onRequestPost({ request, env, waitUntil }) {
   ).bind(DEMO_PARTNER_ID).run();
 
   const now = new Date();
+  const deadline = responseDeadline(now); // partnerystės sutarties 6.1 p.
   const requestId = randomId();
   const contractId = randomId();
   const number = `2UNO-${now.toISOString().slice(0, 10).replace(/-/g, '')}-${randomId(3).toUpperCase()}`;
@@ -63,7 +58,7 @@ export async function onRequestPost({ request, env, waitUntil }) {
     env.DB.prepare(
       "INSERT INTO requests (id, status, partner_id, client_enc, summary, price_eur, deadline_at) VALUES (?, 'laukia_apmokejimo', ?, ?, ?, ?, ?)"
     ).bind(requestId, DEMO_PARTNER_ID, await encryptField(env, JSON.stringify(client), `request:${requestId}`),
-      JSON.stringify(summary), price, nextBusinessDayDeadline(now)),
+      JSON.stringify(summary), price, deadline),
     env.DB.prepare(
       "INSERT INTO contracts (id, request_id, file_key, wrapped_key, sha256, signing_provider, signing_ref, client_signed_at, delete_after) VALUES (?, ?, ?, ?, ?, 'internal', ?, ?, ?)"
     ).bind(contractId, requestId, fileKey, box.wrappedKey, sha256,
@@ -79,7 +74,7 @@ export async function onRequestPost({ request, env, waitUntil }) {
     const to = await partnerRecipients(env, DEMO_PARTNER_ID);
     const sent = await sendMail(env, {
       to, idempotencyKey: `new-request-${requestId}`,
-      ...newRequestMail({ origin: new URL(request.url).origin, requestId, summary, priceEur: price, deadlineAt: nextBusinessDayDeadline(now) }),
+      ...newRequestMail({ origin: new URL(request.url).origin, requestId, summary, priceEur: price, deadlineAt: deadline }),
     });
     await audit(env, { actorType: 'system', action: sent.ok ? 'mail_new_request_ok' : `mail_new_request_fail:${sent.error}`, objectType: 'request', objectId: requestId });
   })().catch((e) => console.error('Pranešimo klaida', e && e.message));
