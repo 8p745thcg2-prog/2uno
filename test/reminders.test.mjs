@@ -37,12 +37,12 @@ assert.deepEqual([r.expired, r.checked, r.sent], [1, 1, 1]);
 assert.equal(sqlite.prepare("SELECT status FROM requests WHERE id='past00001'").get().status, 'pasibaige_terminas');
 // Testinėje aplinkoje laiškas klientui nukreipiamas administratorei
 assert.equal(sent.filter((m) => m.to.includes('k@k.lt')).length, 0);
-const toClient = sent.find((m) => /TESTAS – laiškas klientui k@k\.lt/.test(m.subject));
+const toClient = sent.find((m) => /TESTAS – laiškas klientui/.test(m.subject));
 assert.deepEqual(toClient.to, ['admin@2uno.lt']);
 assert.match(toClient.text, /P per nustatytą terminą/);
 assert.doesNotMatch(toClient.text, /\+370600/);
 const toAdmin = sent.find((m) => /Praleistas terminas/.test(m.subject));
-assert.match(toAdmin.text, /\+370600/);
+assert.doesNotMatch(toAdmin.text + toAdmin.subject, /\+370600|k@k\.lt|Klientas“/);
 assert.match(toAdmin.text, /per 30 dienų: 1/);
 const toPartner = sent.filter((m) => m.to.includes('p@p.lt'));
 assert.equal(toPartner.length, 2);
