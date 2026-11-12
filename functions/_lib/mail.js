@@ -117,3 +117,41 @@ export function reminderMail({ origin, requestId, summary, priceEur, deadlineAt 
     }),
   };
 }
+
+// Klientui: pasirinkta įmonė laiku neatsakė (partnerystės sutarties 6.2 p.).
+export function expiredClientMail({ origin, partnerName, number }) {
+  return {
+    subject: 'Pasirinkta buhalterinė įmonė laiku neatsakė',
+    ...layout({
+      title: 'Pasirinkite kitą buhalterinę įmonę',
+      lines: [
+        `Deja, ${partnerName} per nustatytą terminą neatsakė į jūsų užklausą, todėl jūsų pasirašyta sutartis Nr. ${number} su šia įmone nebus sudaryta.`,
+        'Galite pasirinkti kitą buhalterinę įmonę iš palyginimo.',
+      ],
+      button: { label: 'Pasirinkti kitą įmonę', url: `${origin}/` },
+    }),
+  };
+}
+
+// Buhalterinei įmonei: užklausa nebegalioja.
+export function expiredPartnerMail({ origin, requestId, number }) {
+  return {
+    subject: `Užklausa nebegalioja (${number})`,
+    ...layout({
+      title: 'Atsakymo terminas pasibaigė',
+      lines: [`Per nustatytą terminą komisinis už užklausą Nr. ${number} neapmokėtas, todėl ji nebegalioja. Klientui pasiūlyta pasirinkti kitą įmonę.`],
+      button: { label: 'Atidaryti portalą', url: `${origin}/partneris?u=${encodeURIComponent(requestId)}` },
+    }),
+  };
+}
+
+// Administratorei: kas ir kam neatsakė, kiek kartų per 30 d. (sutarties 6.4 p.).
+export function expiredAdminMail({ partnerName, number, clientName, clientEmail, clientPhone, lateCount30d }) {
+  const lines = [
+    `${partnerName} laiku neatsakė į užklausą Nr. ${number}.`,
+    `Klientas: ${clientName || '–'}, ${clientEmail || '–'}${clientPhone ? ', ' + clientPhone : ''}.`,
+    `Šios įmonės praleisti terminai per 30 dienų: ${lateCount30d}.`,
+  ];
+  if (lateCount30d >= 3) lines.push('Pagal sutarties 6.4 p. galima laikinai sustabdyti įmonės rodymą (iš anksto informavus ir leidus paaiškinti).');
+  return { subject: `Praleistas terminas: ${partnerName} (${number})`, ...layout({ title: 'Įmonė neatsakė laiku', lines }) };
+}
