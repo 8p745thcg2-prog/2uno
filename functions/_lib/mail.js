@@ -145,11 +145,11 @@ export function expiredPartnerMail({ origin, requestId, number }) {
   };
 }
 
-// Administratorei: kas ir kam neatsakė, kiek kartų per 30 d. (sutarties 6.4 p.).
-export function expiredAdminMail({ partnerName, number, clientName, clientEmail, clientPhone, lateCount30d }) {
+// Administratorei: kuri įmonė neatsakė ir kiek kartų per 30 d. (sutarties 6.4 p.). Kliento duomenų laiške nėra.
+export function expiredAdminMail({ partnerName, number, lateCount30d }) {
   const lines = [
     `${partnerName} laiku neatsakė į užklausą Nr. ${number}.`,
-    `Klientas: ${clientName || '–'}, ${clientEmail || '–'}${clientPhone ? ', ' + clientPhone : ''}.`,
+    'Klientui išsiųstas pasiūlymas pasirinkti kitą įmonę.',
     `Šios įmonės praleisti terminai per 30 dienų: ${lateCount30d}.`,
   ];
   if (lateCount30d >= 3) lines.push('Pagal sutarties 6.4 p. galima laikinai sustabdyti įmonės rodymą (iš anksto informavus ir leidus paaiškinti).');

@@ -40,14 +40,11 @@ async function expire(env, origin, now) {
     // Testinėje aplinkoje klientų adresai išgalvoti, todėl jiems skirtas laiškas siunčiamas administratorei.
     const clientMail = expiredClientMail({ origin, partnerName, number });
     const clientTo = isProduction(env) ? client.email : admin;
-    if (!isProduction(env)) clientMail.subject = `[TESTAS – laiškas klientui ${client.email || ''}] ${clientMail.subject}`;
+    if (!isProduction(env)) clientMail.subject = `[TESTAS – laiškas klientui] ${clientMail.subject}`;
     const jobs = [
       ['client', clientTo, clientMail],
       ['partner', await partnerRecipients(env, r.partner_id), expiredPartnerMail({ origin, requestId: r.id, number })],
-      ['admin', admin, expiredAdminMail({
-        partnerName, number, clientName: client.name, clientEmail: client.email, clientPhone: client.phone,
-        lateCount30d: (late && late.n) || 1,
-      })],
+      ['admin', admin, expiredAdminMail({ partnerName, number, lateCount30d: (late && late.n) || 1 })],
     ];
     for (const [who, to, mail] of jobs) {
       const res = await sendMail(env, { to, idempotencyKey: `expired-${who}-${r.id}`, ...mail });
