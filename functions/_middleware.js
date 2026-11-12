@@ -3,7 +3,7 @@ import { safeEqual } from './_lib/crypto.js';
 // Keliai, kurie niekada neturi būti pasiekiami naršyklėje (serverio kodas, schema).
 const BLOCKED = [
   /^\/functions(\/|$)/, /^\/db(\/|$)/, /^\/test(\/|$)/, /^\/_lib(\/|$)/,
-  /^\/\.git/, /^\/README-dev/, /^\/package\.json$/,
+  /^\/\.git/, /^\/README-dev/, /^\/package\.json$/, /^\/cron(\/|$)/,
 ];
 
 const SECURITY_HEADERS = {
@@ -73,7 +73,9 @@ export async function onRequest(context) {
     return new Response('Not found', { status: 404 });
   }
 
-  const denied = checkTestAccess(request, env);
+  // Suplanuotos užduoties kreipinys tikrinamas savo slaptu raktu (žr. functions/api/cron), ne testinės aplinkos slaptažodžiu.
+  const isCron = url.pathname === '/api/cron/reminders' && request.method === 'POST';
+  const denied = isCron ? null : checkTestAccess(request, env);
   if (denied) return denied;
 
   let response;
