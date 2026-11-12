@@ -101,3 +101,19 @@ export async function partnerRecipients(env, partnerId) {
   }
   return [...new Set(list.filter((e) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e)))].slice(0, 10);
 }
+
+// Partneriui: priminimas, kad baigiasi atsakymo terminas.
+export function reminderMail({ origin, requestId, summary, priceEur, deadlineAt }) {
+  const when = new Date(deadlineAt).toLocaleString('lt-LT', { timeZone: 'Europe/Vilnius', dateStyle: 'long', timeStyle: 'short' });
+  return {
+    subject: `Primename: atsakymo terminas baigiasi ${when} (${summary.number || ''})`.replace(' ()', ''),
+    ...layout({
+      title: 'Baigiasi atsakymo terminas',
+      lines: [
+        `Klientas pasirašė sutartį Nr. ${summary.number || '–'} (mėnesio kaina ${Number(priceEur).toFixed(2).replace('.', ',')} €), tačiau komisinis dar neapmokėtas.`,
+        `Atsakyti reikia iki ${when}.`,
+      ],
+      button: { label: 'Peržiūrėti užklausą', url: `${origin}/partneris?u=${encodeURIComponent(requestId)}` },
+    }),
+  };
+}
