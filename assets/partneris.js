@@ -17,7 +17,12 @@
   function el(tag, attrs, text) { var e = document.createElement(tag); if (attrs) Object.keys(attrs).forEach(function (k) { e.setAttribute(k, attrs[k]); }); if (text != null) e.textContent = text; return e; }
 
   function showLogin() { $('loginView').hidden = false; $('appView').hidden = true; $('who').hidden = true; }
-  function showApp(me) { $('loginView').hidden = true; $('appView').hidden = false; $('who').hidden = false; $('whoName').textContent = me.partnerName + ' · ' + me.email; loadList(); }
+  function showApp(me) { $('loginView').hidden = true; $('appView').hidden = false; $('who').hidden = false; $('whoName').textContent = me.partnerName + ' · ' + me.email; loadList(); openFromLink(); }
+  // Nuoroda iš el. laiško: /partneris?u=<užklausos id> atidaro konkrečią užklausą.
+  function openFromLink() {
+    var u = new URLSearchParams(location.search).get('u');
+    if (u && /^[A-Za-z0-9_-]{8,64}$/.test(u)) { current = u; loadDetail(u); history.replaceState(null, '', '/partneris'); }
+  }
 
   emailForm.addEventListener('submit', function (e) {
     e.preventDefault();
@@ -25,7 +30,7 @@
     $('sendBtn').disabled = true;
     api('/api/partner/login', { method: 'POST', body: { email: currentEmail } }).then(function (d) {
       if (d._status !== 200) { msg($('loginMsg'), 'bad', d.error || 'Klaida'); return; }
-      msg($('loginMsg'), 'ok', d.message + (d.devCode ? ' (Testinė aplinka – el. laiškai dar nesiunčiami, jūsų kodas: ' + d.devCode + ')' : ''));
+      msg($('loginMsg'), 'ok', d.message + (d.devCode ? ' (Testinė aplinka – kodas rodomas ir čia: ' + d.devCode + ')' : ''));
       codeForm.hidden = false; codeForm.elements.code.focus();
     }).finally(function () { $('sendBtn').disabled = false; });
   });
