@@ -67,8 +67,9 @@ export async function lookupCompany(code, vat) {
       result.vatValid = true;
       result.vatCode = 'LT' + vatDigits;
       result.source.push('VIES');
-      if (!result.name && v.name && v.name !== '---') result.name = v.name;
-      if (v.address && v.address !== '---') result.address = v.address.replace(/,?\s*\n\s*/g, ', ').trim();
+      const real = (x) => x && !['---', 'N/A', 'n/a', '-'].includes(String(x).trim());
+      if (!result.name && real(v.name)) result.name = v.name;
+      if (real(v.address)) result.address = v.address.replace(/,?\s*\n\s*/g, ', ').trim();
       result.found = true;
     } else if (v) {
       result.vatValid = false;
