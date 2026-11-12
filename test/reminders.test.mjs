@@ -45,4 +45,4 @@ const next = async () => new Response('ok');
 assert.equal((await mw({ env, next, request: new Request('https://dev.2uno.pages.dev/api/cron/reminders', { method: 'POST' }) })).status, 200);
 assert.equal((await mw({ env, next, request: new Request('https://dev.2uno.pages.dev/api/cron/reminders') })).status, 401);
 assert.equal((await mw({ env, next, request: new Request('https://dev.2uno.pages.dev/cron/worker.js') })).status, 404);
-console.log('Visi priminimų testų praėjo'.replace('testų praėjo','testai prėjo').replace('prėjo','praėjo'));
+console.log('Visi priminimų testai praėjo');

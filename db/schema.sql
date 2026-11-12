@@ -46,6 +46,7 @@ CREATE TABLE IF NOT EXISTS requests (
   summary         TEXT NOT NULL DEFAULT '{}',   -- tik tai, ką partneris mato iki apmokėjimo
   price_eur       REAL,
   deadline_at     TEXT,
+  reminder_sent_at TEXT,                        -- kada išsiųstas termino priminimas
   created_at      TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now')),
   updated_at      TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now'))
 );
