@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="lt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Sutarties generavimo demo | 2uno</title>
+<style>
+:root{--ink:#10245f;--brand:#102b70;--teal:#279da7;--muted:#64758e;--paper:#f4f7fc;--line:#dce5f1;--err:#b42318}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,Helvetica,sans-serif}
+header{background:#fff;border-bottom:1px solid var(--line);padding:10px 24px;display:flex;align-items:center;gap:16px}
+header img{height:56px}header span{font-size:12px;color:var(--muted);background:#fff4d6;border:1px solid #f0d58a;border-radius:20px;padding:5px 10px}
+main{max-width:860px;margin:30px auto 60px;padding:0 18px}
+h1{font-size:30px;margin:0 0 8px}p.lead{color:var(--muted);margin:0 0 24px;line-height:1.6}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:24px;margin-bottom:18px}
+.card h2{font-size:17px;margin:0 0 14px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+label{display:block;font-size:13px;font-weight:600}
+input,select{width:100%;margin-top:6px;border:1px solid #c5d6e3;border-radius:8px;padding:11px;font:inherit;color:var(--ink);background:#fff}
+input:focus,select:focus{outline:3px solid #9fdde0;border-color:var(--teal)}
+.full{grid-column:1/-1}.row{display:flex;gap:10px;align-items:end}.row label{flex:1}
+button{border:0;background:var(--brand);color:#fff;border-radius:9px;padding:13px 20px;font:inherit;font-weight:600;cursor:pointer}
+button.light{background:#eaf5f8;color:var(--ink);border:1px solid #c8dfe8}button:disabled{opacity:.6;cursor:wait}
+.hint{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.5}.err{color:var(--err);font-size:12px;margin-top:4px;min-height:14px}
+.status{font-size:13px;padding:11px 14px;border-radius:8px;margin-top:12px;display:none}
+.status.ok{display:block;background:#e9f8f1;color:#0f6b46}.status.warn{display:block;background:#fff6e0;color:#7a5200}.status.bad{display:block;background:#fdecec;color:var(--err)}
+.result{display:none}.result dl{display:grid;grid-template-columns:170px 1fr;gap:8px 14px;font-size:13px;margin:0 0 16px}.result dt{color:var(--muted)}.result dd{margin:0;word-break:break-all}
+.result a.btn{display:inline-block;background:var(--teal);color:#fff;text-decoration:none;border-radius:9px;padding:13px 20px;font-weight:600}
+@media(max-width:700px){.grid{grid-template-columns:1fr}.row{flex-direction:column;align-items:stretch}.result dl{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><img src="assets/2uno-logo.jpg" alt="2uno.lt"><span>Testinė aplinka · demo</span></header>
+<main>
+  <h1>Sutarties generavimo demo</h1>
+  <p class="lead">Įveskite įmonės kodą: pavadinimas ir forma bus paimti iš Registrų centro, o adresas – iš VIES, jei įmonė yra PVM mokėtoja. Visus laukus galima pataisyti arba įvesti ranka. Sutartis sugeneruojama serveryje, iš karto užšifruojama ir atsisiunčiama vienkartine nuoroda.</p>
+
+  <form id="f" novalidate>
+    <div class="card">
+      <h2>1. Įmonė</h2>
+      <div class="grid">
+        <div class="row full">
+          <label>Įmonės kodas<input name="code" inputmode="numeric" maxlength="9" placeholder="9 skaitmenys" autocomplete="off"></label>
+          <label>PVM kodas (nebūtina)<input name="vat" maxlength="14" placeholder="LT123456789" autocomplete="off"></label>
+          <button type="button" class="light" id="lookup">Ieškoti</button>
+        </div>
+        <div class="full"><div class="err" data-for="code"></div><div class="status" id="lookupStatus"></div></div>
+        <label class="full">Pavadinimas<input name="name" maxlength="200"><div class="err" data-for="name"></div></label>
+        <label class="full">Buveinės adresas<input name="address" maxlength="250"><div class="err" data-for="address"></div></label>
+        <label>Banko sąskaita (nebūtina)<input name="bank" maxlength="40" placeholder="LT.."></label>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>2. Pasirašantis asmuo</h2>
+      <div class="grid">
+        <label>Vardas ir pavardė<input name="representative" maxlength="120"><div class="err" data-for="representative"></div></label>
+        <label>Pareigos<input name="position" maxlength="80" placeholder="direktorius"><div class="err" data-for="position"></div></label>
+        <label>Veikia pagal<select name="basis"><option value="įstatus">įstatus</option><option value="įgaliojimą">įgaliojimą</option></select></label>
+        <label>El. paštas<input name="email" type="email" maxlength="120"><div class="err" data-for="email"></div></label>
+        <label>Telefonas (nebūtina)<input name="phone" maxlength="30"></label>
+      </div>
+      <p class="hint">Tikroje platformoje pasirašančio asmens vardą ir pavardę patvirtins kvalifikuotas el. parašas.</p>
+    </div>
+
+    <button type="submit" id="gen">Generuoti sutartį</button>
+    <div class="status" id="genStatus"></div>
+  </form>
+
+  <div class="card result" id="result">
+    <h2>Sutartis sugeneruota ir užšifruota</h2>
+    <dl>
+      <dt>Sutarties Nr.</dt><dd id="rNumber"></dd>
+      <dt>Failo kontrolinė suma</dt><dd id="rHash"></dd>
+      <dt>Nuoroda galioja iki</dt><dd id="rExpires"></dd>
+      <dt>Bus ištrinta</dt><dd id="rDelete"></dd>
+    </dl>
+    <a class="btn" id="rLink" href="#">Atsisiųsti PDF (vienkartinė nuoroda)</a>
+    <p class="hint">Nuoroda veikia vieną kartą ir 15 minučių. Pakartotinai paspaudus ji nebeveiks – tai tyčia.</p>
+  </div>
+</main>
+<script src="assets/demo-sutartis.js"></script>
+</body>
+</html>
