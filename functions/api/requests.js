@@ -1,6 +1,7 @@
 import { renderDemoContract, validateClient } from '../_lib/contract-template.js';
 import { encryptBytes, encryptField, sha256Hex, randomId, b64encode } from '../_lib/crypto.js';
 import { json, notFound, isProduction, readJson, sameOrigin, audit } from '../_lib/http.js';
+import { sendMail, newRequestMail, partnerRecipients } from '../_lib/mail.js';
 
 // Kol tikrų partnerių nėra, testinėje aplinkoje visos užklausos keliauja demo partneriui.
 const DEMO_PARTNER_ID = 'demo-partner-0001';
@@ -19,7 +20,7 @@ function nextBusinessDayDeadline(from = new Date()) {
 
 // POST /api/requests – klientas pasirašo sutartį su pasirinktu partneriu.
 // Sukuriama užklausa (laukia apmokėjimo), sutartis sugeneruojama, užšifruojama ir išsaugoma.
-export async function onRequestPost({ request, env }) {
+export async function onRequestPost({ request, env, waitUntil }) {
   if (isProduction(env)) return notFound(); // produkcijoje įjungsime kartu su tikru parašu
   if (!sameOrigin(request)) return json({ error: 'Draudžiama' }, 403);
   let body;
@@ -72,7 +73,17 @@ export async function onRequestPost({ request, env }) {
       .bind(await sha256Hex(new TextEncoder().encode(token)), contractId, new Date(now.getTime() + 15 * 60e3).toISOString()),
   ]);
   await audit(env, { actorType: 'client', action: 'contract_signed_internal', objectType: 'request', objectId: requestId, request });
-  // TODO: el. laiškas partneriui „Klientas pasirašė sutartį“ su nuoroda į užklausą.
+
+  // Pranešimas partneriui siunčiamas fone, kad klientui nereikėtų laukti.
+  const notify = (async () => {
+    const to = await partnerRecipients(env, DEMO_PARTNER_ID);
+    const sent = await sendMail(env, {
+      to, idempotencyKey: `new-request-${requestId}`,
+      ...newRequestMail({ origin: new URL(request.url).origin, requestId, summary, priceEur: price, deadlineAt: nextBusinessDayDeadline(now) }),
+    });
+    await audit(env, { actorType: 'system', action: sent.ok ? 'mail_new_request_ok' : `mail_new_request_fail:${sent.error}`, objectType: 'request', objectId: requestId });
+  })().catch((e) => console.error('Pranešimo klaida', e && e.message));
+  if (typeof waitUntil === 'function') waitUntil(notify); else await notify;
 
   return json({ ok: true, number, sha256, downloadUrl: `/api/demo/contracts/${contractId}/download?t=${token}` }, 201);
 }
