@@ -87,6 +87,14 @@ export async function onRequest(context) {
     });
   }
 
+  // Testinėje aplinkoje į pagrindinį puslapį įterpiama jungtis su pasirašymo puslapiu.
+  if (!isProduction(env) && (url.pathname === '/' || url.pathname === '/index.html') &&
+      (response.headers.get('Content-Type') || '').includes('text/html') && typeof HTMLRewriter !== 'undefined') {
+    response = new HTMLRewriter()
+      .on('body', { element(el) { el.append('<script src="/assets/sign-bridge.js" defer></script>', { html: true }); } })
+      .transform(response);
+  }
+
   response = new Response(response.body, response);
   for (const [k, v] of Object.entries(SECURITY_HEADERS)) response.headers.set(k, v);
   if (!isProduction(env)) response.headers.set('X-Robots-Tag', 'noindex, nofollow');
