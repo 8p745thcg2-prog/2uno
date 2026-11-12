@@ -68,6 +68,11 @@ export async function onRequest(context) {
     return new Response('Not found', { status: 404 });
   }
 
+  // Demonstraciniai puslapiai prieinami tik testinėje aplinkoje.
+  if (isProduction(env) && /^\/(demo-|assets\/demo-|api\/demo\/)/.test(url.pathname)) {
+    return new Response('Not found', { status: 404 });
+  }
+
   const denied = checkTestAccess(request, env);
   if (denied) return denied;
 
