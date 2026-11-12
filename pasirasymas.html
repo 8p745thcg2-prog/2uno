@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="lt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Sutarties pasirašymas | 2uno</title>
+<style>
+:root{--ink:#10245f;--brand:#102b70;--teal:#279da7;--muted:#64758e;--paper:#f4f7fc;--line:#dce5f1;--err:#b42318;--ok:#0f6b46}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,Helvetica,sans-serif}
+header{background:#fff;border-bottom:1px solid var(--line);padding:8px 24px;display:flex;align-items:center;gap:16px}
+header img{height:52px}header a{margin-left:auto;font-size:13px;color:var(--ink)}
+main{max-width:860px;margin:28px auto 60px;padding:0 18px}
+h1{font-size:28px;margin:0 0 6px}p.lead{color:var(--muted);margin:0 0 22px;line-height:1.6}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;margin-bottom:16px}
+.card h2{font-size:17px;margin:0 0 12px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.full{grid-column:1/-1}
+label{display:block;font-size:13px;font-weight:600}
+input,select{width:100%;margin-top:6px;border:1px solid #c5d6e3;border-radius:8px;padding:11px;font:inherit;color:var(--ink);background:#fff}
+.row{display:flex;gap:10px;align-items:end}.row label{flex:1}
+button{border:0;background:var(--brand);color:#fff;border-radius:9px;padding:13px 20px;font:inherit;font-weight:600;cursor:pointer}
+button.light{background:#eaf5f8;color:var(--ink);border:1px solid #c8dfe8}button:disabled{opacity:.6;cursor:wait}
+.err{color:var(--err);font-size:12px;margin-top:4px;min-height:14px}
+.msg{font-size:13px;padding:10px 13px;border-radius:8px;margin-top:12px;display:none;line-height:1.5}
+.msg.ok{display:block;background:#e9f8f1;color:var(--ok)}.msg.warn{display:block;background:#fff6e0;color:#7a5200}.msg.bad{display:block;background:#fdecec;color:var(--err)}
+dl{display:grid;grid-template-columns:200px 1fr;gap:8px 14px;font-size:14px;margin:0}dt{color:var(--muted)}dd{margin:0}
+.price{font-size:26px;font-weight:700;color:var(--brand)}
+.consent{display:flex;gap:10px;align-items:flex-start;font-weight:400;font-size:14px;line-height:1.5;margin-top:8px}.consent input{width:auto;margin-top:3px}
+.note{font-size:12px;color:var(--muted);line-height:1.5;margin-top:10px}
+.done{display:none}.done.show{display:block}.done a.btn{display:inline-block;background:var(--teal);color:#fff;text-decoration:none;border-radius:9px;padding:12px 18px;font-weight:600;margin-top:10px}
+@media(max-width:700px){.grid{grid-template-columns:1fr}.row{flex-direction:column;align-items:stretch}dl{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><img src="assets/2uno-logo.jpg" alt="2uno.lt"><a href="/">← Grįžti į palyginimą</a></header>
+<main>
+  <div id="form-area">
+    <h1>Sutarties pasirašymas</h1>
+    <p class="lead">Patikrinkite pasirinkimą, įveskite įmonės ir atstovo duomenis ir pasirašykite sutartį. Pasirinkta buhalterinė įmonė gaus užklausą iš karto.</p>
+
+    <div class="card">
+      <h2>1. Jūsų pasirinkimas</h2>
+      <dl id="choice"></dl>
+      <div class="msg warn" id="nochoice" hidden>Pasirinkimo duomenų nėra. Grįžkite į palyginimą ir pasirinkite įmonę.</div>
+    </div>
+
+    <form id="f" novalidate>
+      <div class="card">
+        <h2>2. Įmonė</h2>
+        <div class="grid">
+          <div class="row full">
+            <label>Įmonės kodas<input name="code" inputmode="numeric" maxlength="9" autocomplete="off"></label>
+            <label>PVM kodas (nebūtina)<input name="vat" maxlength="14" autocomplete="off"></label>
+            <button type="button" class="light" id="lookup">Ieškoti registre</button>
+          </div>
+          <div class="full"><div class="err" data-for="code"></div><div class="msg" id="lookupMsg"></div></div>
+          <label class="full">Pavadinimas<input name="name" maxlength="200"><div class="err" data-for="name"></div></label>
+          <label class="full">Buveinės adresas<input name="address" maxlength="250"><div class="err" data-for="address"></div></label>
+          <label>Banko sąskaita (nebūtina)<input name="bank" maxlength="40"></label>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>3. Pasirašantis asmuo</h2>
+        <div class="grid">
+          <label>Vardas ir pavardė<input name="representative" maxlength="120"><div class="err" data-for="representative"></div></label>
+          <label>Pareigos<input name="position" maxlength="80" placeholder="direktorius"><div class="err" data-for="position"></div></label>
+          <label>Veikia pagal<select name="basis"><option value="įstatus">įstatus</option><option value="įgaliojimą">įgaliojimą</option></select></label>
+          <label>El. paštas<input name="email" type="email" maxlength="120"><div class="err" data-for="email"></div></label>
+          <label>Telefonas (nebūtina)<input name="phone" maxlength="30"></label>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>4. Pasirašymas</h2>
+        <label class="consent"><input type="checkbox" name="consent"> Susipažinau su sutarties sąlygomis ir įkainiais bei sutinku sudaryti sutartį su pasirinkta buhalterine įmone.</label>
+        <div class="err" data-for="consent"></div>
+        <label style="margin-top:12px">Parašas: įrašykite savo vardą ir pavardę<input name="fullName" maxlength="120" autocomplete="off"><div class="err" data-for="fullName"></div></label>
+        <p class="note">Testinė versija: parašas patvirtinamas vardu ir pavarde. Tikroje platformoje sutartis bus pasirašoma kvalifikuotu el. parašu (Smart-ID, mobiliuoju parašu ar asmens tapatybės kortele).</p>
+        <button type="submit" id="signBtn" style="margin-top:10px">Pasirašyti sutartį</button>
+        <div class="msg" id="signMsg"></div>
+      </div>
+    </form>
+  </div>
+
+  <div class="card done" id="done">
+    <h1>Sutartis pasirašyta</h1>
+    <p class="lead" id="doneText"></p>
+    <dl>
+      <dt>Sutarties Nr.</dt><dd id="doneNumber"></dd>
+      <dt>Kas toliau</dt><dd>Buhalterinė įmonė užklausą gavo iš karto. Ji patvirtins sutartį ir su jumis susisieks per 1 darbo dieną.</dd>
+    </dl>
+    <a class="btn" id="doneLink" href="#">Atsisiųsti savo sutarties kopiją (PDF)</a>
+    <p class="note">Nuoroda vienkartinė ir galioja 15 minučių.</p>
+  </div>
+</main>
+<script src="assets/pasirasymas.js"></script>
+</body>
+</html>
