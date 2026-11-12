@@ -31,7 +31,21 @@ CREATE TABLE IF NOT EXISTS sessions (
   user_id         TEXT NOT NULL,
   role            TEXT NOT NULL CHECK (role IN ('partner','admin')),
   expires_at      TEXT NOT NULL,
+  mfa_ok          INTEGER NOT NULL DEFAULT 1,   -- administratoriui: 0, kol nepatvirtintas antras žingsnis
   created_at      TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now'))
+);
+
+-- Administratoriai (teisės – aplinkos kintamasis ADMIN_EMAILS). 2FA raktas saugomas užšifruotas.
+CREATE TABLE IF NOT EXISTS admin_users (
+  id               TEXT PRIMARY KEY,
+  email            TEXT NOT NULL UNIQUE,
+  totp_secret_enc  TEXT,
+  totp_pending_enc TEXT,
+  totp_last_step   INTEGER,
+  failed_logins    INTEGER NOT NULL DEFAULT 0,
+  locked_until     TEXT,
+  last_login_at    TEXT,
+  created_at       TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now'))
 );
 
 CREATE TABLE IF NOT EXISTS requests (
