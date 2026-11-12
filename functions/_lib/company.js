@@ -4,6 +4,8 @@
 // Duomenys atnaujinami kartą per dieną, todėl ką tik įregistruotų įmonių gali nebūti – tada pildoma ranka.
 
 const JAR = 'https://get.data.gov.lt/datasets/gov/rc/jar';
+// Kasdien atnaujinamas suspaustas Registrų centro žinynas (žr. .github/workflows/jar-sync.yml).
+const REGISTER = 'https://raw.githubusercontent.com/8p745thcg2-prog/2uno/data/jar';
 const VIES = 'https://ec.europa.eu/taxation_customs/vies/rest-api/ms/LT/vat/';
 const TIMEOUT_MS = 6000;
 
@@ -34,10 +36,51 @@ const SHORT_FORMS = {
   310: 'UAB', 320: 'AB', 960: 'MB', 810: 'IĮ', 570: 'VšĮ', 210: 'TŪB', 220: 'KŪB', 410: 'ŽŪB', 710: 'KB', 630: 'Asociacija',
 };
 
+async function fetchRegisterShard(code) {
+  const ctrl = new AbortController();
+  const t = setTimeout(() => ctrl.abort(), TIMEOUT_MS);
+  try {
+    const r = await fetch(`${REGISTER}/${code.slice(0, 5)}.tsv.gz`, { signal: ctrl.signal, cf: { cacheTtl: 3600, cacheEverything: true } });
+    if (!r.ok) return null;
+    const text = await new Response(r.body.pipeThrough(new DecompressionStream('gzip'))).text();
+    const line = text.split('\n').find((l) => l.startsWith(code + '\t'));
+    return line ? line.split('\t') : null;
+  } catch {
+    return null;
+  } finally {
+    clearTimeout(t);
+  }
+}
+
+let formsCache = null;
+async function registerForms() {
+  if (formsCache) return formsCache;
+  const meta = await getJson(`${REGISTER}/meta.json`);
+  formsCache = (meta && meta.forms) || {};
+  return formsCache;
+}
+
 export async function lookupCompany(code, vat) {
   const result = { found: false, source: [], code: String(code) };
 
+  // 1. Vietinis Registrų centro žinynas: greitas, su adresu.
   if (isValidCompanyCode(code)) {
+    const row = await fetchRegisterShard(String(code));
+    if (row) {
+      const [, name, address, formCode] = row;
+      const forms = await registerForms();
+      Object.assign(result, {
+        found: true, active: true, name, address,
+        legalFormCode: Number(formCode) || null,
+        legalForm: forms[formCode] || '',
+        legalFormShort: SHORT_FORMS[Number(formCode)] || '',
+      });
+      result.source.push('Registrų centras');
+    }
+  }
+
+  // 2. Atsarginis būdas: valstybės atvirų duomenų API (be adreso).
+  if (!result.found && isValidCompanyCode(code)) {
     const data = await getJson(`${JAR}/iregistruoti/JuridinisAsmuo?ja_kodas=${code}`);
     const list = data && Array.isArray(data._data) ? data._data : Array.isArray(data) ? data : [];
     const rec = list.find((x) => String(x.ja_kodas) === String(code)) || null;
