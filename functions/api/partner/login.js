@@ -1,5 +1,6 @@
 import { createLoginCode, normEmail } from '../../_lib/auth.js';
 import { json, readJson, sameOrigin, isProduction, audit } from '../../_lib/http.js';
+import { sendMail, loginCodeMail } from '../../_lib/mail.js';
 
 // POST /api/partner/login { email } – išsiunčia vienkartinį kodą.
 // Atsakymas visada vienodas, kad nebūtų galima sužinoti, kurie el. paštai užregistruoti.
@@ -14,7 +15,9 @@ export async function onRequestPost({ request, env }) {
   const res = { ok: true, message: 'Jei šis el. paštas užregistruotas, išsiuntėme 6 skaitmenų kodą. Jis galioja 10 min.' };
   if (r.ok) {
     await audit(env, { actorType: 'partner', actorId: r.userId, action: 'login_code_sent', request });
-    // TODO: el. laiškų siuntimas. Kol jis neprijungtas, testinėje aplinkoje kodas rodomas ekrane.
+    const sent = await sendMail(env, { to: email, ...loginCodeMail(r.code) });
+    await audit(env, { actorType: 'system', action: sent.ok ? 'mail_login_code_ok' : `mail_login_code_fail:${sent.error}`, request });
+    // Testinėje aplinkoje kodas papildomai rodomas ekrane, kad būtų galima bandyti be pašto.
     if (!isProduction(env)) res.devCode = r.code;
   }
   if (r.tooSoon) res.message = 'Kodas jau išsiųstas. Naują galima gauti po minutės.';
