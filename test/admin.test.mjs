@@ -104,7 +104,7 @@ sqlite.prepare("INSERT INTO sessions (id, user_id, role, expires_at) VALUES ('x'
 await logout({ env, request: req('/api/admin/logout', { method: 'POST', cookie }) });
 assert.equal((await listReq({ env, request: req('/api/admin/requests', { cookie }) })).status, 401);
 
-// Ne administratoriaus sąraše esantis adresas (pvz. pašalintas iš ADMIN_EMAILS) – prieigos nebebėra
+// Ne administratoriaus sąraše esantis adresas (pvz. pašalintas iš ADMIN_EMAILS) – prieigos nebėra
 const env2 = { ...env, ADMIN_EMAILS: 'kitas@2uno.lt' };
 r = await J(await login({ env: env2, request: req('/api/admin/login', { method: 'POST', body: { email: 'boss@2uno.lt' } }) }));
 assert.equal(r.d.devCode, undefined);
@@ -128,3 +128,26 @@ console.log('Visi administratoriaus testai praėjo');
   assert.equal(sameOrigin(new Request('https://a.lt/x', { method: 'POST', headers: { 'Sec-Fetch-Site': 'same-origin', Origin: 'https://a.lt' } })), true);
 }
 console.log('Papildomi saugumo testai praėjo');
+
+// Administratoriė atrakina užrakintą įmonės darbuotoją
+{
+  const { onRequestPost: unlock } = await import('../functions/api/admin/partners/[id]/unlock.js');
+  const { createLoginCode } = await import('../functions/_lib/auth.js');
+  const { sha256Hex } = await import('../functions/_lib/crypto.js');
+  // patvirtinta administratoriaus sesija tiesiai duomenų bazėje
+  const tok = b64encode(crypto.getRandomValues(new Uint8Array(32)));
+  const adminId = sqlite.prepare("SELECT id FROM admin_users WHERE email = 'boss@2uno.lt'").get().id;
+  sqlite.prepare("INSERT INTO sessions (id, user_id, role, expires_at, mfa_ok) VALUES (?, ?, 'admin', '2030-01-01', 1)").run(await sha256Hex(new TextEncoder().encode(tok)), adminId);
+  const c2 = '__Host-2uno_a=' + tok;
+  let lp = await (await listP({ env, request: req('/api/admin/partners', { cookie: c2 }) })).json();
+  assert.equal(lp.partners.find((x) => x.id === 'pp').users[0].locked, true);
+  assert.equal((await unlock({ env, params: { id: 'pp' }, request: req('/api/admin/partners/pp/unlock', { method: 'POST', cookie: c2, body: { email: 'u@u.lt' } }) })).status, 200);
+  lp = await (await listP({ env, request: req('/api/admin/partners', { cookie: c2 }) })).json();
+  assert.equal(lp.partners.find((x) => x.id === 'pp').users[0].locked, false);
+  assert.equal((await createLoginCode(env, 'u@u.lt')).ok, true);
+  // svetimos įmonės darbuotojo per kitą įmonę atrakinti negalima
+  assert.equal((await unlock({ env, params: { id: pid }, request: req('/x', { method: 'POST', cookie: c2, body: { email: 'u@u.lt' } }) })).status, 404);
+  // be administratoriaus sesijos – ne
+  assert.equal((await unlock({ env, params: { id: 'pp' }, request: req('/x', { method: 'POST', body: { email: 'u@u.lt' } }) })).status, 401);
+}
+console.log('Atrakinimo testai praėjo');
