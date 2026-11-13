@@ -1,7 +1,6 @@
 // Dokobit Documents Gateway – kvalifikuotas el. parašas (Smart-ID, mobilusis parašas, kortelė).
-// Parengta pagal viešą dokumentaciją ir oficialų pavyzdį (github.com/dokobit/gateway-php-example).
+// Parengta pagal oficialų Dokobit SDK (github.com/dokobit/gateway-sdk-php): JSON užklausos, access_token adrese.
 // Įjungiama tik nustačius paslaptį DOKOBIT_ACCESS_TOKEN; DOKOBIT_URL – sandbox arba produkcijos adresas.
-// PASTABA: gavus sandbox prieigą, patikrinti laukų pavadinimus ir būsenos kelią (pažymėta „TIKRINTI“).
 
 const DEFAULT_URL = 'https://gateway-sandbox.dokobit.com';
 const TIMEOUT_MS = 20000;
@@ -14,17 +13,6 @@ function baseUrl(env) {
   return String(env.DOKOBIT_URL || DEFAULT_URL).replace(/\/+$/, '');
 }
 
-// Įdėtiniai laukai formos pavidalu, kaip PHP http_build_query: signers[0][id]=…
-export function formEncode(obj, prefix = '', out = new URLSearchParams()) {
-  for (const [k, v] of Object.entries(obj)) {
-    if (v === undefined || v === null) continue;
-    const key = prefix ? `${prefix}[${k}]` : k;
-    if (typeof v === 'object') formEncode(v, key, out);
-    else out.append(key, String(v));
-  }
-  return out;
-}
-
 async function call(env, action, { method = 'POST', fields } = {}) {
   const url = `${baseUrl(env)}/api/${action}.json?access_token=${encodeURIComponent(env.DOKOBIT_ACCESS_TOKEN)}`;
   const ctrl = new AbortController();
@@ -32,8 +20,8 @@ async function call(env, action, { method = 'POST', fields } = {}) {
   try {
     const init = { method, signal: ctrl.signal, headers: { Accept: 'application/json' } };
     if (method === 'POST') {
-      init.headers['Content-Type'] = 'application/x-www-form-urlencoded';
-      init.body = formEncode(fields || {}).toString();
+      init.headers['Content-Type'] = 'application/json';
+      init.body = JSON.stringify(fields || {});
     }
     const r = await fetch(url, init);
     const d = await r.json().catch(() => ({}));
@@ -62,9 +50,8 @@ export async function createSigning(env, { pdf, fileName, title, signer, postbac
   const up = await call(env, 'file/upload', {
     fields: { file: { name: fileName, digest: await sha256Hex(pdf), content: b64(pdf) } },
   });
-  // TIKRINTI: dokumentacijoje nurodytas ir kelias file/upload/{token}/status
   for (let i = 0; i < 10; i++) {
-    const st = await call(env, `file/upload/status/${encodeURIComponent(up.token)}`, { method: 'GET' });
+    const st = await call(env, `file/upload/${encodeURIComponent(up.token)}/status`, { method: 'GET' });
     if (st.status === 'uploaded') break;
     if (st.status !== 'pending' || i === 9) throw new Error('Dokobit: failas neįkeltas');
     await sleep(pollMs);
@@ -73,13 +60,11 @@ export async function createSigning(env, { pdf, fileName, title, signer, postbac
     fields: {
       type: 'pdf',
       name: title,
-      files: { 0: { token: up.token } },
-      signers: {
-        0: {
-          id: signer.id, name: signer.name, surname: signer.surname, country_code: 'LT',
-          signing_purpose: 'signature', signing_options: { 0: 'smartid', 1: 'mobile', 2: 'stationary' },
-        },
-      },
+      files: [{ token: up.token }],
+      signers: [{
+        id: signer.id, name: signer.name, surname: signer.surname, country_code: 'LT',
+        signing_purpose: 'signature', signing_options: ['smartid', 'mobile', 'stationary'],
+      }],
       postback_url: postbackUrl,
     },
   });

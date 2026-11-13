@@ -3,12 +3,11 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { DatabaseSync } from 'node:sqlite';
 import { b64encode } from '../functions/_lib/crypto.js';
-import { formEncode, splitName } from '../functions/_lib/dokobit.js';
+import { splitName } from '../functions/_lib/dokobit.js';
 import { onRequestPost as create } from '../functions/api/requests.js';
 import { onRequestPost as postback } from '../functions/api/sign/dokobit.js';
 import { onRequestGet as status } from '../functions/api/sign/status.js';
 
-assert.equal(formEncode({ a: 1, s: { 0: { id: 'x', o: { 0: 'smartid' } } } }).toString(), 'a=1&s%5B0%5D%5Bid%5D=x&s%5B0%5D%5Bo%5D%5B0%5D=smartid');
 assert.deepEqual(splitName('Ona Marija Petraitienė'), { name: 'Ona Marija', surname: 'Petraitienė' });
 
 const sqlite = new DatabaseSync(':memory:');
@@ -30,10 +29,10 @@ globalThis.fetch = async (url, init = {}) => {
   const u = new URL(url); calls.push({ path: u.pathname, method: init.method || 'GET', body: init.body, token: u.searchParams.get('access_token') });
   const J = (o) => new Response(JSON.stringify(o));
   if (u.pathname === '/api/file/upload.json') return J({ status: 'ok', token: 'FILE1' });
-  if (u.pathname === '/api/file/upload/status/FILE1.json') return J({ status: 'uploaded' });
+  if (u.pathname === '/api/file/upload/FILE1/status.json') return J({ status: 'uploaded' });
   if (u.pathname === '/api/signing/create.json') {
-    const p = new URLSearchParams(init.body);
-    return J({ status: 'ok', token: 'SIGNTOKEN123', signers: { [p.get('signers[0][id]')]: 'SIGNERTOK' } });
+    const p = JSON.parse(init.body);
+    return J({ status: 'ok', token: 'SIGNTOKEN123', signers: { [p.signers[0].id]: 'SIGNERTOK' } });
   }
   if (u.pathname === '/api/signing/SIGNTOKEN123/status.json') return J(signed ? { status: 'completed', file: 'https://gw.test/files/x.pdf' } : { status: 'pending' });
   if (u.pathname === '/files/x.pdf') return new Response(SIGNED_PDF);
@@ -49,10 +48,13 @@ const out = await r.json();
 assert.equal(out.signUrl, 'https://gw.test/signing/SIGNTOKEN123?access_token=SIGNERTOK');
 assert.ok(out.statusToken && !out.downloadUrl);
 assert.ok(calls.every((c) => c.token === 'slaptas'));
-const createBody = new URLSearchParams(calls.find((c) => c.path === '/api/signing/create.json').body);
-assert.equal(createBody.get('signers[0][name]'), 'Jonas'); assert.equal(createBody.get('signers[0][surname]'), 'Jonaitis');
-assert.equal(createBody.get('postback_url'), 'https://dev.2uno.pages.dev/api/sign/dokobit');
-assert.equal(createBody.get('files[0][token]'), 'FILE1');
+const createBody = JSON.parse(calls.find((c) => c.path === '/api/signing/create.json').body);
+assert.equal(createBody.signers[0].name, 'Jonas'); assert.equal(createBody.signers[0].surname, 'Jonaitis');
+assert.deepEqual(createBody.signers[0].signing_options, ['smartid', 'mobile', 'stationary']);
+assert.equal(createBody.postback_url, 'https://dev.2uno.pages.dev/api/sign/dokobit');
+assert.equal(createBody.files[0].token, 'FILE1');
+const upload = JSON.parse(calls.find((c) => c.path === '/api/file/upload.json').body);
+assert.match(upload.file.digest, /^[0-9a-f]{64}$/); assert.equal(upload.file.name.endsWith('.pdf'), true);
 
 // Iki parašo partneris nieko negauna, užklausa „laukia kliento parašo“
 assert.equal(sqlite.prepare('SELECT status FROM requests').get().status, 'laukia_kliento_paraso');
