@@ -48,6 +48,36 @@
   F('code').addEventListener('change', function () { if (/^\d{9}$/.test(this.value.trim())) lookup(); });
   if (data && data.client && /^\d{9}$/.test(data.client.code || '')) lookup();
 
+  function showDone(number, url) {
+    sessionStorage.removeItem('2uno-sign');
+    document.getElementById('form-area').style.display = 'none';
+    document.getElementById('qes').hidden = true;
+    document.getElementById('doneText').textContent = 'Sutartis su ' + data.providerName + ' pasirašyta ir saugiai išsaugota.';
+    document.getElementById('doneNumber').textContent = number;
+    document.getElementById('doneLink').href = url;
+    document.getElementById('done').classList.add('show');
+    window.scrollTo(0, 0);
+  }
+
+  // Kvalifikuotas parašas: Dokobit langas puslapyje, o būsena tikrinama kas 3 s (iki 20 min.).
+  function startQes(d) {
+    document.getElementById('form-area').style.display = 'none';
+    document.getElementById('qes').hidden = false;
+    document.getElementById('qesFrame').src = d.signUrl;
+    window.scrollTo(0, 0);
+    var tries = 0;
+    (function poll() {
+      fetch('/api/sign/status?t=' + encodeURIComponent(d.statusToken), { cache: 'no-store' })
+        .then(function (r) { return r.json(); })
+        .then(function (s) {
+          if (s.signed) return showDone(s.number, s.downloadUrl);
+          if (++tries > 400) { msg(document.getElementById('qesMsg'), 'bad', 'Parašo laukimo laikas baigėsi. Pradėkite iš naujo.'); return; }
+          setTimeout(poll, 3000);
+        })
+        .catch(function () { setTimeout(poll, 5000); });
+    })();
+  }
+
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     form.querySelectorAll('.err').forEach(function (x) { x.textContent = ''; });
@@ -69,6 +99,7 @@
           if (x.d.fields) Object.keys(x.d.fields).forEach(function (k) { var el = form.querySelector('[data-for=' + k + ']'); if (el) el.textContent = x.d.fields[k]; });
           btn.disabled = false; return;
         }
+        if (x.d.signUrl) { startQes(x.d); return; }
         sessionStorage.removeItem('2uno-sign');
         document.getElementById('form-area').style.display = 'none';
         document.getElementById('doneText').textContent = 'Sutartis su ' + data.providerName + ' pasirašyta ir saugiai išsaugota.';
