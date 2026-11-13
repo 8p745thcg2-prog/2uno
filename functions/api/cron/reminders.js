@@ -99,6 +99,8 @@ async function cleanup(env, now) {
     env.DB.prepare('DELETE FROM login_codes WHERE expires_at < ?').bind(dayAgo),
     env.DB.prepare('DELETE FROM sessions WHERE expires_at < ?').bind(iso),
     env.DB.prepare('DELETE FROM download_tokens WHERE expires_at < ?').bind(dayAgo),
+    // Klientas pradėjo, bet per parą nepasirašė – užklausa atšaukiama (partneris jos nematė)
+    env.DB.prepare("UPDATE requests SET status = 'atsaukta', updated_at = ? WHERE status = 'laukia_kliento_paraso' AND created_at < ?").bind(iso, dayAgo),
   ]);
   return deleted;
 }
