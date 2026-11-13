@@ -20,12 +20,23 @@ async function codeHash(env, email, code) {
 const nowIso = () => new Date().toISOString();
 const plus = (min) => new Date(Date.now() + min * 60e3).toISOString();
 
-// Nesėkmingi bandymai per paskutines 24 val. (skaičiuojami iš nekeičiamo žurnalo).
+// Nesėkmingi bandymai per paskutines 24 val. (skaičiuojami iš nekeičiamo žurnalo),
+// neįskaitant tų, kurie buvo prieš administratorės atrakinimą.
 export async function failsLastDay(env, actorType, actorId) {
   const r = await env.DB.prepare(
-    "SELECT COUNT(*) AS n FROM audit_log WHERE actor_type = ? AND actor_id = ? AND action = 'login_fail' AND at > ?"
-  ).bind(actorType, actorId, new Date(Date.now() - 864e5).toISOString()).first();
+    `SELECT COUNT(*) AS n FROM audit_log
+      WHERE actor_type = ? AND actor_id = ? AND action = 'login_fail' AND at > ?
+        AND at > COALESCE((SELECT MAX(at) FROM audit_log WHERE object_type = ? AND object_id = ? AND action = 'login_unlocked'), '')`
+  ).bind(actorType, actorId, new Date(Date.now() - 864e5).toISOString(), actorType + '_user', actorId).first();
   return (r && r.n) || 0;
+}
+
+// Administratorė atrakina partnerio darbuotojo prisijungimą.
+export async function unlockPartnerUser(env, userId, adminId) {
+  await env.DB.batch([
+    env.DB.prepare('UPDATE partner_users SET failed_logins = 0, locked_until = NULL WHERE id = ?').bind(userId),
+    env.DB.prepare("INSERT INTO audit_log (actor_type, actor_id, action, object_type, object_id) VALUES ('admin', ?, 'login_unlocked', 'partner_user', ?)").bind(adminId, userId),
+  ]);
 }
 export const DAY_LOCK_MSG = 'Per daug nesėkmingų bandymų. Pabandykite po 24 val. arba rašykite info@2uno.lt.';
 

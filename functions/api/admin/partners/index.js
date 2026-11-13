@@ -2,6 +2,7 @@ import { requireAdmin } from '../../../_lib/admin-auth.js';
 import { randomId } from '../../../_lib/crypto.js';
 import { json, readJson, audit } from '../../../_lib/http.js';
 import { validatePartner, syncUsers } from '../../../_lib/partner-admin.js';
+import { failsLastDay } from '../../../_lib/auth.js';
 
 // GET /api/admin/partners – įmonių sąrašas su naudotojais ir praleistais terminais per 30 d.
 export async function onRequestGet({ request, env }) {
@@ -15,12 +16,17 @@ export async function onRequestGet({ request, env }) {
             (SELECT COUNT(*) FROM requests r WHERE r.partner_id = p.id AND r.status IN ('apmoketa','pasirasyta')) AS won
        FROM partners p ORDER BY p.name`
   ).bind(since).all();
-  const { results: users = [] } = await env.DB.prepare('SELECT partner_id, email, last_login_at FROM partner_users ORDER BY email').all();
+  const { results: users = [] } = await env.DB.prepare('SELECT id, partner_id, email, last_login_at, locked_until FROM partner_users ORDER BY email').all();
+  const now = new Date().toISOString();
+  for (const u of users) {
+    // Užrakinta: 15 min. po 5 klaidų arba parai po 15 klaidų per 24 val.
+    u.locked = !!(u.locked_until && u.locked_until > now) || (await failsLastDay(env, 'partner', u.id)) >= 15;
+  }
   return json({
     partners: results.map((p) => ({
       id: p.id, name: p.name, companyCode: p.company_code || '', notifyEmails: JSON.parse(p.notify_emails || '[]'),
       active: !!p.active, late30: p.late30, waiting: p.waiting, won: p.won,
-      users: users.filter((u) => u.partner_id === p.id).map((u) => ({ email: u.email, lastLoginAt: u.last_login_at })),
+      users: users.filter((u) => u.partner_id === p.id).map((u) => ({ email: u.email, lastLoginAt: u.last_login_at, locked: u.locked })),
     })),
   });
 }
