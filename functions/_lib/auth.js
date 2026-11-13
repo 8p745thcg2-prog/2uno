@@ -6,6 +6,7 @@ const SESSION_HOURS = 12;
 const CODE_MINUTES = 10;
 const MAX_ATTEMPTS = 5;
 const LOCK_MINUTES = 15;
+const DAILY_MAX_FAILS = 15; // per parą: tikimybė atspėti 6 skaitmenų kodą lieka ~0,0015 %
 const enc = new TextEncoder();
 
 export function normEmail(e) {
@@ -19,12 +20,22 @@ async function codeHash(env, email, code) {
 const nowIso = () => new Date().toISOString();
 const plus = (min) => new Date(Date.now() + min * 60e3).toISOString();
 
+// Nesėkmingi bandymai per paskutines 24 val. (skaičiuojami iš nekeičiamo žurnalo).
+export async function failsLastDay(env, actorType, actorId) {
+  const r = await env.DB.prepare(
+    "SELECT COUNT(*) AS n FROM audit_log WHERE actor_type = ? AND actor_id = ? AND action = 'login_fail' AND at > ?"
+  ).bind(actorType, actorId, new Date(Date.now() - 864e5).toISOString()).first();
+  return (r && r.n) || 0;
+}
+export const DAY_LOCK_MSG = 'Per daug nesėkmingų bandymų. Pabandykite po 24 val. arba rašykite info@2uno.lt.';
+
 // Sukuria kodą. Grąžina { code } arba { error } (kodas grąžinamas tik tam, kad jį būtų galima išsiųsti).
 export async function createLoginCode(env, emailRaw) {
   const email = normEmail(emailRaw);
   const user = await env.DB.prepare('SELECT id, locked_until FROM partner_users WHERE email = ?').bind(email).first();
   if (!user) return { ok: false };
   if (user.locked_until && user.locked_until > nowIso()) return { ok: false, locked: true };
+  if (await failsLastDay(env, 'partner', user.id) >= DAILY_MAX_FAILS) return { ok: false, locked: true };
   const recent = await env.DB.prepare(
     'SELECT created_at FROM login_codes WHERE email = ? ORDER BY created_at DESC LIMIT 1'
   ).bind(email).first();
@@ -43,6 +54,7 @@ export async function verifyLoginCode(env, emailRaw, codeRaw) {
   const user = await env.DB.prepare('SELECT id, partner_id, failed_logins, locked_until FROM partner_users WHERE email = ?').bind(email).first();
   if (!user || !/^\d{6}$/.test(code)) return { error: 'Neteisingas kodas' };
   if (user.locked_until && user.locked_until > nowIso()) return { error: 'Per daug bandymų. Pabandykite po 15 min.' };
+  if (await failsLastDay(env, 'partner', user.id) >= DAILY_MAX_FAILS) return { error: DAY_LOCK_MSG };
 
   const row = await env.DB.prepare(
     'SELECT id, code_hash FROM login_codes WHERE email = ? AND used_at IS NULL AND expires_at > ? ORDER BY created_at DESC LIMIT 1'
@@ -53,6 +65,7 @@ export async function verifyLoginCode(env, emailRaw, codeRaw) {
     const lock = fails >= MAX_ATTEMPTS ? plus(LOCK_MINUTES) : null;
     await env.DB.prepare('UPDATE partner_users SET failed_logins = ?, locked_until = ? WHERE id = ?')
       .bind(lock ? 0 : fails, lock, user.id).run();
+    await env.DB.prepare("INSERT INTO audit_log (actor_type, actor_id, action) VALUES ('partner', ?, 'login_fail')").bind(user.id).run();
     return { error: lock ? 'Per daug bandymų. Pabandykite po 15 min.' : 'Neteisingas arba nebegaliojantis kodas' };
   }
 

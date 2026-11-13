@@ -9,8 +9,9 @@ export function notFound() {
   return json({ error: 'Nerasta' }, 404);
 }
 
+// Saugus numatytasis režimas: viskas, kas nėra aiškiai pažymėta kaip testinė aplinka, laikoma produkcija.
 export function isProduction(env) {
-  return env.APP_ENV === 'production';
+  return env.APP_ENV !== 'test';
 }
 
 // Saugiai nuskaito JSON užklausos kūną su dydžio riba.
@@ -24,6 +25,8 @@ export async function readJson(request, maxBytes = 16 * 1024) {
 
 // Leidžia tik to paties šaltinio POST užklausas (apsauga nuo CSRF).
 export function sameOrigin(request) {
+  const site = request.headers.get('Sec-Fetch-Site');
+  if (site && site !== 'same-origin' && site !== 'none') return false;
   const origin = request.headers.get('Origin');
   return !origin || origin === new URL(request.url).origin;
 }
