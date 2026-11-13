@@ -87,7 +87,8 @@ export async function onRequest(context) {
   }
 
   // Suplanuotos užduoties kreipinys tikrinamas savo slaptu raktu (žr. functions/api/cron), ne testinės aplinkos slaptažodžiu.
-  const isCron = url.pathname === '/api/cron/reminders' && request.method === 'POST';
+  // Dokobit pranešimas taip pat ateina be testinės aplinkos slaptažodžio; jo turiniu nepasitikima (žr. functions/api/sign).
+  const isCron = request.method === 'POST' && (url.pathname === '/api/cron/reminders' || url.pathname === '/api/sign/dokobit');
   const denied = isCron ? null : checkTestAccess(request, env);
   if (denied) return denied;
 
