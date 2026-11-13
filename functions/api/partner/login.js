@@ -1,6 +1,7 @@
 import { createLoginCode, normEmail } from '../../_lib/auth.js';
 import { json, readJson, sameOrigin, isProduction, audit } from '../../_lib/http.js';
 import { sendMail, loginCodeMail } from '../../_lib/mail.js';
+import { verifyTurnstile, TURNSTILE_ERROR } from '../../_lib/turnstile.js';
 
 // POST /api/partner/login { email } – išsiunčia vienkartinį kodą.
 // Atsakymas visada vienodas, kad nebūtų galima sužinoti, kurie el. paštai užregistruoti.
@@ -10,6 +11,7 @@ export async function onRequestPost({ request, env }) {
   try { body = await readJson(request, 2048); } catch { return json({ error: 'Netinkami duomenys' }, 400); }
   const email = normEmail(body.email);
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return json({ error: 'Neteisingas el. paštas' }, 400);
+  if (!(await verifyTurnstile(env, body.turnstile, request))) return json({ error: TURNSTILE_ERROR }, 403);
 
   const r = await createLoginCode(env, email);
   const res = { ok: true, message: 'Jei šis el. paštas užregistruotas, išsiuntėme 6 skaitmenų kodą. Jis galioja 10 min.' };

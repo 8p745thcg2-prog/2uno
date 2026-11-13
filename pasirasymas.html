@@ -31,6 +31,7 @@ dl{display:grid;grid-template-columns:200px 1fr;gap:8px 14px;font-size:14px;marg
 .done{display:none}.done.show{display:block}.done a.btn{display:inline-block;background:var(--teal);color:#fff;text-decoration:none;border-radius:9px;padding:12px 18px;font-weight:600;margin-top:10px}
 @media(max-width:700px){.grid{grid-template-columns:1fr}.row{flex-direction:column;align-items:stretch}dl{grid-template-columns:1fr}}
 </style>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
 <header><img src="assets/2uno-logo.jpg" alt="2uno.lt"><a href="/">← Grįžti į palyginimą</a></header>
@@ -78,6 +79,7 @@ dl{display:grid;grid-template-columns:200px 1fr;gap:8px 14px;font-size:14px;marg
         <div class="err" data-for="consent"></div>
         <label style="margin-top:12px">Parašas: įrašykite savo vardą ir pavardę<input name="fullName" maxlength="120" autocomplete="off"><div class="err" data-for="fullName"></div></label>
         <p class="note">Testinė versija: parašas patvirtinamas vardu ir pavarde. Tikroje platformoje sutartis bus pasirašoma kvalifikuotu el. parašu (Smart-ID, mobiliuoju parašu ar asmens tapatybės kortele).</p>
+      <div class="cf-turnstile" data-sitekey="0x4AAAAAAF_LsLYphbN-n8UU" data-language="lt" style="margin-top:14px"></div>
         <button type="submit" id="signBtn" style="margin-top:10px">Pasirašyti sutartį</button>
         <div class="msg" id="signMsg"></div>
       </div>
