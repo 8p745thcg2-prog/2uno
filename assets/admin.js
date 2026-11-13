@@ -178,7 +178,21 @@
     if (p && p.users.length) {
       box.appendChild(el('h3', null, 'Paskutiniai prisijungimai'));
       var log = el('div', { class: 'log' }); box.appendChild(log);
-      p.users.forEach(function (u) { log.appendChild(el('div', null, u.email + ' · ' + (u.lastLoginAt ? when(u.lastLoginAt) : 'dar nesijungė'))); });
+      p.users.forEach(function (u) {
+        var line = el('div', null, u.email + ' · ' + (u.lastLoginAt ? when(u.lastLoginAt) : 'dar nesijungė') + (u.locked ? ' · UŽRAKINTA' : ''));
+        if (u.locked) {
+          var ub = el('button', { type: 'button', class: 'light', style: 'margin-left:8px;padding:4px 10px;font-size:12px' }, 'Atrakinti');
+          ub.addEventListener('click', function () {
+            ub.disabled = true;
+            api('/api/admin/partners/' + encodeURIComponent(p.id) + '/unlock', { method: 'POST', body: { email: u.email } }).then(function (d) {
+              if (d._status !== 200) { msg(out, 'bad', d.error || 'Klaida'); ub.disabled = false; return; }
+              msg(out, 'ok', u.email + ' atrakinta.'); loadPartners(p.id);
+            });
+          });
+          line.appendChild(ub);
+        }
+        log.appendChild(line);
+      });
     }
     f.addEventListener('submit', function (e) {
       e.preventDefault(); b.disabled = true;
