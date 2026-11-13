@@ -1,18 +1,29 @@
 import assert from 'node:assert/strict';
+import { gzipSync } from 'node:zlib';
 import { lookupCompany } from '../functions/_lib/company.js';
-globalThis.fetch = async (url) => {
-  const u = String(url);
-  const body = u.includes('JuridinisAsmuo') ? { _data: [{ ja_kodas: 121215434, ja_pavadinimas: 'Telia Lietuva, AB', reg_data: '1992-02-06', isreg_data: null, forma: { _id: 'f1' } }] }
-    : u.includes('/Forma/') ? { kodas: 320, pavadinimas: 'Akcinė bendrovė' }
-    : u.includes('vies') ? { isValid: true, name: 'Telia Lietuva, AB', address: 'Saltoniškių g. 7A,\nVilniaus m.' } : null;
-  return new Response(JSON.stringify(body), { status: body ? 200 : 404 });
+
+const shard = gzipSync('121215433\tKita, AB\tKur nors\t320\n121215434\tTelia Lietuva, AB\tLvivo g. 25, Vilnius\t320\n');
+let calls = [];
+const mock = (map) => async (url) => {
+  const u = String(url); calls.push(u);
+  for (const [k, v] of map) if (u.includes(k)) return typeof v === 'function' ? v() : new Response(v);
+  return new Response('nėra', { status: 404 });
 };
-const r = await lookupCompany('121215434', 'LT212154314');
-assert.equal(r.name, 'Telia Lietuva, AB'); assert.equal(r.legalFormShort, 'AB'); assert.equal(r.active, true);
-assert.equal(r.address, 'Saltoniškių g. 7A, Vilniaus m.'); assert.equal(r.vatCode, 'LT212154314');
-globalThis.fetch = async () => new Response('{"_data":[]}');
-const n = await lookupCompany('999999999');
-assert.equal(n.found, false);
+
+// 1. Randama vietiniame žinyne – su adresu, be lėto API
+globalThis.fetch = mock([['/data/jar/12121.tsv.gz', () => new Response(shard)], ['/data/jar/meta.json', JSON.stringify({ forms: { 320: 'Akcinė bendrovė' } })]]);
+let r = await lookupCompany('121215434');
+assert.equal(r.found, true); assert.equal(r.name, 'Telia Lietuva, AB'); assert.equal(r.address, 'Lvivo g. 25, Vilnius');
+assert.equal(r.legalFormShort, 'AB'); assert.equal(r.legalForm, 'Akcinė bendrovė');
+assert.ok(!calls.some((c) => c.includes('get.data.gov.lt')));
+
+// 2. Žinyne nėra (nauja įmonė) – atsarginis API
+calls = [];
+globalThis.fetch = mock([['/data/jar/', () => new Response('', { status: 404 })], ['JuridinisAsmuo', JSON.stringify({ _data: [{ ja_kodas: 306000001, ja_pavadinimas: 'Nauja', isreg_data: null, forma: { _id: 'f' } }] })], ['/Forma/', JSON.stringify({ kodas: 960, pavadinimas: 'Mažoji bendrija' })]]);
+r = await lookupCompany('306000001');
+assert.equal(r.found, true); assert.equal(r.name, 'Nauja'); assert.equal(r.legalFormShort, 'MB'); assert.equal(r.address, undefined);
+
+// 3. Niekur nėra / tinklo klaida – „nerasta“, rankinis įvedimas
 globalThis.fetch = async () => { throw new Error('tinklas'); };
-assert.equal((await lookupCompany('121215434')).found, false);
+assert.equal((await lookupCompany('999999999')).found, false);
 console.log('Visi įmonės paieškos testai praėjo');
