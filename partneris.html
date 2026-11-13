@@ -36,6 +36,7 @@ dl{display:grid;grid-template-columns:190px 1fr;gap:9px 14px;font-size:14px;marg
 .empty{color:var(--muted);font-size:14px}.testbox{margin-top:18px;font-size:12px;color:var(--muted);border-top:1px dashed var(--line);padding-top:14px}
 @media(max-width:820px){.grid{grid-template-columns:1fr}dl{grid-template-columns:1fr}}
 </style>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
 <header><img src="assets/2uno-logo.jpg" alt="2uno.lt"><div class="who" id="who" hidden><span id="whoName"></span><button class="light" id="logout">Atsijungti</button></div></header>
@@ -45,6 +46,7 @@ dl{display:grid;grid-template-columns:190px 1fr;gap:9px 14px;font-size:14px;marg
     <p class="lead">Prisijungimui naudojamas vienkartinis kodas, siunčiamas į jūsų el. paštą.</p>
     <form id="emailForm">
       <label>El. paštas<input name="email" type="email" autocomplete="email" required></label>
+      <div class="cf-turnstile" data-sitekey="0x4AAAAAAF_LsLYphbN-n8UU" data-language="lt" style="margin-top:14px"></div>
       <button class="full" id="sendBtn">Gauti kodą</button>
     </form>
     <form id="codeForm" hidden>
