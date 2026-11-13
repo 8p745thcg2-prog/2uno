@@ -6,6 +6,16 @@ const BLOCKED = [
   /^\/\.git/, /^\/README-dev/, /^\/package\.json$/, /^\/cron(\/|$)/,
 ];
 
+// index.html (4), buhalteriams.html (1), partnerio-paskyra.html (1) įterptinių skriptų SHA-256.
+export const INLINE_SCRIPT_HASHES = [
+  "'sha256-P25jVaQ7LBEeAXCMvmvnHzyT38vO6LKC1VwMf+PqgSE='",
+  "'sha256-ZEcKaPEsyA0/3sDbe/Q0efuYdIzw68GhWbkukRXiGDU='",
+  "'sha256-GctPturq1sts0NsV+Cowsebf+6QURvQ6G2oUkOeNRcY='",
+  "'sha256-jn3kRDjkRhiZOgf7/v8vzWzyFo+sGJyK4PAHsUPGyDg='",
+  "'sha256-aOfsd+xRVtvuARa/4YL1YP2gOPQEpmHXgEzozx6ZRJg='",
+  "'sha256-REVYJn0BEP3HW5wd6y5JMdLLHUGl2MY3QZm3Eq6ZF7o='",
+];
+
 const SECURITY_HEADERS = {
   'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
   'X-Content-Type-Options': 'nosniff',
@@ -13,11 +23,12 @@ const SECURITY_HEADERS = {
   'Referrer-Policy': 'strict-origin-when-cross-origin',
   'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=()',
   'Cross-Origin-Opener-Policy': 'same-origin',
-  // Dabartiniai demo puslapiai naudoja įterptinius skriptus, todėl kol kas leidžiamas
-  // 'unsafe-inline'. Perkėlus skriptus į failus (2 etapas) jis bus pašalintas.
+  // Skriptai leidžiami tik iš savo svetainės ir Turnstile. Keli įterptiniai skriptai pagrindiniuose
+  // puslapiuose leidžiami tik pagal tikslų turinio kontrolinį kodą (pakeitus jų tekstą, kodą reikia atnaujinti –
+  // tai tikrina test/csp.test.mjs).
   'Content-Security-Policy': [
     "default-src 'self'",
-    "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com",
+    "script-src 'self' " + INLINE_SCRIPT_HASHES.join(' ') + " https://challenges.cloudflare.com",
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
     "font-src 'self' https://fonts.gstatic.com",
     "img-src 'self' data:",
