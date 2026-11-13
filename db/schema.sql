@@ -74,11 +74,16 @@ CREATE TABLE IF NOT EXISTS contracts (
   sha256             TEXT,                      -- originalaus PDF maiša
   signing_provider   TEXT,                      -- 'internal' arba 'dokobit'
   signing_ref        TEXT,
+  signing_lookup     TEXT,                      -- tiekėjo pasirašymo žetono maiša (paieškai)
+  client_status_hash TEXT,                      -- kliento būsenos žetono maiša (laukiant parašo)
   client_signed_at   TEXT,
   partner_signed_at  TEXT,
   delete_after       TEXT,
   deleted_at         TEXT
 );
+
+CREATE INDEX IF NOT EXISTS idx_contracts_signing_lookup ON contracts(signing_lookup);
+CREATE INDEX IF NOT EXISTS idx_contracts_client_status ON contracts(client_status_hash);
 
 CREATE TABLE IF NOT EXISTS payments (
   id                 TEXT PRIMARY KEY,
