@@ -2,6 +2,7 @@
 // Administratoriai nustatomi aplinkos kintamuoju ADMIN_EMAILS (kableliais atskirti adresai).
 import { sha256Hex, b64encode, safeEqual, encryptField, decryptField } from './crypto.js';
 import { json, sameOrigin } from './http.js';
+import { failsLastDay, DAY_LOCK_MSG } from './auth.js';
 
 export const ADMIN_COOKIE = '__Host-2uno_a';
 const PENDING_MINUTES = 10;   // laikas antram žingsniui
@@ -9,6 +10,7 @@ const SESSION_HOURS = 8;
 const CODE_MINUTES = 10;
 const MAX_ATTEMPTS = 5;
 const LOCK_MINUTES = 15;
+const DAILY_MAX_FAILS = 15;
 const enc = new TextEncoder();
 const nowIso = () => new Date().toISOString();
 const plus = (min) => new Date(Date.now() + min * 60e3).toISOString();
@@ -33,11 +35,13 @@ async function getOrCreateAdmin(env, email) {
 }
 
 const locked = (u) => u.locked_until && u.locked_until > nowIso();
+const dayLocked = async (env, u) => (await failsLastDay(env, 'admin', u.id)) >= DAILY_MAX_FAILS;
 
 async function fail(env, u) {
   const fails = (u.failed_logins || 0) + 1;
   const lock = fails >= MAX_ATTEMPTS ? plus(LOCK_MINUTES) : null;
   await env.DB.prepare('UPDATE admin_users SET failed_logins = ?, locked_until = ? WHERE id = ?').bind(lock ? 0 : fails, lock, u.id).run();
+  await env.DB.prepare("INSERT INTO audit_log (actor_type, actor_id, action) VALUES ('admin', ?, 'login_fail')").bind(u.id).run();
   return lock ? 'Per daug bandymų. Pabandykite po 15 min.' : 'Neteisingas kodas';
 }
 
@@ -45,7 +49,7 @@ async function fail(env, u) {
 export async function createAdminCode(env, emailRaw) {
   const email = norm(emailRaw);
   const u = await getOrCreateAdmin(env, email);
-  if (!u || locked(u)) return { ok: false };
+  if (!u || locked(u) || await dayLocked(env, u)) return { ok: false };
   const key = 'admin:' + email;
   const recent = await env.DB.prepare('SELECT created_at FROM login_codes WHERE email = ? ORDER BY created_at DESC LIMIT 1').bind(key).first();
   if (recent && recent.created_at > new Date(Date.now() - 60e3).toISOString()) return { ok: false, tooSoon: true };
@@ -62,6 +66,7 @@ export async function verifyAdminCode(env, emailRaw, codeRaw) {
   const u = await getOrCreateAdmin(env, email);
   if (!u || !/^\d{6}$/.test(code)) return { error: 'Neteisingas kodas' };
   if (locked(u)) return { error: 'Per daug bandymų. Pabandykite po 15 min.' };
+  if (await dayLocked(env, u)) return { error: DAY_LOCK_MSG };
   const row = await env.DB.prepare(
     'SELECT id, code_hash FROM login_codes WHERE email = ? AND used_at IS NULL AND expires_at > ? ORDER BY created_at DESC LIMIT 1'
   ).bind('admin:' + email, nowIso()).first();
@@ -173,6 +178,7 @@ export async function verifyTotp(env, s, codeRaw) {
   const code = String(codeRaw || '').trim();
   const u = await env.DB.prepare('SELECT * FROM admin_users WHERE id = ?').bind(s.adminId).first();
   if (!u || locked(u)) return { error: 'Per daug bandymų. Pabandykite po 15 min.' };
+  if (await dayLocked(env, u)) return { error: DAY_LOCK_MSG };
   if (!/^\d{6}$/.test(code)) return { error: await fail(env, u) };
   const setup = !u.totp_secret_enc;
   const stored = setup ? u.totp_pending_enc : u.totp_secret_enc;
