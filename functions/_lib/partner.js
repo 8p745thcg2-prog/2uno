@@ -25,14 +25,15 @@ export async function requirePartner(request, env, { write = false } = {}) {
   return { session: s };
 }
 
-// Užklausa, priklausanti BŪTENT šiam partneriui (kitaip – null).
+// Užklausa, priklausanti BŪTENT šiam partneriui ir jau pasirašyta kliento (kitaip – null).
 export async function loadRequest(env, id, partnerId) {
   if (!/^[A-Za-z0-9_-]{10,64}$/.test(String(id || ''))) return null;
   return env.DB.prepare(
     `SELECT r.id, r.status, r.summary, r.price_eur, r.deadline_at, r.created_at, r.client_enc,
             c.id AS contract_id, c.deleted_at AS contract_deleted
        FROM requests r LEFT JOIN contracts c ON c.request_id = r.id
-      WHERE r.id = ? AND r.partner_id = ?`
+      WHERE r.id = ? AND r.partner_id = ? AND c.client_signed_at IS NOT NULL
+        AND r.status NOT IN ('juodrastis','laukia_kliento_paraso')`
   ).bind(id, partnerId).first();
 }
 
