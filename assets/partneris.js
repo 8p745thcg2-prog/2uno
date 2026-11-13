@@ -4,6 +4,8 @@
   var currentEmail = '';
   var current = null;
 
+  function tsToken(form) { var i = form.querySelector('[name="cf-turnstile-response"]'); return i ? i.value : ''; }
+  function tsReset(form) { var w = form.querySelector('.cf-turnstile'); if (window.turnstile && w) try { window.turnstile.reset(w); } catch (e) {} }
   function msg(el, kind, text) { el.className = 'msg ' + kind; el.textContent = text; }
   function api(path, opts) {
     opts = opts || {};
@@ -28,7 +30,8 @@
     e.preventDefault();
     currentEmail = emailForm.elements.email.value.trim();
     $('sendBtn').disabled = true;
-    api('/api/partner/login', { method: 'POST', body: { email: currentEmail } }).then(function (d) {
+    api('/api/partner/login', { method: 'POST', body: { email: currentEmail, turnstile: tsToken(emailForm) } }).then(function (d) {
+      tsReset(emailForm);
       if (d._status !== 200) { msg($('loginMsg'), 'bad', d.error || 'Klaida'); return; }
       msg($('loginMsg'), 'ok', d.message + (d.devCode ? ' (Testinė aplinka – kodas rodomas ir čia: ' + d.devCode + ')' : ''));
       codeForm.hidden = false; codeForm.elements.code.focus();

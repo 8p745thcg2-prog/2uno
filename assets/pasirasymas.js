@@ -56,6 +56,7 @@
     var body = {
       providerName: data.providerName, priceEur: data.priceEur, summary: data.summary, client: client,
       signature: { fullName: F('fullName').value.trim(), consent: F('consent').checked },
+      turnstile: (form.querySelector('[name="cf-turnstile-response"]') || {}).value || '',
     };
     var btn = document.getElementById('signBtn'); btn.disabled = true;
     msg(document.getElementById('signMsg'), 'warn', 'Pasirašoma ir saugiai išsaugoma...');
@@ -63,6 +64,7 @@
       .then(function (r) { return r.json().then(function (d) { return { s: r.status, d: d }; }); })
       .then(function (x) {
         if (x.s !== 201) {
+          var w = form.querySelector('.cf-turnstile'); if (window.turnstile && w) try { window.turnstile.reset(w); } catch (er) {}
           msg(document.getElementById('signMsg'), 'bad', x.d.error || 'Klaida');
           if (x.d.fields) Object.keys(x.d.fields).forEach(function (k) { var el = form.querySelector('[data-for=' + k + ']'); if (el) el.textContent = x.d.fields[k]; });
           btn.disabled = false; return;
