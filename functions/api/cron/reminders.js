@@ -78,6 +78,31 @@ async function remind(env, origin, now) {
   return { checked: results.length, sent };
 }
 
+// Saugojimo terminas: sutarties failas ištrinamas praėjus delete_after (90 d. po pasirašymo),
+// kartu išvalomi pasibaigę prisijungimo kodai, sesijos ir atsisiuntimo žetonai.
+async function cleanup(env, now) {
+  const iso = now.toISOString();
+  const { results = [] } = await env.DB.prepare(
+    'SELECT id, file_key FROM contracts WHERE deleted_at IS NULL AND delete_after IS NOT NULL AND delete_after <= ? LIMIT 100'
+  ).bind(iso).all();
+  let deleted = 0;
+  for (const c of results) {
+    if (c.file_key) await env.CONTRACTS.delete(c.file_key);
+    await env.DB.prepare('UPDATE contracts SET deleted_at = ?, wrapped_key = NULL, signing_ref = NULL WHERE id = ? AND deleted_at IS NULL')
+      .bind(iso, c.id).run();
+    await env.DB.prepare("DELETE FROM download_tokens WHERE contract_id = ?").bind(c.id).run();
+    await audit(env, { actorType: 'system', action: 'contract_deleted_retention', objectType: 'contract', objectId: c.id });
+    deleted++;
+  }
+  const dayAgo = new Date(now.getTime() - 864e5).toISOString();
+  await env.DB.batch([
+    env.DB.prepare('DELETE FROM login_codes WHERE expires_at < ?').bind(dayAgo),
+    env.DB.prepare('DELETE FROM sessions WHERE expires_at < ?').bind(iso),
+    env.DB.prepare('DELETE FROM download_tokens WHERE expires_at < ?').bind(dayAgo),
+  ]);
+  return deleted;
+}
+
 // POST /api/cron/reminders – kviečia suplanuota užduotis (cron/worker.js) kas valandą.
 export async function onRequestPost({ request, env }) {
   const key = request.headers.get('X-Cron-Key') || '';
@@ -86,5 +111,6 @@ export async function onRequestPost({ request, env }) {
   const origin = new URL(request.url).origin;
   const expired = await expire(env, origin, now);
   const r = await remind(env, origin, now);
-  return json({ ok: true, expired, ...r });
+  const contractsDeleted = await cleanup(env, now);
+  return json({ ok: true, expired, ...r, contractsDeleted });
 }
