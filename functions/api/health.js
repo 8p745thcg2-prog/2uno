@@ -3,6 +3,10 @@ import { encryptBytes, decryptBytes, encryptField, decryptField } from '../_lib/
 // Techninė patikra: ar prijungta duomenų bazė, saugykla ir ar veikia šifravimas.
 // Grąžina tik „ok“ / klaidos tipą, jokių duomenų ar raktų.
 export async function onRequestGet({ env }) {
+  // Produkcijoje vidinė informacija neatskleidžiama.
+  if (env.APP_ENV !== 'test') {
+    return new Response('{"ok":true}', { headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' } });
+  }
   const result = { env: env.APP_ENV || 'nenustatyta', d1: 'nėra', r2: 'nėra', crypto: 'nėra' };
 
   if (env.DB) {
