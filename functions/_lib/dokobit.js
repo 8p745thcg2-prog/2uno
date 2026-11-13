@@ -1,6 +1,6 @@
 // Dokobit Documents Gateway – kvalifikuotas el. parašas (Smart-ID, mobilusis parašas, kortelė).
 // Parengta pagal viešą dokumentaciją ir oficialų pavyzdį (github.com/dokobit/gateway-php-example).
-// Įjungiama tik nustatčius paslaptį DOKOBIT_ACCESS_TOKEN; DOKOBIT_URL – sandbox arba produkcijos adresas.
+// Įjungiama tik nustačius paslaptį DOKOBIT_ACCESS_TOKEN; DOKOBIT_URL – sandbox arba produkcijos adresas.
 // PASTABA: gavus sandbox prieigą, patikrinti laukų pavadinimus ir būsenos kelią (pažymėta „TIKRINTI“).
 
 const DEFAULT_URL = 'https://gateway-sandbox.dokobit.com';
