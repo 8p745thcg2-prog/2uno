@@ -3,6 +3,7 @@ import { encryptBytes, encryptField, sha256Hex, randomId, b64encode } from '../_
 import { json, notFound, isProduction, readJson, sameOrigin, audit } from '../_lib/http.js';
 import { sendMail, newRequestMail, partnerRecipients } from '../_lib/mail.js';
 import { responseDeadline } from '../_lib/deadline.js';
+import { verifyTurnstile, TURNSTILE_ERROR } from '../_lib/turnstile.js';
 
 // Kol tikrų partnerių nėra, testinėje aplinkoje visos užklausos keliauja demo partneriui.
 const DEMO_PARTNER_ID = 'demo-partner-0001';
@@ -19,6 +20,7 @@ export async function onRequestPost({ request, env, waitUntil }) {
   if (!sameOrigin(request)) return json({ error: 'Draudžiama' }, 403);
   let body;
   try { body = await readJson(request, 16 * 1024); } catch { return json({ error: 'Netinkami duomenys' }, 400); }
+  if (!(await verifyTurnstile(env, body.turnstile, request))) return json({ error: TURNSTILE_ERROR }, 403);
 
   const { ok, errors, client } = validateClient(body.client || {});
   const fullName = clean(body.signature && body.signature.fullName);
