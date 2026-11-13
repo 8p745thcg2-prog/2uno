@@ -30,8 +30,9 @@ const SECURITY_HEADERS = {
   ].join('; '),
 };
 
+// Saugus numatytasis režimas: testinės funkcijos veikia tik su APP_ENV=test.
 function isProduction(env) {
-  return env.APP_ENV === 'production';
+  return env.APP_ENV !== 'test';
 }
 
 function unauthorized() {
@@ -44,8 +45,9 @@ function unauthorized() {
 // Testinė aplinka uždaryta slaptažodžiu. Jei slaptažodis nenustatytas,
 // aplinka neatidaroma visai (saugiau, nei palikti ją atvirą).
 function checkTestAccess(request, env) {
-  if (isProduction(env)) return null;
-  if (!env.TEST_ACCESS_PASSWORD) {
+  if (env.APP_ENV === 'production') return null;
+  // Nežinoma aplinka arba testinė be slaptažodžio – neatidaroma visai.
+  if (env.APP_ENV !== 'test' || !env.TEST_ACCESS_PASSWORD) {
     return new Response('Testinė aplinka nesukonfigūruota.', { status: 503, headers: { 'Cache-Control': 'no-store' } });
   }
   const auth = request.headers.get('Authorization') || '';

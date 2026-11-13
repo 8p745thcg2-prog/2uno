@@ -5,9 +5,11 @@ const run = (url, env, headers = {}) => onRequest({ request: new Request(url, { 
 const basic = (p) => ({ Authorization: 'Basic ' + btoa('x:' + p) });
 
 assert.equal((await run('https://t/', {})).status, 503);
-assert.equal((await run('https://t/', { TEST_ACCESS_PASSWORD: 'slapt' })).status, 401);
-assert.equal((await run('https://t/', { TEST_ACCESS_PASSWORD: 'slapt' }, basic('blogas'))).status, 401);
-const ok = await run('https://t/', { TEST_ACCESS_PASSWORD: 'slapt' }, basic('slapt'));
+assert.equal((await run('https://t/', { TEST_ACCESS_PASSWORD: 'slapt' })).status, 503); // be APP_ENV – uždaryta
+assert.equal((await run('https://t/', { APP_ENV: 'test' })).status, 503);
+assert.equal((await run('https://t/', { APP_ENV: 'test', TEST_ACCESS_PASSWORD: 'slapt' })).status, 401);
+assert.equal((await run('https://t/', { APP_ENV: 'test', TEST_ACCESS_PASSWORD: 'slapt' }, basic('blogas'))).status, 401);
+const ok = await run('https://t/', { APP_ENV: 'test', TEST_ACCESS_PASSWORD: 'slapt' }, basic('slapt'));
 assert.equal(ok.status, 200);
 assert.equal(ok.headers.get('X-Frame-Options'), 'DENY');
 assert.equal(ok.headers.get('X-Robots-Tag'), 'noindex, nofollow');
