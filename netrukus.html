@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="lt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light only">
+<meta name="theme-color" content="#f4f7fc">
+<title>2uno | Netrukus</title>
+<meta name="description" content="2uno.lt – buhalterinių paslaugų palyginimas ir sutarties sudarymas internetu. Platforma kuriama – palikite el. paštą ir pranešime, kai pradės veikti.">
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<script src="assets/netrukus.js" defer></script>
+<style>
+:root{--ink:#152b59;--muted:#5f6d82;--line:#e8edf2;--accent:#279da7;--lime:#dff2f1}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:#f7f9fc;color:var(--ink);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;font-size:15px;line-height:1.55;overflow-x:hidden}
+button,input{font:inherit}
+.hidden{display:none!important}
+/* Fonas: išblurinta palyginimo lentelė */
+.backdrop{position:fixed;inset:0;padding:110px 24px 24px;filter:blur(7px);opacity:.75;pointer-events:none;user-select:none;overflow:hidden}
+.backdrop table{width:min(1100px,100%);margin:0 auto;border-collapse:separate;border-spacing:0 12px}
+.backdrop td{background:#fff;padding:22px 18px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-size:15px;white-space:nowrap}
+.backdrop td:first-child{border-left:1px solid var(--line);border-radius:14px 0 0 14px;font-weight:650}
+.backdrop td:last-child{border-right:1px solid var(--line);border-radius:0 14px 14px 0}
+.mark{display:inline-grid;place-items:center;width:38px;height:38px;border-radius:10px;background:var(--lime);color:#1d6f77;margin-right:12px;font-weight:700}
+.price{font-size:20px;font-weight:700}
+.pill{display:inline-block;padding:5px 10px;border-radius:99px;background:#eef8f7;color:#25818a;font-size:12px;font-weight:600}
+.btn-fake{display:inline-block;padding:10px 16px;border-radius:9px;background:var(--ink);color:#fff;font-size:13px}
+header{position:relative;z-index:2;height:84px;display:flex;align-items:center;padding:0 max(24px,calc((100vw - 1100px)/2));background:#fff;border-bottom:1px solid var(--line)}
+header img{width:118px;height:68px;object-fit:contain}
+/* Kortelė */
+main{position:relative;z-index:2;display:grid;place-items:center;padding:24px 16px 48px;min-height:calc(100vh - 84px)}
+.card{width:min(520px,100%);background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:0 20px 60px #152b591f;padding:34px 32px}
+.eyebrow{text-transform:uppercase;letter-spacing:1.8px;font-size:11px;font-weight:700;color:#38949d}
+h1{font-size:30px;line-height:1.2;letter-spacing:-.03em;margin:10px 0 12px;font-weight:650}
+.lead{color:var(--muted);margin:0 0 22px}
+ul.points{margin:0 0 24px;padding:0;list-style:none}
+ul.points li{padding-left:26px;position:relative;margin:7px 0}
+ul.points li::before{content:"";position:absolute;left:4px;top:8px;width:9px;height:9px;border-radius:50%;background:var(--accent)}
+label.field{display:block;font-size:12px;font-weight:600;color:#67768b;margin-bottom:7px}
+input[type=email]{width:100%;height:48px;padding:0 14px;border:1px solid #dfe5ec;background:#f9fafc;border-radius:10px;color:var(--ink);font-size:15px}
+input[type=email]:focus{outline:3px solid #79c6ce;outline-offset:2px;background:#fff}
+.consent{display:flex;gap:10px;align-items:flex-start;margin:14px 0 4px;font-size:13px;color:var(--muted)}
+.consent input{margin-top:3px;width:17px;height:17px;flex:none}
+.consent a{color:#25818a}
+.cf-turnstile{margin-top:14px;min-height:65px}
+button.primary{width:100%;height:50px;margin-top:12px;border:0;border-radius:10px;background:var(--ink);color:#fff;font-weight:650;font-size:15px;cursor:pointer}
+button.primary:disabled{opacity:.6;cursor:default}
+.msg{margin-top:14px;padding:12px 14px;border-radius:10px;font-size:14px}
+.msg.ok{background:#eef8f7;color:#1d6f77}
+.msg.err{background:#fdf0f0;color:#9b2c2c}
+.foot{margin-top:18px;font-size:12px;color:#8a96a8}
+.foot a{color:#25818a}
+@media (max-width:560px){.card{padding:26px 20px;border-radius:16px}h1{font-size:25px}.backdrop{padding-top:90px}}
+</style>
+</head>
+<body>
+<div class="backdrop" aria-hidden="true">
+  <table>
+    <tr><td><span class="mark">A</span>Apskaitos partneris A</td><td><span class="pill">Smulkiajam verslui</span></td><td>Rivilė, B1</td><td>Atsakymas per 1 d. d.</td><td class="price">95 € / mėn.</td><td><span class="btn-fake">Pasirinkti</span></td></tr>
+    <tr><td><span class="mark">B</span>Apskaitos partneris B</td><td><span class="pill">E. prekybai</span></td><td>B1, Site.pro</td><td>Asmeninis buhalteris</td><td class="price">110 € / mėn.</td><td><span class="btn-fake">Pasirinkti</span></td></tr>
+    <tr><td><span class="mark">C</span>Apskaitos partneris C</td><td><span class="pill">Naujoms įmonėms</span></td><td>Rivilė</td><td>Perėmimas nemokamai</td><td class="price">79 € / mėn.</td><td><span class="btn-fake">Pasirinkti</span></td></tr>
+    <tr><td><span class="mark">D</span>Apskaitos partneris D</td><td><span class="pill">Paslaugų įmonėms</span></td><td>ROBO, B1</td><td>Konsultacijos įskaičiuotos</td><td class="price">125 € / mėn.</td><td><span class="btn-fake">Pasirinkti</span></td></tr>
+    <tr><td><span class="mark">E</span>Apskaitos partneris E</td><td><span class="pill">MB ir IĮ</span></td><td>B1</td><td>Viskas vienoje sistemoje</td><td class="price">69 € / mėn.</td><td><span class="btn-fake">Pasirinkti</span></td></tr>
+    <tr><td><span class="mark">F</span>Apskaitos partneris F</td><td><span class="pill">Gamybai</span></td><td>Rivilė, B1</td><td>Sandėlio apskaita</td><td class="price">140 € / mėn.</td><td><span class="btn-fake">Pasirinkti</span></td></tr>
+  </table>
+</div>
+
+<header><img src="assets/2uno-logo.jpg" alt="2UNO.lt"></header>
+
+<main>
+  <section class="card" id="signup">
+    <div class="eyebrow">Netrukus</div>
+    <h1>Buhalterio paieška be skambučių ir derybų</h1>
+    <p class="lead">Kuriame 2uno.lt – platformą, kurioje verslas palygins atrinktų buhalterinių įmonių pasiūlymus ir sudarys sutartį internetu.</p>
+    <ul class="points">
+      <li>Kainos pagal jūsų veiklą, ne „nuo“</li>
+      <li>Kelios patikrintos įmonės vienoje vietoje</li>
+      <li>Sutartis pasirašoma el. parašu per kelias minutes</li>
+    </ul>
+    <form id="wl-form" novalidate>
+      <label class="field" for="wl-email">Jūsų el. paštas</label>
+      <input id="wl-email" type="email" autocomplete="email" inputmode="email" required maxlength="254" placeholder="vardas@imone.lt">
+      <label class="consent"><input id="wl-consent" type="checkbox" required><span>Sutinku gauti vieną pranešimą, kai 2uno.lt pradės veikti. Adresą naudosime tik tam. <a href="privatumas.html">Privatumo politika</a></span></label>
+      <div class="cf-turnstile" data-sitekey="0x4AAAAAAF_LsLYphbN-n8UU" data-language="lt"></div>
+      <button class="primary" type="submit" id="wl-submit">Pranešti man, kai veiks</button>
+      <div id="wl-msg" class="msg hidden" role="status" aria-live="polite"></div>
+    </form>
+    <p class="foot">Esate buhalterinė įmonė? Rašykite <a href="mailto:info@2uno.lt">info@2uno.lt</a></p>
+  </section>
+
+  <section class="card hidden" id="confirm">
+    <div class="eyebrow">El. pašto patvirtinimas</div>
+    <h1>Patvirtinkite el. paštą</h1>
+    <p class="lead">Paspauskite mygtuką ir pranešime, kai 2uno.lt pradės veikti.</p>
+    <button class="primary" type="button" id="cf-btn">Patvirtinti</button>
+    <div id="cf-msg" class="msg hidden" role="status" aria-live="polite"></div>
+  </section>
+</main>
+</body>
+</html>
