@@ -61,7 +61,7 @@ export function loginCodeMail(code) {
     ...layout({
       title: 'Prisijungimas prie 2uno.lt partnerio portalo',
       lines: [`Jūsų vienkartinis kodas: ${code}`, 'Kodas galioja 10 minučių ir gali būti panaudotas tik vieną kartą.',
-        'Jei prisijungti nebanduėte, šį laišką galite ignoruoti.'],
+        'Jei prisijungti nebandėte, šį laišką galite ignoruoti.'],
     }),
   };
 }
