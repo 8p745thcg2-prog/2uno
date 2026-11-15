@@ -11,7 +11,7 @@
     const msg = $('wl-msg');
     const email = $('wl-email').value.trim();
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return show(msg, 'Įrašykite teisingą el. pašto adresą.', false);
-    if (!$('wl-consent').checked) return show(msg, 'Pažymėkite, kad sutinkate gauti pranešimą.', false);
+    if (!$('wl-consent').checked) return show(msg, 'Pažymėkite sutikimą gauti pranešimą.', false);
     const input = document.querySelector('[name="cf-turnstile-response"]');
     $('wl-submit').disabled = true;
     try {
@@ -21,7 +21,7 @@
       });
       const d = await r.json().catch(() => ({}));
       if (r.ok) {
-        show(msg, 'Ačiū! Pranešime, kai 2uno.lt pradės veikti.', true);
+        show(msg, 'Ačiū! Apie 2uno.lt veiklos pradžią pranešime el. paštu.', true);
         $('wl-form').querySelectorAll('input,button').forEach((x) => { x.disabled = true; });
       } else {
         show(msg, d.error || 'Nepavyko. Bandykite dar kartą.', false);
