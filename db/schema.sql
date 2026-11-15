@@ -109,7 +109,7 @@ CREATE TABLE IF NOT EXISTS invoices (
   UNIQUE (partner_id, month)
 );
 
--- Žurnalas: tik įrašoma, niekada nekeičiama ir netrinama.
+-- Žurnalas: tik įrašoma, niekada nekeičiama; trinami tik senesni nei 365 d. įrašai (saugojimo terminas).
 CREATE TABLE IF NOT EXISTS audit_log (
   id              INTEGER PRIMARY KEY AUTOINCREMENT,
   at              TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now')),
@@ -122,7 +122,8 @@ CREATE TABLE IF NOT EXISTS audit_log (
 );
 CREATE TRIGGER IF NOT EXISTS audit_log_no_update BEFORE UPDATE ON audit_log
 BEGIN SELECT RAISE(ABORT, 'audit_log yra nekeičiamas'); END;
-CREATE TRIGGER IF NOT EXISTS audit_log_no_delete BEFORE DELETE ON audit_log
+CREATE TRIGGER IF NOT EXISTS audit_log_no_delete_recent BEFORE DELETE ON audit_log
+WHEN OLD.at >= strftime('%Y-%m-%dT%H:%M:%fZ', 'now', '-365 days')
 BEGIN SELECT RAISE(ABORT, 'audit_log yra nekeičiamas'); END;
 
 -- Vienkartinės atsisiuntimo nuorodos (saugoma tik žetono maiša).

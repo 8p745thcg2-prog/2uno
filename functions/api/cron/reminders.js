@@ -11,7 +11,7 @@ function parse(s) {
   try { return JSON.parse(s || '{}'); } catch { return {}; }
 }
 
-// Pasibaigus terminui: užklausa uždaroma, informuojami klientas, įmonė ir administratorė (sutarties 6.2 p.).
+// Pasibaigus terminui: užklausa uždaroma, informuojami klientas, įmonė ir administratoriė (sutarties 6.2 p.).
 async function expire(env, origin, now) {
   const { results = [] } = await env.DB.prepare(
     `SELECT r.id, r.partner_id, r.summary, r.client_enc, p.name AS partner_name FROM requests r
@@ -102,7 +102,45 @@ async function cleanup(env, now) {
     // Klientas pradėjo, bet per parą nepasirašė – užklausa atšaukiama (partneris jos nematė)
     env.DB.prepare("UPDATE requests SET status = 'atsaukta', updated_at = ? WHERE status = 'laukia_kliento_paraso' AND created_at < ?").bind(iso, dayAgo),
   ]);
+  await eraseClientData(env, now);
   return deleted;
+}
+
+// Saugojimo terminai (patvirtinti 2026-11-15). Pasibaigus terminui ištrinami kliento duomenys,
+// santrauka be asmens duomenų lieka apskaitai.
+const DAY = 864e5;
+export const RETENTION = [
+  { statuses: ['juodrastis', 'atsaukta'], days: 7 },                                  // nepasirašyta
+  { statuses: ['pasibaige_terminas', 'partneris_atsisake', 'grazinta'], days: 30 },   // sandoris neįvyko
+  { statuses: ['apmoketa', 'pasirasyta', 'uzdaryta'], days: 365 },                    // nuo apmokėjimo
+];
+export const AUDIT_DAYS = 365;
+
+async function eraseClientData(env, now) {
+  const iso = now.toISOString();
+  let erased = 0;
+  for (const { statuses, days } of RETENTION) {
+    const before = new Date(now.getTime() - days * DAY).toISOString();
+    const marks = statuses.map(() => '?').join(',');
+    const { results = [] } = await env.DB.prepare(
+      `SELECT r.id FROM requests r
+        WHERE r.status IN (${marks}) AND (r.client_enc IS NOT NULL OR r.answers_enc IS NOT NULL)
+          AND COALESCE((SELECT MAX(p.paid_at) FROM payments p WHERE p.request_id = r.id), r.updated_at) < ?
+        LIMIT 200`
+    ).bind(...statuses, before).all();
+    for (const r of results) {
+      await env.DB.batch([
+        env.DB.prepare('UPDATE requests SET client_enc = NULL, answers_enc = NULL WHERE id = ?').bind(r.id),
+        // sutarties failas taip pat su kliento duomenimis – ištrinamas kitu paleidimu
+        env.DB.prepare('UPDATE contracts SET delete_after = ? WHERE request_id = ? AND deleted_at IS NULL AND (delete_after IS NULL OR delete_after > ?)').bind(iso, r.id, iso),
+      ]);
+      await audit(env, { actorType: 'system', action: 'client_data_erased_retention', objectType: 'request', objectId: r.id });
+      erased++;
+    }
+  }
+  const auditBefore = new Date(now.getTime() - AUDIT_DAYS * DAY).toISOString();
+  await env.DB.prepare('DELETE FROM audit_log WHERE at < ?').bind(auditBefore).run();
+  return erased;
 }
 
 // POST /api/cron/reminders – kviečia suplanuota užduotis (cron/worker.js) kas valandą.
