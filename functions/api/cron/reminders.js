@@ -11,7 +11,7 @@ function parse(s) {
   try { return JSON.parse(s || '{}'); } catch { return {}; }
 }
 
-// Pasibaigus terminui: užklausa uždaroma, informuojami klientas, įmonė ir administratoriė (sutarties 6.2 p.).
+// Pasibaigus terminui: užklausa uždaroma, informuojami klientas, įmonė ir administratorė (sutarties 6.2 p.).
 async function expire(env, origin, now) {
   const { results = [] } = await env.DB.prepare(
     `SELECT r.id, r.partner_id, r.summary, r.client_enc, p.name AS partner_name FROM requests r
@@ -103,6 +103,13 @@ async function cleanup(env, now) {
     env.DB.prepare("UPDATE requests SET status = 'atsaukta', updated_at = ? WHERE status = 'laukia_kliento_paraso' AND created_at < ?").bind(iso, dayAgo),
   ]);
   await eraseClientData(env, now);
+  // Laukiančiųjų sąrašas: nepatvirtinti adresai ištrinami po 7 d. (atskirai, kad klaida nesustabdytų kitų darbų)
+  try {
+    await env.DB.prepare('DELETE FROM waitlist WHERE confirmed_at IS NULL AND created_at < ?')
+      .bind(new Date(now.getTime() - 7 * 864e5).toISOString()).run();
+  } catch (e) {
+    console.error('Laukiančiųjų sąrašo valymo klaida', e && e.message);
+  }
   return deleted;
 }
 
