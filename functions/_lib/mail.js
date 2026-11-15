@@ -61,7 +61,7 @@ export function loginCodeMail(code) {
     ...layout({
       title: 'Prisijungimas prie 2uno.lt partnerio portalo',
       lines: [`Jūsų vienkartinis kodas: ${code}`, 'Kodas galioja 10 minučių ir gali būti panaudotas tik vieną kartą.',
-        'Jei prisijungti nebandėte, šį laišką galite ignoruoti.'],
+        'Jei prisijungti nebanduėte, šį laišką galite ignoruoti.'],
     }),
   };
 }
@@ -154,4 +154,19 @@ export function expiredAdminMail({ partnerName, number, lateCount30d }) {
   ];
   if (lateCount30d >= 3) lines.push('Pagal sutarties 6.4 p. galima laikinai sustabdyti įmonės rodymą (iš anksto informavus ir leidus paaiškinti).');
   return { subject: `Praleistas terminas: ${partnerName} (${number})`, ...layout({ title: 'Įmonė neatsakė laiku', lines }) };
+}
+
+// Laukiančiųjų sąrašas: el. pašto patvirtinimas (dvigubas patvirtinimas).
+export function waitlistConfirmMail(url) {
+  return {
+    subject: 'Patvirtinkite el. paštą – 2uno.lt',
+    ...layout({
+      title: 'Patvirtinkite, kad norite gauti žinią apie 2uno.lt',
+      lines: [
+        'Ačiū, kad domitės 2uno.lt. Patvirtinę el. paštą, gausite vieną laišką, kai platforma pradės veikti.',
+        'Nuoroda galioja 48 valandas. Jei šio laiško neužsakėte, tiesiog jį ignoruokite – adresas bus ištrintas.',
+      ],
+      button: { label: 'Patvirtinti el. paštą', url },
+    }),
+  };
 }
