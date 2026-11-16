@@ -85,7 +85,12 @@ def load_addresses():
 
 def main():
     addr_by_code = load_addresses()
-    text = fetch(URL)
+    try:
+        text = fetch(URL)
+    except Exception as e:
+        # Žinoma priežastis: registrucentras.lt atmeta automatines (ne naršyklės) užklausas iš
+        # GitHub Actions (HTTP 403). Reikia kito vykdymo būdo (pvz. Cloudflare Workers).
+        sys.exit(f"JAR_IREGISTRUOTI.csv nepasiekiamas ({e}) – atnaujinimas nutrauktas")
     reader = csv.reader(io.StringIO(text), delimiter="|")
     header = [h.strip().lower() for h in next(reader)]
     col = {name: header.index(name) for name in ("ja_kodas", "ja_pavadinimas", "adresas", "form_kodas", "form_pavadinimas")}
