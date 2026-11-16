@@ -7,6 +7,71 @@
   function msg(el, kind, text) { el.className = 'msg ' + kind; el.textContent = text; }
   function eur(n) { return Number(n).toFixed(2).replace('.', ',') + ' €'; }
   function add(dl, k, v) { var dt = document.createElement('dt'); dt.textContent = k; var dd = document.createElement('dd'); dd.textContent = v || '–'; dl.appendChild(dt); dl.appendChild(dd); }
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+
+  // Pareigos: pasirenkama iš sąrašo arba įrašoma ranka pasirinkus „Kita“. Reali reikšmė laikoma
+  // paslėptame form.elements['position'] lauke, kad jį galėtų nuskaityti esamas pateikimo (submit) kodas.
+  var positionSelect = document.getElementById('position-select');
+  var positionOther = document.getElementById('position-other');
+  var positionOtherWrap = document.getElementById('position-other-wrap');
+  function syncPosition() { F('position').value = positionSelect.value === 'Kita' ? positionOther.value.trim() : positionSelect.value; }
+  positionSelect.addEventListener('change', function () { positionOtherWrap.classList.toggle('hidden', positionSelect.value !== 'Kita'); syncPosition(); clearFieldError('position'); refreshPreview(); });
+  positionOther.addEventListener('input', function () { syncPosition(); clearFieldError('position'); refreshPreview(); });
+
+  function fieldInput(name) { return (name === 'position' ? positionSelect : form.elements[name]); }
+  function markFieldError(name, text) { var el = fieldInput(name); if (el) el.classList.add('invalid'); var errEl = form.querySelector('[data-for=' + name + ']'); if (errEl) errEl.textContent = text; }
+  function clearFieldError(name) { var el = fieldInput(name); if (el) el.classList.remove('invalid'); var errEl = form.querySelector('[data-for=' + name + ']'); if (errEl) errEl.textContent = ''; }
+  function clearAllFieldErrors() { form.querySelectorAll('.err').forEach(function (x) { x.textContent = ''; }); form.querySelectorAll('.invalid').forEach(function (x) { x.classList.remove('invalid'); }); }
+
+  // Patikrina įmonės ir pasirašančio asmens duomenis (reikalinga ir peržiūrai, ir pasirašymui).
+  function validateClientFields() {
+    clearAllFieldErrors();
+    var ok = true;
+    if (!/^\d{9}$/.test(F('code').value.trim())) { markFieldError('code', 'Įmonės kodą sudaro 9 skaitmenys.'); ok = false; }
+    if (!F('name').value.trim()) { markFieldError('name', 'Nurodykite įmonės pavadinimą.'); ok = false; }
+    if (!F('address').value.trim()) { markFieldError('address', 'Nurodykite buveinės adresą.'); ok = false; }
+    if (!F('representative').value.trim()) { markFieldError('representative', 'Nurodykite atstovo vardą ir pavardę.'); ok = false; }
+    if (!F('position').value.trim()) { markFieldError('position', 'Nurodykite atstovo pareigas.'); ok = false; }
+    return ok;
+  }
+  function validateSignFields() {
+    var ok = validateClientFields();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(F('email').value.trim())) { markFieldError('email', 'Nurodykite galiojantį el. paštą.'); ok = false; }
+    if (!F('fullName').value.trim()) { markFieldError('fullName', 'Įrašykite vardą ir pavardę parašui.'); ok = false; }
+    if (!F('consent').checked) { markFieldError('consent', 'Reikia sutikti su sutarties sąlygomis.'); ok = false; }
+    return ok;
+  }
+
+  // Sutarties peržiūra: glausta santrauka su įvestais duomenimis. Galutinė sutartis bus sudaroma
+  // pagal pasirinktos buhalterinės įmonės pačios šabloną – čia rodoma tik orientacinė santrauka.
+  function refreshPreview() {
+    var box = document.getElementById('contractPreview');
+    if (!box.classList.contains('show')) return;
+    box.innerHTML = buildPreview();
+  }
+  function buildPreview() {
+    if (!data || !data.providerName) return '';
+    var s = data.summary || {};
+    return '' +
+      '<h4>1. Sutarties šalys</h4><p>Klientas: ' + esc(F('name').value || '[įmonės pavadinimas]') + ', kodas ' + esc(F('code').value || '[įmonės kodas]') +
+      (F('vat').value.trim() ? ', PVM kodas ' + esc(F('vat').value.trim()) : '') + ', buveinės adresas: ' + esc(F('address').value || '[adresas]') + '.<br>' +
+      'Atstovas: ' + esc(F('representative').value || '[vardas ir pavardė]') + ', pareigos: ' + esc(F('position').value || '[pareigos]') + ', veikia pagal ' + esc(F('basis').value) + '.<br>' +
+      'Paslaugų teikėjas: <b>' + esc(data.providerName) + '</b>.</p>' +
+      '<h4>2. Paslaugų apimtis</h4><p>Veiklos forma: ' + esc(s.legalForm) + '. Situacija: ' + esc(s.situation) + '. Darbuotojai: ' + esc(s.employees) + '. Sąskaitos: ' + esc(s.invoices) + '.</p>' +
+      '<h4>3. Kaina</h4><p>Orientacinė suma: <b>' + eur(data.priceEur) + ' / mėn. be PVM</b>. Galutinę kainą ir sąlygas patvirtina pasirinkta buhalterinė įmonė savo sutartyje.</p>' +
+      '<h4>4. Pradžia</h4><p>' + (s.startDate ? 'Pageidaujama pradžia: ' + esc(s.startDate) + '.' : 'Pradžios data nenurodyta.') + '</p>' +
+      '<h4>5. Pasirašymas</h4><p>Tai orientacinė santrauka, ne galutinis dokumentas. Sutartis bus sudaroma pagal ' + esc(data.providerName) + ' naudojamą šabloną ir pasirašoma kvalifikuotu elektroniniu parašu.</p>';
+  }
+  document.getElementById('previewBtn').addEventListener('click', function () {
+    validateClientFields();
+    var box = document.getElementById('contractPreview');
+    box.classList.add('show');
+    box.innerHTML = buildPreview();
+  });
+  form.querySelectorAll('input[name], select[name]').forEach(function (el) {
+    el.addEventListener('input', function () { clearFieldError(el.name); refreshPreview(); });
+    el.addEventListener('change', function () { clearFieldError(el.name); refreshPreview(); });
+  });
 
   var choice = document.getElementById('choice');
   if (!data || !data.providerName) {
@@ -23,9 +88,19 @@
     if (data.client) {
       if (data.client.code) F('code').value = data.client.code;
       if (data.client.name) F('name').value = data.client.name;
+      if (data.client.vat) F('vat').value = data.client.vat;
       if (data.client.address) F('address').value = data.client.address;
       if (data.client.representative) F('representative').value = data.client.representative;
-      if (data.client.position) F('position').value = data.client.position;
+      if (data.client.position) {
+        if (data.client.position === 'Direktorius (-ė)') {
+          document.getElementById('position-select').value = 'Direktorius (-ė)';
+        } else {
+          document.getElementById('position-select').value = 'Kita';
+          document.getElementById('position-other').value = data.client.position;
+          document.getElementById('position-other-wrap').classList.remove('hidden');
+        }
+        syncPosition();
+      }
     }
   }
 
@@ -82,7 +157,11 @@
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
-    form.querySelectorAll('.err').forEach(function (x) { x.textContent = ''; });
+    if (!validateSignFields()) {
+      var firstInvalid = form.querySelector('.invalid');
+      if (firstInvalid) firstInvalid.focus();
+      return;
+    }
     var client = {};
     ['name', 'code', 'vat', 'address', 'representative', 'position', 'basis', 'email', 'phone', 'bank'].forEach(function (k) { client[k] = F(k).value; });
     var body = {

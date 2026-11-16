@@ -8,6 +8,7 @@
 <style>
 :root{--ink:#10245f;--brand:#102b70;--teal:#279da7;--muted:#64758e;--paper:#f4f7fc;--line:#dce5f1;--err:#b42318;--ok:#0f6b46}
 [hidden]{display:none!important}
+.hidden{display:none!important}
 *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,Helvetica,sans-serif}
 header{background:#fff;border-bottom:1px solid var(--line);padding:8px 24px;display:flex;align-items:center;gap:16px}
 header img{height:52px}header a{margin-left:auto;font-size:13px;color:var(--ink)}
@@ -22,6 +23,11 @@ input,select{width:100%;margin-top:6px;border:1px solid #c5d6e3;border-radius:8p
 button{border:0;background:var(--brand);color:#fff;border-radius:9px;padding:13px 20px;font:inherit;font-weight:600;cursor:pointer}
 button.light{background:#eaf5f8;color:var(--ink);border:1px solid #c8dfe8}button:disabled{opacity:.6;cursor:wait}
 .err{color:var(--err);font-size:12px;margin-top:4px;min-height:14px}
+input.invalid,select.invalid{border-color:var(--err);background:#fdecec}
+.preview{display:none;background:#fbfbfe;border:1px solid var(--line);border-radius:10px;padding:16px;margin-top:14px;font-size:13px;line-height:1.7;color:var(--ink)}
+.preview.show{display:block}
+.preview h4{font-size:13px;margin:12px 0 4px}.preview h4:first-child{margin-top:0}
+.preview p{margin:4px 0}
 .msg{font-size:13px;padding:10px 13px;border-radius:8px;margin-top:12px;display:none;line-height:1.5}
 .msg.ok{display:block;background:#e9f8f1;color:var(--ok)}.msg.warn{display:block;background:#fff6e0;color:#7a5200}.msg.bad{display:block;background:#fdecec;color:var(--err)}
 dl{display:grid;grid-template-columns:200px 1fr;gap:8px 14px;font-size:14px;margin:0}dt{color:var(--muted)}dd{margin:0}
@@ -66,7 +72,8 @@ dl{display:grid;grid-template-columns:200px 1fr;gap:8px 14px;font-size:14px;marg
         <h2>3. Pasirašantis asmuo</h2>
         <div class="grid">
           <label>Vardas ir pavardė<input name="representative" maxlength="120"><div class="err" data-for="representative"></div></label>
-          <label>Pareigos<input name="position" maxlength="80" placeholder="direktorius"><div class="err" data-for="position"></div></label>
+          <label>Pareigos<select id="position-select"><option value="">Pasirinkti</option><option value="Direktorius (-ė)">Direktorius (-ė)</option><option value="Kita">Kita</option></select><input type="hidden" name="position"><div class="err" data-for="position"></div></label>
+          <label class="hidden" id="position-other-wrap">Nurodykite pareigas<input id="position-other" maxlength="60" placeholder="Pareigos"></label>
           <label>Veikia pagal<select name="basis"><option value="įstatus">įstatus</option><option value="įgaliojimą">įgaliojimą</option></select></label>
           <label>El. paštas<input name="email" type="email" maxlength="120"><div class="err" data-for="email"></div></label>
           <label>Telefonas (nebūtina)<input name="phone" maxlength="30"></label>
@@ -74,7 +81,14 @@ dl{display:grid;grid-template-columns:200px 1fr;gap:8px 14px;font-size:14px;marg
       </div>
 
       <div class="card">
-        <h2>4. Pasirašymas</h2>
+        <h2>4. Sutarties peržiūra</h2>
+        <p class="lead" style="margin:0 0 14px">Peržiūrėkite sutarties santrauką su įvestais duomenimis prieš pasirašant. Galutinė sutartis bus sudaroma pagal pasirinktos buhalterinės įmonės šabloną.</p>
+        <button type="button" class="light" id="previewBtn">Peržiūrėti sutartį</button>
+        <div class="preview" id="contractPreview"></div>
+      </div>
+
+      <div class="card">
+        <h2>5. Pasirašymas</h2>
         <label class="consent"><input type="checkbox" name="consent"> Susipažinau su sutarties sąlygomis ir įkainiais bei sutinku sudaryti sutartį su pasirinkta buhalterine įmone.</label>
         <div class="err" data-for="consent"></div>
         <label style="margin-top:12px">Parašas: įrašykite savo vardą ir pavardę<input name="fullName" maxlength="120" autocomplete="off"><div class="err" data-for="fullName"></div></label>
