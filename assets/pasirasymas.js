@@ -23,7 +23,9 @@
     if (data.client) {
       if (data.client.code) F('code').value = data.client.code;
       if (data.client.name) F('name').value = data.client.name;
+      if (data.client.address) F('address').value = data.client.address;
       if (data.client.representative) F('representative').value = data.client.representative;
+      if (data.client.position) F('position').value = data.client.position;
     }
   }
 
