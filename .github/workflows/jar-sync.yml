@@ -1,0 +1,40 @@
+name: Įmonių žinyno atnaujinimas
+
+on:
+  schedule:
+    - cron: '17 3 * * *'   # kasdien 03:17 UTC (veikia, kai failas yra pagrindinėje šakoje)
+  workflow_dispatch:
+  push:
+    branches: [dev]
+    paths: ['.github/workflows/jar-sync.yml', '.github/scripts/build_jar.py']
+
+permissions:
+  contents: write
+
+concurrency:
+  group: jar-sync
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: .github/scripts
+      - name: Paimti esamą žinyną
+        run: |
+          REPO="https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
+          git clone -q --depth 1 -b data "$REPO" out 2>/dev/null || (mkdir out && cd out && git init -q -b data)
+      - name: Atnaujinti tik pasikeitusias dalis
+        run: python3 .github/scripts/build_jar.py out
+      - name: Įkelti pakeitimus (viena versija, be istorijos)
+        run: |
+          cd out
+          git config user.name "2uno-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then echo "Pakeitimų nėra"; exit 0; fi
+          git commit -q --amend -m "Įmonių žinynas $(date -u +%F)" 2>/dev/null || git commit -q -m "Įmonių žinynas $(date -u +%F)"
+          git push -q -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" data
