@@ -10,7 +10,7 @@ Jei adreso faile stulpeliai pasirodytų kitokie, nei numatyta žemiau (ADDR_COL_
 ADDR_PART_CANDIDATES), skriptas tiesiog adreso neprijungs (neklius su klaida) – pamatysite tai
 per sumažėjusį "su adresu" skaičių meta.json faile, ir reikės patikrinti tikrą stulpelių sąrašą
 (struktūros failas: https://www.registrucentras.lt/aduomenys/?byla=JAR_ADRESAI_STR.xlsx).
-Išvestis: out/jar/<pirmi 3 kodo skaitmenys>.tsv (kodas, pavadinimas, adresas, formos kodas) –
+Išvestis: out/jar/<pirmi 4 kodo skaitmenys>.tsv (kodas, pavadinimas, adresas, formos kodas) –
 paprastas tekstas (ne gzip), kad tiktų ir rankiniam įkėlimui per GitHub API, kuris priima
 tik tekstinį turinį – ir out/jar/meta.json (data, įrašų skaičius, formų pavadinimai, su adresu rasta).
 """
@@ -110,7 +110,7 @@ def main():
         if address:
             with_addr += 1
         line = "\t".join([code, clean(r[col["ja_pavadinimas"]]), address, form])
-        shards.setdefault(code[:3], []).append(line)
+        shards.setdefault(code[:4], []).append(line)
         rows += 1
     if rows < MIN_ROWS:
         sys.exit(f"Per mažai įrašų ({rows}) – atnaujinimas nutrauktas")
