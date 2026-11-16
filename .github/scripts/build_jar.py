@@ -21,6 +21,28 @@ ADDR_URL = "https://www.registrucentras.lt/aduomenys/?byla=JAR_ADRESAI.csv"
 OUT = os.path.join(sys.argv[1] if len(sys.argv) > 1 else "out", "jar")
 MIN_ROWS = 100_000  # apsauga: jei failas nepilnas, nieko neatnaujiname
 
+# registrucentras.lt blokuoja GitHub Actions (ir, matyt, kitų debesijos/CI paslaugų) IP adresus
+# (HTTP 403). Kol tai nepasikeis, naujausius CSV failus reikia atsisiųsti rankiniu būdu per
+# naršyklę (kurios IP neblokuojamas), suskaidyti į <10MB dalis ir įkelti kaip GitHub release
+# "assets" (tie patalpinti github.com infrastruktūroje, kurios Actions tikrai pasiekia).
+# Žemiau surašytos tų dalių nuorodos – prireikus naujo duomenų atnaujinimo, pakeiskite jas
+# naujo release'o nuorodomis ir paleiskite "Įmonių žinyno atnaujinimas" workflow rankiniu būdu
+# (Actions → Run workflow). Likus tuščiam sąrašui, skriptas vėl bandys fetch(URL)/fetch(ADDR_URL)
+# tiesiai iš registrucentras.lt (tai, ko gero, ir toliau neveiks iš Actions, bet nekenkia bandyti).
+RELEASE_BASE = "https://github.com/8p745thcg2-prog/2uno/releases/download/jar-data-raw-20261116/"
+IREGISTRUOTI_CHUNK_URLS = [
+    RELEASE_BASE + "iregistruoti_00",
+    RELEASE_BASE + "iregistruoti_01",
+    RELEASE_BASE + "iregistruoti_02",
+    RELEASE_BASE + "iregistruoti_03",
+    RELEASE_BASE + "iregistruoti_04",
+]
+ADRESAI_CHUNK_URLS = [
+    RELEASE_BASE + "adresai_00",
+    RELEASE_BASE + "adresai_01",
+    RELEASE_BASE + "adresai_02",
+]
+
 # Pirmenybės tvarka ieškant pilno adreso stulpelio adresų faile.
 ADDR_COL_CANDIDATES = ("pilnas_adresas", "adresas", "buveines_adresas")
 # Jei pilno adreso stulpelio nėra – surenkama iš dalių šia tvarka.
@@ -37,15 +59,26 @@ ADDR_PART_CANDIDATES = (
 def clean(s):
     return " ".join((s or "").replace("\t", " ").split())
 
-def fetch(url):
+def fetch_raw(url):
     req = urllib.request.Request(url, headers={"User-Agent": "2uno.lt jar-sync"})
-    raw = urllib.request.urlopen(req, timeout=300).read()
+    return urllib.request.urlopen(req, timeout=300).read()
+
+def decode(raw):
     for enc in ("utf-8-sig", "cp1257"):
         try:
             return raw.decode(enc)
         except UnicodeDecodeError:
             continue
     return raw.decode("utf-8", errors="replace")
+
+def fetch(url, chunk_urls=()):
+    """Jei chunk_urls nurodyti – surenka failą iš jų dalių (žr. komentarą prie
+    IREGISTRUOTI_CHUNK_URLS); kitaip – tiesiai iš url."""
+    if chunk_urls:
+        raw = b"".join(fetch_raw(u) for u in chunk_urls)
+    else:
+        raw = fetch_raw(url)
+    return decode(raw)
 
 def pick(header, names):
     for n in names:
@@ -57,7 +90,7 @@ def load_addresses():
     """Grąžina {ja_kodas: adresas} iš JAR_ADRESAI.csv. Tyliai grąžina {}, jei nepavyksta –
     tada liekame su (tikėtina tuščiu) JAR_IREGISTRUOTI.csv adreso stulpeliu."""
     try:
-        text = fetch(ADDR_URL)
+        text = fetch(ADDR_URL, ADRESAI_CHUNK_URLS)
         reader = csv.reader(io.StringIO(text), delimiter="|")
         header = [h.strip().lower() for h in next(reader)]
         code_i = pick(header, ("ja_kodas",))
@@ -87,7 +120,7 @@ def load_addresses():
 def main():
     addr_by_code = load_addresses()
     try:
-        text = fetch(URL)
+        text = fetch(URL, IREGISTRUOTI_CHUNK_URLS)
     except Exception as e:
         # Žinoma priežastis: registrucentras.lt atmeta automatines (ne naršyklės) užklausas iš
         # GitHub Actions (HTTP 403). Reikia kito vykdymo būdo (pvz. Cloudflare Workers).
