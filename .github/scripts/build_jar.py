@@ -52,6 +52,18 @@ def pick(header, names):
             return header.index(n)
     return None
 
+def diag_check_govlt():
+    """LAIKINA (pašalinti, kai klausimas išsiaiškintas): patikrina, ar get.data.gov.lt API
+    (kitas serveris nei registrucentras.lt raw CSV) pasiekiamas iš GitHub Actions."""
+    try:
+        u = "https://get.data.gov.lt/datasets/gov/rc/jar/iregistruoti/JuridinisAsmuo?ja_kodas=308188308&format(json)"
+        req = urllib.request.Request(u, headers={"User-Agent": "2uno.lt jar-sync", "Accept": "application/json"})
+        with urllib.request.urlopen(req, timeout=20) as r:
+            body = r.read(1500).decode("utf-8", errors="replace")
+            print(f"DIAG get.data.gov.lt: HTTP {r.status} :: {body}")
+    except Exception as e:
+        print(f"DIAG get.data.gov.lt: KLAIDA {e}")
+
 def load_addresses():
     """Grąžina {ja_kodas: adresas} iš JAR_ADRESAI.csv. Tyliai grąžina {}, jei nepavyksta –
     tada liekame su (tikėtina tuščiu) JAR_IREGISTRUOTI.csv adreso stulpeliu."""
@@ -84,6 +96,7 @@ def load_addresses():
         return {}
 
 def main():
+    diag_check_govlt()
     addr_by_code = load_addresses()
     try:
         text = fetch(URL)
