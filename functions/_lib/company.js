@@ -40,7 +40,7 @@ async function fetchRegisterShard(code) {
   const ctrl = new AbortController();
   const t = setTimeout(() => ctrl.abort(), TIMEOUT_MS);
   try {
-    const r = await fetch(`${REGISTER}/${code.slice(0, 5)}.tsv`, { signal: ctrl.signal, cf: { cacheTtl: 3600, cacheEverything: true } });
+    const r = await fetch(`${REGISTER}/${code.slice(0, 3)}.tsv`, { signal: ctrl.signal, cf: { cacheTtl: 3600, cacheEverything: true } });
     if (!r.ok) return null;
     const text = await r.text();
     const line = text.split('\n').find((l) => l.startsWith(code + '\t'));
