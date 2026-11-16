@@ -4,7 +4,7 @@
 // Duomenys atnaujinami kartą per dieną, todėl ką tik įregistruotų įmonių gali nebūti – tada pildoma ranka.
 
 const JAR = 'https://get.data.gov.lt/datasets/gov/rc/jar';
-// Kasdien atnaujinamas suspaustas Registrų centro žinynas (žr. .github/workflows/jar-sync.yml).
+// Registrų centro žinynas (žr. .github/workflows/jar-sync.yml); data šaka, data/jar/*.tsv.
 const REGISTER = 'https://raw.githubusercontent.com/8p745thcg2-prog/2uno/data/jar';
 const VIES = 'https://ec.europa.eu/taxation_customs/vies/rest-api/ms/LT/vat/';
 const TIMEOUT_MS = 6000;
@@ -40,9 +40,9 @@ async function fetchRegisterShard(code) {
   const ctrl = new AbortController();
   const t = setTimeout(() => ctrl.abort(), TIMEOUT_MS);
   try {
-    const r = await fetch(`${REGISTER}/${code.slice(0, 5)}.tsv.gz`, { signal: ctrl.signal, cf: { cacheTtl: 3600, cacheEverything: true } });
+    const r = await fetch(`${REGISTER}/${code.slice(0, 5)}.tsv`, { signal: ctrl.signal, cf: { cacheTtl: 3600, cacheEverything: true } });
     if (!r.ok) return null;
-    const text = await new Response(r.body.pipeThrough(new DecompressionStream('gzip'))).text();
+    const text = await r.text();
     const line = text.split('\n').find((l) => l.startsWith(code + '\t'));
     return line ? line.split('\t') : null;
   } catch {

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Kasdien paruošia suspaustą įmonių žinyną iš Registrų centro atvirų duomenų.
+"""Kasdien paruošia įmonių žinyną iš Registrų centro atvirų duomenų.
 
 Šaltiniai (CC BY 4.0, VĮ Registrų centras, atnaujinama kiekvieną dieną):
   https://www.registrucentras.lt/aduomenys/?byla=JAR_IREGISTRUOTI.csv – įmonės, pavadinimas, forma
@@ -10,10 +10,11 @@ Jei adreso faile stulpeliai pasirodytų kitokie, nei numatyta žemiau (ADDR_COL_
 ADDR_PART_CANDIDATES), skriptas tiesiog adreso neprijungs (neklius su klaida) – pamatysite tai
 per sumažėjusį "su adresu" skaičių meta.json faile, ir reikės patikrinti tikrą stulpelių sąrašą
 (struktūros failas: https://www.registrucentras.lt/aduomenys/?byla=JAR_ADRESAI_STR.xlsx).
-Išvestis: out/jar/<pirmi 5 kodo skaitmenys>.tsv.gz (kodas, pavadinimas, adresas, formos kodas)
-ir out/jar/meta.json (data, įrašų skaičius, formų pavadinimai, su adresu rasta).
+Išvestis: out/jar/<pirmi 5 kodo skaitmenys>.tsv (kodas, pavadinimas, adresas, formos kodas) –
+paprastas tekstas (ne gzip), kad tiktų ir rankiniam įkėlimui per GitHub API, kuris priima
+tik tekstinį turinį – ir out/jar/meta.json (data, įrašų skaičius, formų pavadinimai, su adresu rasta).
 """
-import csv, gzip, io, json, os, sys, urllib.request, datetime
+import csv, io, json, os, sys, urllib.request, datetime
 
 URL = "https://www.registrucentras.lt/aduomenys/?byla=JAR_IREGISTRUOTI.csv"
 ADDR_URL = "https://www.registrucentras.lt/aduomenys/?byla=JAR_ADRESAI.csv"
@@ -52,18 +53,6 @@ def pick(header, names):
             return header.index(n)
     return None
 
-def diag_check_govlt():
-    """LAIKINA (pašalinti, kai klausimas išsiaiškintas): patikrina, ar get.data.gov.lt API
-    (kitas serveris nei registrucentras.lt raw CSV) pasiekiamas iš GitHub Actions."""
-    try:
-        u = "https://get.data.gov.lt/datasets/gov/rc/jar/iregistruoti/JuridinisAsmuo?ja_kodas=308188308&format(json)"
-        req = urllib.request.Request(u, headers={"User-Agent": "2uno.lt jar-sync", "Accept": "application/json"})
-        with urllib.request.urlopen(req, timeout=20) as r:
-            body = r.read(1500).decode("utf-8", errors="replace")
-            print(f"DIAG get.data.gov.lt: HTTP {r.status} :: {body}")
-    except Exception as e:
-        print(f"DIAG get.data.gov.lt: KLAIDA {e}")
-
 def load_addresses():
     """Grąžina {ja_kodas: adresas} iš JAR_ADRESAI.csv. Tyliai grąžina {}, jei nepavyksta –
     tada liekame su (tikėtina tuščiu) JAR_IREGISTRUOTI.csv adreso stulpeliu."""
@@ -96,7 +85,6 @@ def load_addresses():
         return {}
 
 def main():
-    diag_check_govlt()
     addr_by_code = load_addresses()
     try:
         text = fetch(URL)
@@ -131,8 +119,8 @@ def main():
     # todėl kasdien atnaujinama tik tai, kas nauja ar pakeista (be dubliavimo).
     total, changed = 0, 0
     for key, lines in shards.items():
-        path = os.path.join(OUT, f"{key}.tsv.gz")
-        data = gzip.compress(("\n".join(sorted(lines)) + "\n").encode("utf-8"), compresslevel=9, mtime=0)
+        path = os.path.join(OUT, f"{key}.tsv")
+        data = ("\n".join(sorted(lines)) + "\n").encode("utf-8")
         total += len(data)
         old = open(path, "rb").read() if os.path.exists(path) else None
         if old != data:
@@ -140,7 +128,7 @@ def main():
                 f.write(data)
             changed += 1
     for name in os.listdir(OUT):  # išregistruotų įmonių grupės, kurių nebeliko
-        if name.endswith(".tsv.gz") and name[:-7] not in shards:
+        if name.endswith(".tsv") and name != "meta.json" and name[:-4] not in shards:
             os.remove(os.path.join(OUT, name))
             changed += 1
     meta_path = os.path.join(OUT, "meta.json")
@@ -152,7 +140,7 @@ def main():
             "sources": [URL, ADDR_URL], "license": "CC BY 4.0, VĮ Registrų centras"}
     with open(meta_path, "w", encoding="utf-8") as f:
         json.dump(meta, f, ensure_ascii=False)
-    print(f"Įrašų: {rows}, su adresu: {with_addr}, failų: {len(shards)}, pakeista: {changed}, suspausta: {total/1e6:.1f} MB")
+    print(f"Įrašų: {rows}, su adresu: {with_addr}, failų: {len(shards)}, pakeista: {changed}, dydis: {total/1e6:.1f} MB")
 
 if __name__ == "__main__":
     main()
