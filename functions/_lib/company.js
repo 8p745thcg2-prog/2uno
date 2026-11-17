@@ -13,7 +13,11 @@ async function getJson(url) {
   const ctrl = new AbortController();
   const t = setTimeout(() => ctrl.abort(), TIMEOUT_MS);
   try {
-    const r = await fetch(url, { signal: ctrl.signal, headers: { Accept: 'application/json' }, cf: { cacheTtl: 3600 } });
+    const r = await fetch(url, {
+      signal: ctrl.signal,
+      headers: { Accept: 'application/json' },
+      cf: { cacheTtlByStatus: { '200-299': 86400, '404': 60, '500-599': 30 } },
+    });
     if (!r.ok) return null;
     return await r.json();
   } catch {
@@ -36,11 +40,20 @@ const SHORT_FORMS = {
   310: 'UAB', 320: 'AB', 960: 'MB', 810: 'IĮ', 570: 'VšĮ', 210: 'TŪB', 220: 'KŪB', 410: 'ŽŪB', 710: 'KB', 630: 'Asociacija',
 };
 
+// Dienos žyma URL gale: priverčia Cloudflare talpyklą atsinaujinti bent kartą per dieną
+// (suderinta su tuo, kad patys duomenys taip pat atnaujinami tik kartą per dieną), o su
+// cacheTtlByStatus žemiau – klaidos/"nerasta" atsakymas neįstringa talpykloje ilgam, jei
+// šaltinis laikinai nepasiekiamas (pvz., repo matomumas ar tinklo triktis).
+const cacheBust = () => new Date().toISOString().slice(0, 10).replace(/-/g, '');
+
 async function fetchRegisterShard(code) {
   const ctrl = new AbortController();
   const t = setTimeout(() => ctrl.abort(), TIMEOUT_MS);
   try {
-    const r = await fetch(`${REGISTER}/${code.slice(0, 4)}.tsv`, { signal: ctrl.signal, cf: { cacheTtl: 3600, cacheEverything: true } });
+    const r = await fetch(`${REGISTER}/${code.slice(0, 4)}.tsv?d=${cacheBust()}`, {
+      signal: ctrl.signal,
+      cf: { cacheTtlByStatus: { '200-299': 86400, '404': 60, '500-599': 30 } },
+    });
     if (!r.ok) return null;
     const text = await r.text();
     const line = text.split('\n').find((l) => l.startsWith(code + '\t'));
@@ -55,7 +68,7 @@ async function fetchRegisterShard(code) {
 let formsCache = null;
 async function registerForms() {
   if (formsCache) return formsCache;
-  const meta = await getJson(`${REGISTER}/meta.json`);
+  const meta = await getJson(`${REGISTER}/meta.json?d=${cacheBust()}`);
   formsCache = (meta && meta.forms) || {};
   return formsCache;
 }
