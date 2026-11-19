@@ -37,6 +37,7 @@ export async function onRequestPost({ request, env, params }) {
       failureUrl: `${origin}/partneris?u=${encodeURIComponent(r.id)}&pay=fail`,
       callbackUrl: `${origin}/api/payments/paysera-webhook`,
     });
+    if (new URL(request.url).searchParams.has('debug_order')) return json({ order });
     link = await createPaymentLink(env, {
       orderId: order.id,
       amountCents,
