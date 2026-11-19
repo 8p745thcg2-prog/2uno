@@ -37,7 +37,7 @@ export async function onRequestPost({ request, env, params }) {
       failureUrl: `${origin}/partneris?u=${encodeURIComponent(r.id)}&pay=fail`,
       callbackUrl: `${origin}/api/payments/paysera-webhook`,
     });
-    if (request.headers.get('X-Debug-Order')) {
+    if (new URL(request.url).searchParams.has('debug_order')) {
       const fetched = await getOrder(env, order.order_id).catch((e) => ({ error: String(e && e.message) }));
       return json({ order, fetched });
     }
