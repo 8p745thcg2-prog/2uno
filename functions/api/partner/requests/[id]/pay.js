@@ -1,7 +1,7 @@
 import { requirePartner, loadRequest, commissionEurForPartner } from '../../../../_lib/partner.js';
 import { json, notFound, audit } from '../../../../_lib/http.js';
 import { randomId } from '../../../../_lib/crypto.js';
-import { createOrder, createPaymentLink } from '../../../../_lib/paysera.js';
+import { createOrder, createPaymentLink, getOrder } from '../../../../_lib/paysera.js';
 
 // POST /api/partner/requests/:id/pay – sukuria tikrą Paysera mokėjimo nuorodą komisiniui.
 // Būseną į „apmoketa“ pakeičia TIK pasirašytas Paysera webhook (žr. functions/api/payments/paysera-webhook.js).
@@ -37,7 +37,10 @@ export async function onRequestPost({ request, env, params }) {
       failureUrl: `${origin}/partneris?u=${encodeURIComponent(r.id)}&pay=fail`,
       callbackUrl: `${origin}/api/payments/paysera-webhook`,
     });
-    if (new URL(request.url).searchParams.has('debug_order')) return json({ order });
+    if (new URL(request.url).searchParams.has('debug_order')) {
+      const fetched = await getOrder(env, order.order_id).catch((e) => ({ error: String(e && e.message) }));
+      return json({ order, fetched });
+    }
     link = await createPaymentLink(env, {
       orderId: order.id,
       amountCents,
