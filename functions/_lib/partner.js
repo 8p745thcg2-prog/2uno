@@ -17,6 +17,8 @@ export const STATUS_LABELS = {
   juodrastis: 'Juodraštis',
 };
 
+const DEFAULT_COMMISSION_EUR = 200;
+
 // Grąžina sesiją arba atsakymą su klaida (401/403).
 export async function requirePartner(request, env, { write = false } = {}) {
   if (write && !sameOrigin(request)) return { error: json({ error: 'Draudžiama' }, 403) };
@@ -25,11 +27,21 @@ export async function requirePartner(request, env, { write = false } = {}) {
   return { session: s };
 }
 
+// Komisinio dydis pagal sutartį su konkrečiu partneriu (partners.pricing JSON: { commissionEur }).
+// Kol nenurodyta kitaip – 200 €, be PVM.
+export async function commissionEurForPartner(env, partnerId) {
+  const p = await env.DB.prepare('SELECT pricing FROM partners WHERE id = ?').bind(partnerId).first();
+  let pricing = {};
+  try { pricing = JSON.parse((p && p.pricing) || '{}'); } catch { pricing = {}; }
+  const v = Number(pricing.commissionEur);
+  return Number.isFinite(v) && v > 0 ? v : DEFAULT_COMMISSION_EUR;
+}
+
 // Užklausa, priklausanti BŪTENT šiam partneriui ir jau pasirašyta kliento (kitaip – null).
 export async function loadRequest(env, id, partnerId) {
   if (!/^[A-Za-z0-9_-]{10,64}$/.test(String(id || ''))) return null;
   return env.DB.prepare(
-    `SELECT r.id, r.status, r.summary, r.price_eur, r.deadline_at, r.created_at, r.client_enc,
+    `SELECT r.id, r.status, r.summary, r.price_eur, r.deadline_at, r.created_at, r.client_enc, r.partner_id,
             c.id AS contract_id, c.deleted_at AS contract_deleted
        FROM requests r LEFT JOIN contracts c ON c.request_id = r.id
       WHERE r.id = ? AND r.partner_id = ? AND c.client_signed_at IS NOT NULL
@@ -52,5 +64,6 @@ export async function presentRequest(env, r) {
     hasContract: !!r.contract_id && !r.contract_deleted,
   };
   if (unlocked && r.client_enc) out.client = JSON.parse(await decryptField(env, r.client_enc, `request:${r.id}`));
+  if (!unlocked && r.status === 'laukia_apmokejimo') out.commissionEur = await commissionEurForPartner(env, r.partner_id);
   return out;
 }

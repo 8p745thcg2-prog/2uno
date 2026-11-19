@@ -156,6 +156,20 @@ export function expiredAdminMail({ partnerName, number, lateCount30d }) {
   return { subject: `Praleistas terminas: ${partnerName} (${number})`, ...layout({ title: 'Įmonė neatsakė laiku', lines }) };
 }
 
+// Partneriui: komisinis apmokėtas per Paysera – kliento duomenys ir sutartis dabar atrakinti.
+export function paymentPaidMail({ origin, requestId, summary }) {
+  return {
+    subject: `Komisinis apmokėtas – sutartis atrakinta (${summary.number || ''})`.replace(' ()', ''),
+    ...layout({
+      title: 'Komisinis apmokėtas',
+      lines: [
+        `Mokėjimas už užklausą Nr. ${summary.number || '–'} gautas. Kliento duomenys ir pasirašyta sutartis dabar atrakinti jūsų portale.`,
+      ],
+      button: { label: 'Atidaryti užklausą', url: `${origin}/partneris?u=${encodeURIComponent(requestId)}` },
+    }),
+  };
+}
+
 // Laukiančiųjų sąrašas: el. pašto patvirtinimas (dvigubas patvirtinimas).
 export function waitlistConfirmMail(url) {
   return {

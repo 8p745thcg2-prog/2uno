@@ -20,10 +20,14 @@
 
   function showLogin() { $('loginView').hidden = false; $('appView').hidden = true; $('who').hidden = true; }
   function showApp(me) { $('loginView').hidden = true; $('appView').hidden = false; $('who').hidden = false; $('whoName').textContent = me.partnerName + ' · ' + me.email; loadList(); openFromLink(); }
-  // Nuoroda iš el. laiško: /partneris?u=<užklausos id> atidaro konkrečią užklausą.
+  // Nuoroda iš el. laiško arba iš Paysera (success/failure_url): /partneris?u=<id>[&pay=ok|fail] atidaro konkrečią užklausą.
   function openFromLink() {
-    var u = new URLSearchParams(location.search).get('u');
-    if (u && /^[A-Za-z0-9_-]{8,64}$/.test(u)) { current = u; loadDetail(u); history.replaceState(null, '', '/partneris'); }
+    var q = new URLSearchParams(location.search);
+    var u = q.get('u'), pay = q.get('pay');
+    if (u && /^[A-Za-z0-9_-]{8,64}$/.test(u)) {
+      current = u; loadList(); loadDetail(u, pay);
+      history.replaceState(null, '', '/partneris');
+    }
   }
 
   emailForm.addEventListener('submit', function (e) {
@@ -81,7 +85,8 @@
 
   function row(dl, k, v) { dl.appendChild(el('dt', null, k)); dl.appendChild(el('dd', null, v || '–')); }
 
-  function loadDetail(id) {
+  // pendingPay: jei vartotojas grįžo iš Paysera (pay=ok), webhook dar gali būti nepasiekęs mūsų – patikriname du kartus su pauze.
+  function loadDetail(id, pendingPay) {
     api('/api/partner/requests/' + encodeURIComponent(id)).then(function (r) {
       var box = $('detail'); box.textContent = '';
       if (r._status !== 200) { box.appendChild(el('p', { class: 'empty' }, r.error || 'Klaida')); return; }
@@ -97,6 +102,7 @@
 
       var out = el('div', { class: 'msg' });
       if (r.unlocked && r.client) {
+        if (pendingPay === 'ok') msg(out, 'ok', 'Mokėjimas gautas – sutartis atrakinta.');
         box.appendChild(el('h3', null, 'Kliento duomenys'));
         var c = el('dl'); box.appendChild(c);
         row(c, 'Įmonė', r.client.name); row(c, 'Įmonės kodas', r.client.code); row(c, 'PVM kodas', r.client.vat);
@@ -115,14 +121,20 @@
           a.appendChild(dlBtn);
         }
       } else if (r.status === 'laukia_apmokejimo') {
-        box.appendChild(el('div', { class: 'lock' }, 'Kliento pavadinimas, kontaktai ir pasirašyta sutartis atrakinami automatiškai iš karto po komisinio apmokėjimo.'));
+        if (pendingPay === 'ok') {
+          msg(out, 'warn', 'Mokėjimą gavome iš Paysera – sutartis atsirakins per kelias sekundes. Jei neatsirakina, atnaujinkite puslapį.');
+          setTimeout(function () { if (current === id) loadDetail(id); }, 2500);
+        } else if (pendingPay === 'fail') {
+          msg(out, 'bad', 'Mokėjimas nepavyko arba buvo atšauktas. Galite bandyti iš naujo.');
+        }
+        box.appendChild(el('div', { class: 'lock' }, 'Kliento pavadinimas, kontaktai ir pasirašyta sutartis atrakinami automatiškai iš karto po komisinio apmokėjimo (' + eur(r.commissionEur) + ', be PVM).'));
         var acts = el('div', { class: 'actions' }); box.appendChild(acts);
-        var pay = el('button', { type: 'button' }, 'Apmokėti komisinį (testas)');
+        var pay = el('button', { type: 'button' }, 'Apmokėti komisinį (' + eur(r.commissionEur) + ')');
         pay.addEventListener('click', function () {
           pay.disabled = true;
-          api('/api/partner/requests/' + encodeURIComponent(id) + '/pay-test', { method: 'POST' }).then(function (d) {
-            if (d._status !== 200) { msg(out, 'bad', d.error || 'Klaida'); pay.disabled = false; return; }
-            loadList(); loadDetail(id);
+          api('/api/partner/requests/' + encodeURIComponent(id) + '/pay', { method: 'POST' }).then(function (d) {
+            if (d._status !== 200 || !d.paymentUrl) { msg(out, 'bad', d.error || 'Nepavyko sukurti mokėjimo'); pay.disabled = false; return; }
+            location.href = d.paymentUrl;
           });
         });
         var dec = el('button', { type: 'button', class: 'danger' }, 'Atsisakyti kliento');
