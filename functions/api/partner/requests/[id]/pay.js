@@ -45,7 +45,7 @@ export async function onRequestPost({ request, env, params }) {
     });
   } catch (e) {
     console.error('Paysera klaida', e && e.message);
-    return json({ error: 'Nepavyko sukurti mokėjimo. Pabandykite vėliau arba rašykite info@2uno.lt.' }, 502);
+    return json({ error: 'Nepavyko sukurti mokėjimo. Pabandykite vėliau arba rašykite info@2uno.lt.', debug: String(e && e.message) }, 502);
   }
 
   const paymentUrl = link.payment_URL || link.paymentUrl || link.url;
