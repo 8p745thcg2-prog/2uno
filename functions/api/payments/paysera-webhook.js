@@ -10,6 +10,9 @@ export async function onRequestPost({ request, env }) {
   let body;
   try { body = JSON.parse(raw); } catch { return json({ error: 'bad body' }, 400); }
 
+  // LAIKINA diagnostika: patvirtina, kad Paysera apskritai pasiekė šį endpoint'ą.
+  await audit(env, { actorType: 'system', action: `webhook_hit:${raw.slice(0, 100)}`, objectType: 'order', objectId: body && body.order && (body.order.order_id || body.order.id), request }).catch(() => {});
+
   const sig = request.headers.get('X-Paysera-Signature');
   if (sig) {
     const ok = await verifyWebhookSignature(env, raw, sig).catch(() => false);
@@ -22,7 +25,10 @@ export async function onRequestPost({ request, env }) {
   const pay = await env.DB.prepare(
     'SELECT id, request_id, amount_cents, status FROM payments WHERE provider_order_id = ? AND provider = ?'
   ).bind(orderId, 'paysera').first();
-  if (!pay) return json({ ok: true }); // nežinomas užsakymas
+  if (!pay) {
+    await audit(env, { actorType: 'system', action: 'webhook_no_payment_row', objectType: 'order', objectId: orderId, request }).catch(() => {});
+    return json({ ok: true }); // nežinomas užsakymas
+  }
   if (pay.status === 'apmoketa') return json({ ok: true }); // idempotentiškumas (pakartotiniai webhook'ai)
 
   let order;
@@ -30,11 +36,15 @@ export async function onRequestPost({ request, env }) {
     order = await getOrder(env, orderId);
   } catch (e) {
     console.error('Paysera getOrder klaida', e && e.message);
+    await audit(env, { actorType: 'system', action: `webhook_getorder_fail:${String(e && e.message).slice(0, 80)}`, objectType: 'order', objectId: orderId, request }).catch(() => {});
     return json({ ok: false }, 502);
   }
 
   // Paysera API laukų pavadinimai yra snake_case (patikrinta tikru atsakymu, ne dokumentacija).
   const amountPaid = Number(order.amount_paid ?? order.amountPaid ?? 0);
+
+  // LAIKINA diagnostika: ką tiksliai grąžino getOrder.
+  await audit(env, { actorType: 'system', action: `webhook_order_state:status=${order.status},paid=${amountPaid},need=${pay.amount_cents}`, objectType: 'order', objectId: orderId, request }).catch(() => {});
 
   if (order.status === 'paid' && amountPaid >= pay.amount_cents) {
     const now = new Date().toISOString();
