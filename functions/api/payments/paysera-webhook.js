@@ -13,10 +13,10 @@ export async function onRequestPost({ request, env }) {
   const sig = request.headers.get('X-Paysera-Signature');
   if (sig) {
     const ok = await verifyWebhookSignature(env, raw, sig).catch(() => false);
-    if (!ok) await audit(env, { actorType: 'system', action: 'webhook_bad_signature', objectType: 'order', objectId: body && body.order && body.order.id, request });
+    if (!ok) await audit(env, { actorType: 'system', action: 'webhook_bad_signature', objectType: 'order', objectId: body && body.order && (body.order.order_id || body.order.id), request });
   }
 
-  const orderId = body && body.order && body.order.id;
+  const orderId = body && body.order && (body.order.order_id || body.order.id);
   if (!orderId) return json({ ok: true });
 
   const pay = await env.DB.prepare(
@@ -33,7 +33,10 @@ export async function onRequestPost({ request, env }) {
     return json({ ok: false }, 502);
   }
 
-  if (order.status === 'paid' && Number(order.amountPaid) >= pay.amount_cents) {
+  // Paysera API laukų pavadinimai yra snake_case (patikrinta tikru atsakymu, ne dokumentacija).
+  const amountPaid = Number(order.amount_paid ?? order.amountPaid ?? 0);
+
+  if (order.status === 'paid' && amountPaid >= pay.amount_cents) {
     const now = new Date().toISOString();
     await env.DB.prepare("UPDATE payments SET status = 'apmoketa', paid_at = ? WHERE id = ?").bind(now, pay.id).run();
     const claim = await env.DB.prepare(
