@@ -34,7 +34,7 @@ const SECURITY_HEADERS = {
     "img-src 'self' data:",
     "connect-src 'self'",
     "form-action 'self' https://www.paysera.com https://bank.paysera.com",
-    "frame-src 'self' https://challenges.cloudflare.com https://gateway-sandbox.dokobit.com https://gateway.dokobit.com",
+    "frame-src 'self' https://challenges.cloudflare.com https://gateway-sandbox.dokobit.com https://gateway.dokobit.com https://signa.mitsoft.lt",
     "frame-ancestors 'none'",
     "base-uri 'self'",
     "object-src 'none'",
@@ -90,9 +90,11 @@ export async function onRequest(context) {
   // Dokobit pranešimas taip pat ateina be testinės aplinkos slaptažodžio; jo turiniu nepasitikima (žr. functions/api/sign).
   // Paysera webhook'as taip pat ateina be testinės aplinkos slaptažodžio (Paysera jo nežino); jo turiniu taip pat
   // nepasitikima – serveris pats patikrina užsakymo būseną per Paysera OAuth (žr. functions/api/payments/paysera-webhook).
+  // Signa Platform callback'as (el. parašas) taip pat ateina be testinės aplinkos slaptažodžio (žr. functions/api/sign/signa.js).
   const isSystemCallback = request.method === 'POST' && (
     url.pathname === '/api/cron/reminders' ||
     url.pathname === '/api/sign/dokobit' ||
+    url.pathname === '/api/sign/signa' ||
     url.pathname === '/api/payments/paysera-webhook'
   );
   const denied = isSystemCallback ? null : checkTestAccess(request, env);
