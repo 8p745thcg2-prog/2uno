@@ -97,7 +97,7 @@ export async function onRequestPost({ request, env, waitUntil }) {
       // Nematau Cloudflare Worker'io logų, todėl tikra klaidos žinutė (pvz., IP neleidžiamas,
       // trūkstamas/netinkamas parametras ir pan.) įrašoma į audit_log – kad testo nepavykimo
       // priežastį būtų galima pamatyti per D1 užklausą, analogiškai Paysera webhook_getorder_fail.
-      await audit(env, { actorType: 'client', action: `signing_failed_signa:${msg.slice(0, 80)}`, objectType: 'request', objectId: requestId, request });
+      await audit(env, { actorType: 'client', action: `signing_failed_signa:${msg.slice(0, 300)}`, objectType: 'request', objectId: requestId, request });
       await env.DB.prepare("UPDATE requests SET status = 'atsaukta' WHERE id = ?").bind(requestId).run();
       return json({ error: 'Pasirašymo paslauga šiuo metu nepasiekiama. Bandykite po kelių minučių.' }, 502);
     }
@@ -113,7 +113,7 @@ export async function onRequestPost({ request, env, waitUntil }) {
   } catch (e) {
     const msg = (e && e.message) || String(e);
     console.error('Dokobit klaida', msg);
-    await audit(env, { actorType: 'client', action: `signing_failed_dokobit:${msg.slice(0, 80)}`, objectType: 'request', objectId: requestId, request });
+    await audit(env, { actorType: 'client', action: `signing_failed_dokobit:${msg.slice(0, 300)}`, objectType: 'request', objectId: requestId, request });
     await env.DB.prepare("UPDATE requests SET status = 'atsaukta' WHERE id = ?").bind(requestId).run();
     return json({ error: 'Pasirašymo paslauga šiuo metu nepasiekiama. Bandykite po kelių minučių.' }, 502);
   }
