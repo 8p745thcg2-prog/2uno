@@ -71,3 +71,22 @@ export async function initSign(env, { docExtUid, signerId, signerFirstName, sign
 export function signUrl(env, signExtUid, { ln = 'lt' } = {}) {
   return `${baseUrl(env)}/app/api/da/link/sign/${encodeURIComponent(signExtUid)}?ln=${encodeURIComponent(ln)}`;
 }
+
+// Atsisiunčia anksčiau patalpintą dokumentą (operacija "download"). PDF formatui turinio failas
+// ir visas dokumentas yra tas pats, todėl contentId nenurodomas. SVARBU: šis endpoint'as grąžina
+// dokumentą nepriklausomai nuo to, ar jis jau pasirašytas – kviesti tik gavus patikimą signalą,
+// kad pasirašymas įvyko (žr. _lib/signa-check.js ir api/sign/signa.js callback'ą), o ne kiekvieno
+// kliento naršyklės užklausimo metu.
+export async function downloadDocument(env, docExtUid) {
+  const body = new URLSearchParams({ cid: cid(env), docExtUid });
+  const r = await fetch(`${baseUrl(env)}/app/api/rs/link/download`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+    body,
+  });
+  if (!r.ok) {
+    const d = await r.json().catch(() => ({}));
+    throw new Error(`Signa download klaida: ${r.status} ${d.message || JSON.stringify(d)}`);
+  }
+  return new Uint8Array(await r.arrayBuffer());
+}
