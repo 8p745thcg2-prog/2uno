@@ -34,7 +34,14 @@ dl{display:grid;grid-template-columns:190px 1fr;gap:9px 14px;font-size:14px;marg
 .lock{background:#f6f8fc;border:1px dashed #b9c8de;border-radius:10px;padding:16px;font-size:14px;color:#3b4b66;line-height:1.6}
 .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
 .empty{color:var(--muted);font-size:14px}.testbox{margin-top:18px;font-size:12px;color:var(--muted);border-top:1px dashed var(--line);padding-top:14px}
-@media(max-width:820px){.grid{grid-template-columns:1fr}dl{grid-template-columns:1fr}}
+.back-btn{display:none;margin-bottom:14px}
+@media(max-width:820px){
+  .grid{grid-template-columns:1fr}
+  dl{grid-template-columns:1fr}
+  #grid.show-detail .list{display:none}
+  #grid:not(.show-detail) .detail-col{display:none}
+  #grid.show-detail .back-btn{display:inline-block}
+}
 </style>
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
@@ -60,9 +67,12 @@ dl{display:grid;grid-template-columns:190px 1fr;gap:9px 14px;font-size:14px;marg
   <section id="appView" hidden>
     <h1>Klientų užklausos</h1>
     <p class="lead">Kliento duomenys ir sutartis atrakinami automatiškai, kai tik apmokamas komisinis.</p>
-    <div class="grid">
+    <div class="grid" id="grid">
       <div class="list" id="list"></div>
-      <div class="card" id="detail"><p class="empty">Pasirinkite užklausą.</p></div>
+      <div class="detail-col">
+        <button class="light back-btn" id="backToList" type="button">← Atgal į sąrašą</button>
+        <div class="card" id="detail"><p class="empty">Pasirinkite užklausą.</p></div>
+      </div>
     </div>
     <div class="testbox">Testinė aplinka: <button class="light" id="seedBtn2" type="button">Sukurti naują demo užklausą</button></div>
   </section>
