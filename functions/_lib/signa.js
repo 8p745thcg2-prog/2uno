@@ -1,1 +1,151 @@
-Ly8gU2lnbmEgUGxhdGZvcm0gKE1pdFNvZnQpIGVsLiBwYXJhxaFvIGludGVncmFjaWphLgovLyBBcGxpbmtvcyBwYXNsYXB0eXMgKENsb3VkZmxhcmUgUGFnZXMgc2VjcmV0cyDigJMgcmVpa2lhIG51c3RhdHl0aSBBVFNLSVJBSSAiZGV2IiAoUHJldmlldykgaXIKLy8gIjJ1bm8ubHQiIChQcm9kdWN0aW9uKSBhcGxpbmtvbXMsIGthZCB2ZWlrdMWzIGFiaWVqb3NlKToKLy8gICBTSUdOQV9DSUQgICAgICAgICAgICAgIOKAkyBrbGllbnRvIElELCBzdXRlaWt0YXMgTWl0U29mdCAocHZ6LiAidjVaczQ5YTZRRUlGcWVxWW9KeUsiKS4KLy8gICBTSUdOQV9CQVNFX1VSTCAgICAgICAgIOKAkyBSRVNUIGt2aWV0aW1haSBlaW5hIHBlciBmaWtzdW90byBJUCBwcm94eSAoR29vZ2xlIENsb3VkIFZNLAovLyAgICAgICAgICAgICAgICAgICAgICAgICAgICAzNC42Ni45OS42OCksIGt1cmlzIHR1cmkgZmlrc3VvdMSFIGnFoWVpbmFuxI1pxIUgSVAsIHRvZMSXbAovLyAgICAgICAgICAgICAgICAgICAgICAgICAgICBTaWduYSB3aGl0ZWxpc3QgbmVwYcW+ZWlkxb5pYW1hLiBHYWx1dGluxJcgdmVpa2lhbnRpIHJlaWvFoW3ElzoKLy8gICAgICAgICAgICAgICAgICAgICAgICAgICAgImh0dHA6Ly8zNC42Ni45OS42OC5uaXAuaW86ODQ0NCIgKG5pcC5pbyBob3N0YXMg4oCTIEdFTlVJTkFJIG5lCi8vICAgICAgICAgICAgICAgICAgICAgICAgICAgIENsb3VkZmxhcmUgem9ub3MsIHRhbSwga2FkIMWhaXMgVFRQIHByaWVnbGF1Z2EgbmVqdWRpbnTFsyBwcmlhcnRpbnTFsyBwcm94eQovLyAgICAgICAgICAgICAgICAgICAgICAgICAgICBwcm9ibGVtb3M7IHByaWV2YWRhcyA4NDQ0IC0gVk0ncyBmaXJld2FsbCAiYWxsb3ctc2lnbmEtcHJveHktODQ0MyIKLy8gICAgICAgICAgICAgICAgICAgICAgICAgICAgdGFpc3lrbMSXIGxlaWTFvmlhIHRjcDo4NDQzLDg0NDQpIEJFIGpva2lvIGtlbGlvIHByaWVkbyDigJMgcHJveHkKLy8gICAgICAgICAgICAgICAgICAgICAgICAgICAgcGF0cyBwcmlkZWRhICIvc2lnbmEtcGxhdGZvcm0iIGRhbMSvIHByaWUga2VsaW8sIGt1csSvIG1lcyBzaXVuxI1pYW1lCi8vICAgICAgICAgICAgICAgICAgICAgICAgICAgICgiL2FwcC9hcGkvLi4uIikuCi8vICAgU0lHTkFfUFJPWFlfU0VDUkVUICAgICDigJMgcHJveHkgcmVpa2FsYXVqYW1hIGJlbmRyb2ppIHBhc2xhcHRpczsgc2l1bsSNaWFtYSBrYWlwICJYLVByb3h5LUF1dGgiCi8vICAgICAgICAgICAgICAgICAgICAgICAgICAgIGFudHJhxaF0xJcgS0lFS1ZJRU5BTUUgUkVTVCBrdmlldGltZSwga2l0YWlwIHByb3h5IGF0bWV0YSBzdSA0MDMuCi8vICAgICAgICAgICAgICAgICAgICAgICAgICAgIFBSSVZBTE8gc3V0YXB0aSBzdSBwcm94eSBzZXJ2aXNvIGFwbGlua29zIGtpbnRhbXVvanUgUFJPWFlfU0VDUkVULgovLyAgIFNJR05BX1BVQkxJQ19CQVNFX1VSTCAg4oCTIG5lYsWrdGluYTsgbnVtYXR5dG9qaSByZWlrxaFtxJcgamF1IHlyYSB0aWtyYXMgU2lnbmEgUGxhdGZvcm0gYWRyZXNhcy4KLy8gICBTSUdOQV9ET0NfU1BFQ19JRCAgICAgIOKAkyBkb2t1bWVudG8gc3BlY2lmaWthY2lqb3MgSUQgKGZvcm1hdG8gaWRlbnRpZmlrYXRvcml1cykuIE51bWF0eXRvamkKLy8gICAgICAgICAgICAgICAgICAgICAgICAgICAgcmVpa8WhbcSXICJQREYtUEFkRVMtVFMiIOKAkyBwYXByYXN0YXMgUERGIHN1IGxhaWtvIMW+eW1hLCBiZSBQREYvQQovLyAgICAgICAgICAgICAgICAgICAgICAgICAgICByZWlrYWxhdmltbyAoxb5yLiBNaXRTb2Z0IGRva3VtZW50xbMgZm9ybWF0xbMgYXByYcWhxIUpLiBLaXRhcyBnYWxpbWFzCi8vICAgICAgICAgICAgICAgICAgICAgICAgICAgIGZvcm1hdGFzIOKAkyAiUERGLUxULVYxLjAiLCBiZXQgamFtIHJlaWthbGF1amFtYSwga2FkIHByYWRpbmlzIGZhaWxhcwovLyAgICAgICAgICAgICAgICAgICAgICAgICAgICBixat0xbMgUERGL0EtMSBhciBhdWvFoXRlc27El3MgdmVyc2lqb3MsIHRvZMSXbCBqaXMgbXVtcyBuZXRpbmthIGJlCi8vICAgICAgICAgICAgICAgICAgICAgICAgICAgIHBhcGlsZG9tb3MgUERGL0Ega29udmVyc2lqb3MuCi8vCi8vIFNWQVJCVSDigJMgZHUgc2tpcnRpbmdpIGFkcmVzYWk6Ci8vIDEpIFJFU1Qgb3BlcmFjaWpvcyAoc3RvcmUvaW5pdFNpZ24vZG93bmxvYWQpLCBrdXJpYXMga3ZpZcSNaWEgTcWqU8WyIFNFUlZFUklTIOKAkyBqxbMga3JlaXBpbWFzaXMKLy8gICAgdGlrcmluYW1hcyBwYWdhbCBJUCAod2hpdGVsaXN0aW5nIHBhZ2FsIGNpZCkuIFNpZ25hIHNlcnZlcmlzIElQIHdoaXRlbGlzdCB0aWtyaW5pbXVpIG5hdWRvamEKLy8gICAgIlgtRm9yd2FyZGVkLUZvciIgKGFyIHBhbmHFoWnEhSkgYW50cmHFoXTEmSwgbmUgdGlrcsSFIFRDUCByecWhaW8gSVAg4oCTIHRvZMSXbCBQUk9YWSBQUklWQUxPCi8vICAgIElTRklMVFJVT1RJIENsb3VkZmxhcmUgV29ya2VyJ2lvIGF1dG9tYXRpxaFrYWkgcHJpZGVkYW1hcyBhbnRyYcWhdGVzICgiY2YtKiIsICJ4LWZvcndhcmRlZC0qIiwKLy8gICAgImNkbi1sb29wIiwgImZvcndhcmRlZCIpIHByaWXFoSBwZXJzaXVuxI1pYW50IHXFvmtsYXVzxIUgxK8gU2lnbmEgKMW+ci4gL29wdC9wcm94eS9wcm94eS5weSBWTS1lCi8vICAgIDM0LjY2Ljk5LjY4OyB0YWkgTsSWUkEgZ2l0IHJlcG96aXRvcmlqb3MgZGFsaXMpLiBCZSDFoWlvIGZpbHRybyBTaWduYSBtYXR5ZGF2byBDbG91ZGZsYXJlIGVkZ2UKLy8gICAgSVAgKHB2ei4gIjJhMDY6OThjMDozNjAwOjoxMDMiKSBpciBhdG1lc2Rhdm8gdcW+a2xhdXPEhSBzdSA0MDEgbm9QZXJtaXNzaW9uLCBuZXByaWtsYXVzb21haSBudW8KLy8gICAgdG8sIGthZCBwcm94eSBwYXRzIHNpxbNzZGF2byBpxaEgdGVpc2luZ2FtZSwgd2hpdGVsaXN0J2UgZXNhbsSNaW8gVk0gSVAgKDM0LjY2Ljk5LjY4KS4KLy8gICAgUGF0dmlydGludGEgdmVpa2lhbnRpIDIwMjYtMTEtMjIgMTg6MzUgVVRDIChhdWRpdF9sb2cgaWQgMjIxLCBzaWduaW5nX3N0YXJ0ZWRfc2lnbmEpLgovLyAyKSAic2lnbiIgb3BlcmFjaWphIChuYXLFoXlrbMSXcyBudWtyZWlwaW1hcykg4oCTIGrEhSB0aWVzaW9naWFpIGF0aWRhcm8gS0xJRU5UTyBuYXLFoXlrbMSXIGnFoSBKTyBQQcSMSU8KLy8gICAgSVAsIG5lIG3Fq3PFsyBzZXJ2ZXJpcywgdG9kxJdsIElQIHdoaXRlbGlzdGluZyBqYWkgbmV0YWlrb21hcyBpciBqaSB2aXNhZGEgdHVyaSBlaXRpIHRpZXNpYWkgxK8KLy8gICAgdGlrcsSFIHNpZ25hLm1pdHNvZnQubHQgYWRyZXPEhSAoU0lHTkFfUFVCTElDX0JBU0VfVVJMKSwgTklFS0FEQSBwZXIgcHJveHkg4oCTIHByaWXFoWluZ3UgYXR2ZWp1Ci8vICAgIGtsaWVudGFzIGLFq3TFsyBudWtyZWlwdGFzIMSvIGFkcmVzxIUsIGt1cmlzIG5lcm9kbyBwYXNpcmHFoXltbyB2YXJ0b3Rvam8gc8SFc2Fqb3MuCmNvbnN0IERFRkFVTFRfQkFTRSA9ICdodHRwczovL3NpZ25hLm1pdHNvZnQubHQvc2lnbmEtcGxhdGZvcm0nOwoKZXhwb3J0IGZ1bmN0aW9uIHNpZ25hRW5hYmxlZChlbnYpIHsKICByZXR1cm4gISFlbnYuU0lHTkFfQ0lEOwp9CgovLyBTZXJ2ZXJpbyBSRVNUIGt2aWV0aW1hbXMgKHN0b3JlL2luaXRTaWduL2Rvd25sb2FkKSDigJMgZ2FsaSB0YXB0aSBwcm94eSBhZHJlc3UuCmZ1bmN0aW9uIGJhc2VVcmwoZW52KSB7CiAgcmV0dXJuIFN0cmluZyhlbnYuU0lHTkFfQkFTRV9VUkwgfHwgREVGQVVMVF9CQVNFKS5yZXBsYWNlKC9cLyskLywgJycpOwp9CgovLyBLbGllbnRvIG5hcsWheWtsxJdzIG51a3JlaXBpbXVpIChzaWduKSDigJMgdmlzYWRhIHRpa3JhcyBTaWduYSBQbGF0Zm9ybSBhZHJlc2FzLgpmdW5jdGlvbiBwdWJsaWNCYXNlVXJsKGVudikgewogIHJldHVybiBTdHJpbmcoZW52LlNJR05BX1BVQkxJQ19CQVNFX1VSTCB8fCBERUZBVUxUX0JBU0UpLnJlcGxhY2UoL1wvKyQvLCAnJyk7Cn0KCmZ1bmN0aW9uIGNpZChlbnYpIHsKICByZXR1cm4gZW52LlNJR05BX0NJRCB8fCAnZGVmYXVsdCc7Cn0KCi8vIEFudHJhxaF0xJcsIGt1cmnEhSByZWlrYWxhdWphIGZpa3N1b3RvIElQIHByb3h5ICjFvnIuIFNJR05BX1BST1hZX1NFQ1JFVCBhdWvFocSNaWF1KS4gSmVpCi8vIFNJR05BX0JBU0VfVVJMIG51a3JlaXB0YXMgdGllc2lhaSDEryBzaWduYS5taXRzb2Z0Lmx0IChwcm94eSBuZW5hdWRvamFtYXMpLCDFoWkgYW50cmHFoXTElwovLyBwYXByYXPEjWlhdXNpYWkgbmVzaXVuxI1pYW1hIOKAkyB0aWtyYXNpcyBTaWduYSBQbGF0Zm9ybSBzZXJ2ZXJpcyBqb3MgbmVwYWlzby4KZnVuY3Rpb24gcHJveHlIZWFkZXJzKGVudikgewogIHJldHVybiBlbnYuU0lHTkFfUFJPWFlfU0VDUkVUID8geyAnWC1Qcm94eS1BdXRoJzogZW52LlNJR05BX1BST1hZX1NFQ1JFVCB9IDoge307Cn0KCi8vIERpYWdub3N0aWthICjFvnIuIGZ1bmN0aW9ucy9hcGkvZGVidWctZW52LmpzKSDigJMgdGllc2lvZ2lhaSBiYW5kbyBwYXNpZWt0aSBwcm94eSBpxaEgV29ya2VyJ2lvIHN1Ci8vIHRpa3JhIGFudHJhxaF0ZS4gTmF1ZGluZ2EgYXRlaXR5amUgdGlrcmluYW50IHByb3h5L0lQIHdoaXRlbGlzdCBixatzZW7EhSBiZSByZWFsYXVzIHN0b3JlL2luaXRTaWduCi8vIGt2aWV0aW1vLiBQYWxpa3RhIGthaXAgcGFnYWxiaW7ElyBkaWFnbm9zdGlrYSBwbyB0bywga2FpIHBhZ3JpbmRpbsSXIElQIHdoaXRlbGlzdCBrbGFpZGEgKMW+ci4KLy8gYXVrxaHEjWlhdSkgYnV2byBzdXJhc3RhIGlyIGnFoXRhaXN5dGEuCmV4cG9ydCBhc3luYyBmdW5jdGlvbiBwcm94eVBpbmcoZW52KSB7CiAgY29uc3QgdXJsID0gYCR7YmFzZVVybChlbnYpfS9hcHAvYXBpL3JzL2xpbmsvc3RvcmVgOwogIHRyeSB7CiAgICBjb25zdCByID0gYXdhaXQgZmV0Y2godXJsLCB7IG1ldGhvZDogJ1BPU1QnLCBoZWFkZXJzOiBwcm94eUhlYWRlcnMoZW52KSB9KTsKICAgIGNvbnN0IHRleHQgPSBhd2FpdCByLnRleHQoKS5jYXRjaCgoKSA9PiAnJyk7CiAgICByZXR1cm4geyBvazogdHJ1ZSwgc3RhdHVzOiByLnN0YXR1cywgYm9keVNuaXBwZXQ6IHRleHQuc2xpY2UoMCwgMjAwKSB9OwogIH0gY2F0Y2ggKGUpIHsKICAgIHJldHVybiB7IG9rOiBmYWxzZSwgZXJyb3I6IFN0cmluZyhlICYmIGUubWVzc2FnZSB8fCBlKSB9OwogIH0KfQoKLy8gUGF0YWxwaW5hIGRva3VtZW50xIUgxK8gU2lnbmEgUGxhdGZvcm0gcGFzaXJhxaF5bXVpIChvcGVyYWNpamEgInN0b3JlIikuCi8vIGRvY0V4dFVpZCDigJMgbcWrc8WzIHN1dGFydGllcyBJRCAoY29udHJhY3RzLmlkKS4gZG9jVGl0bGUg4oCTIFBSSVZBTE9NQVMga3VyaWFudCBuYXVqxIUgZG9rdW1lbnTEhQovLyAodGFpa29tYSBBRE9DL1BERi1MVC9QREYgZm9ybWF0YW1zKS4gY2FsbGJhY2tVcmwg4oCTIG3Fq3PFsyBlbmRwb2ludCdhcywgxK8ga3VyxK8gU2lnbmEgdsSXbGlhdSBwcmFuZcWhCi8vIGFwaWUgYsWrc2Vub3MgcGFzaWtlaXRpbXVzICjFvnIuIGZ1bmN0aW9ucy9hcGkvc2lnbi9zaWduYS5qcykuCmV4cG9ydCBhc3luYyBmdW5jdGlvbiBzdG9yZURvY3VtZW50KGVudiwgeyBkb2NFeHRVaWQsIGRvY1RpdGxlLCBwZGZCeXRlcywgZmlsZU5hbWUsIGNhbGxiYWNrVXJsIH0pIHsKICBjb25zdCBmZCA9IG5ldyBGb3JtRGF0YSgpOwogIGZkLnNldCgnY2lkJywgY2lkKGVudikpOwogIGZkLnNldCgnZG9jRXh0VWlkJywgZG9jRXh0VWlkKTsKICBmZC5zZXQoJ2RvY1NwZWNJZCcsIGVudi5TSUdOQV9ET0NfU1BFQ19JRCB8fCAnUERGLVBBZEVTLVRTJyk7CiAgZmQuc2V0KCdkb2NUaXRsZScsIGRvY1RpdGxlKTsKICBmZC5zZXQoJ2NhbGxiYWNrVXJsJywgY2FsbGJhY2tVcmwpOwogIC8vIGRvY0ZpbGVTb3J0MSA9ICJjbnQiICh0dXJpbmlvIGZhaWxhcykg4oCTIHRhaSBpciB5cmEgbnVtYXR5dG9qaSByZWlrxaFtxJcsIGplaSDFoWlvIHBhcmFtZXRybwogIC8vIHZpc2FpIG5lbnVyb2R5dHVtZSwgdGFkIGrEhSBudXJvZG9tZSB0aWsgZMSXbCBhacWha3Vtby4gTklFS0FEQSBuZXJhxaF5dGkgxI1pYSBza2FpxI1pYXVzL2luZGVrc28g4oCTCiAgLy8gxaFpcyBwYXJhbWV0cmFzIG51cm9kbyBmYWlsbyBSxarFoMSuLCBsZWlzdGlub3MgcmVpa8WhbcSXcyB5cmEgdGlrIG1haW4vYW5ueC9hdHRjL2NudC9lZG9jLgogIGZkLnNldCgnZG9jRmlsZUVsZW0xJywgbmV3IEJsb2IoW3BkZkJ5dGVzXSwgeyB0eXBlOiAnYXBwbGljYXRpb24vcGRmJyB9KSwgZmlsZU5hbWUpOwogIGZkLnNldCgnZG9jRmlsZVNvcnQxJywgJ2NudCcpOwogIGNvbnN0IHIgPSBhd2FpdCBmZXRjaChgJHtiYXNlVXJsKGVudil9L2FwcC9hcGkvcnMvbGluay9zdG9yZWAsIHsgbWV0aG9kOiAnUE9TVCcsIGhlYWRlcnM6IHByb3h5SGVhZGVycyhlbnYpLCBib2R5OiBmZCB9KTsKICBjb25zdCBkID0gYXdhaXQgci5qc29uKCkuY2F0Y2goKCkgPT4gKHt9KSk7CiAgaWYgKCFyLm9rIHx8IGQuc3RhdHVzICE9PSAnc3VjY2VzcycpIHRocm93IG5ldyBFcnJvcihgU2lnbmEgc3RvcmUga2xhaWRhOiAke3Iuc3RhdHVzfSAke0pTT04uc3RyaW5naWZ5KGQpfWApOwogIHJldHVybiBkOwp9CgovLyBQYXJ1b8WhaWEgcGF0YWxwaW50xIUgZG9rdW1lbnTEhSBwYXNpcmHFoXltdWkgaW50ZWdydW9qYW7EjWlvcyBzaXN0ZW1vcyBuYXVkb3RvanVpIChvcGVyYWNpamEKLy8gImluaXRTaWduIiwgdmFyaWFudGFzIEEg4oCTIHBhc2lyYcWhYW50eXNpcyBuxJdyYSByZWdpc3RydW90YXMgU2lnbmEgUGxhdGZvcm0gc2lzdGVtb2plKS4KLy8gR3LEhcW+aW5hIHsgc3RhdHVzLCBzaWduRXh0VWlkIH0uCmV4cG9ydCBhc3luYyBmdW5jdGlvbiBpbml0U2lnbihlbnYsIHsgZG9jRXh0VWlkLCBzaWduZXJJZCwgc2lnbmVyRmlyc3ROYW1lLCBzaWduZXJMYXN0TmFtZSwgc2lnbmVyU2VyaWFsSWRzLCBwb3N0YmFja1VybCwgbG4gPSAnbHQnIH0pIHsKICBjb25zdCBib2R5ID0gbmV3IFVSTFNlYXJjaFBhcmFtcyh7CiAgICBjaWQ6IGNpZChlbnYpLAogICAgZG9jRXh0VWlkLAogICAgc2lnbmVyVHlwZTogJ0knLAogICAgc2lnbmVySWQsCiAgICBzaWduZXJGaXJzdE5hbWUsCiAgICBzaWduZXJMYXN0TmFtZSwKICAgIHBvc3RiYWNrVXJsLAogICAgbG4sCiAgfSk7CiAgaWYgKHNpZ25lclNlcmlhbElkcykgYm9keS5zZXQoJ3NpZ25lclNlcmlhbElkcycsIHNpZ25lclNlcmlhbElkcyk7CiAgY29uc3QgciA9IGF3YWl0IGZldGNoKGAke2Jhc2VVcmwoZW52KX0vYXBwL2FwaS9ycy9saW5rL2luaXRTaWduYCwgewogICAgbWV0aG9kOiAnUE9TVCcsCiAgICBoZWFkZXJzOiB7ICdDb250ZW50LVR5cGUnOiAnYXBwbGljYXRpb24veC13d3ctZm9ybS11cmxlbmNvZGVkOyBjaGFyc2V0PVVURi04JywgLi4ucHJveHlIZWFkZXJzKGVudikgfSwKICAgIGJvZHksCiAgfSk7CiAgY29uc3QgZCA9IGF3YWl0IHIuanNvbigpLmNhdGNoKCgpID0+ICh7fSkpOwogIGlmICghci5vayB8fCBkLnN0YXR1cyAhPT0gJ3N1Y2Nlc3MnIHx8ICFkLnNpZ25FeHRVaWQpIHRocm93IG5ldyBFcnJvcihgU2lnbmEgaW5pdFNpZ24ga2xhaWRhOiAke3Iuc3RhdHVzfSAke0pTT04uc3RyaW5naWZ5KGQpfWApOwogIHJldHVybiBkOwp9CgovLyBOdW9yb2RhLCDEryBrdXJpxIUgbnVrcmVpcGlhbWEga2xpZW50byBuYXLFoXlrbMSXIChhciBpZnJhbWUpIHBhc2lyYcWheW11aSBhdGxpa3RpIChvcGVyYWNpamEgInNpZ24iKS4KLy8gVHnEjWlhIG5hdWRvamEgcHVibGljQmFzZVVybCgpLCBORSBiYXNlVXJsKCkg4oCTIMW+ci4gcGFhacWha2luaW3EhSBmYWlsbyB2aXLFoXVqZS4KZXhwb3J0IGZ1bmN0aW9uIHNpZ25VcmwoZW52LCBzaWduRXh0VWlkLCB7IGxuID0gJ2x0JyB9ID0ge30pIHsKICByZXR1cm4gYCR7cHVibGljQmFzZVVybChlbnYpfS9hcHAvYXBpL2RhL2xpbmsvc2lnbi8ke2VuY29kZVVSSUNvbXBvbmVudChzaWduRXh0VWlkKX0/bG49JHtlbmNvZGVVUklDb21wb25lbnQobG4pfWA7Cn0KCi8vIEF0c2lzaXVuxI1pYSBhbmtzxI1pYXUgcGF0YWxwaW50xIUgZG9rdW1lbnTEhSAob3BlcmFjaWphICJkb3dubG9hZCIpLiBQREYgZm9ybWF0dWkgdHVyaW5pbyBmYWlsYXMKLy8gaXIgdmlzYXMgZG9rdW1lbnRhcyB5cmEgdGFzIHBhdHMsIHRvZMSXbCBjb250ZW50SWQgbmVudXJvZG9tYXMuIFNWQVJCVTogxaFpcyBlbmRwb2ludCdhcyBncsSFxb5pbmEKLy8gZG9rdW1lbnTEhSBuZXByaWtsYXVzb21haSBudW8gdG8sIGFyIGppcyBqYXUgcGFzaXJhxaF5dGFzIOKAkyBrdmllc3RpIHRpayBnYXZ1cyBwYXRpa2ltxIUgc2lnbmFsxIUsCi8vIGthZCBwYXNpcmHFoXltYXMgxK92eWtvICjFvnIuIF9saWIvc2lnbmEtY2hlY2suanMgaXIgYXBpL3NpZ24vc2lnbmEuanMgY2FsbGJhY2snxIUpLCBvIG5lIGtpZWt2aWVubwovLyBrbGllbnRvIG5hcsWheWtsxJdzIHXFvmtsYXVzaW1vIG1ldHUuCmV4cG9ydCBhc3luYyBmdW5jdGlvbiBkb3dubG9hZERvY3VtZW50KGVudiwgZG9jRXh0VWlkKSB7CiAgY29uc3QgYm9keSA9IG5ldyBVUkxTZWFyY2hQYXJhbXMoeyBjaWQ6IGNpZChlbnYpLCBkb2NFeHRVaWQgfSk7CiAgY29uc3QgciA9IGF3YWl0IGZldGNoKGAke2Jhc2VVcmwoZW52KX0vYXBwL2FwaS9ycy9saW5rL2Rvd25sb2FkYCwgewogICAgbWV0aG9kOiAnUE9TVCcsCiAgICBoZWFkZXJzOiB7ICdDb250ZW50LVR5cGUnOiAnYXBwbGljYXRpb24veC13d3ctZm9ybS11cmxlbmNvZGVkOyBjaGFyc2V0PVVURi04JywgLi4ucHJveHlIZWFkZXJzKGVudikgfSwKICAgIGJvZHksCiAgfSk7CiAgaWYgKCFyLm9rKSB7CiAgICBjb25zdCBkID0gYXdhaXQgci5qc29uKCkuY2F0Y2goKCkgPT4gKHt9KSk7CiAgICB0aHJvdyBuZXcgRXJyb3IoYFNpZ25hIGRvd25sb2FkIGtsYWlkYTogJHtyLnN0YXR1c30gJHtkLm1lc3NhZ2UgfHwgSlNPTi5zdHJpbmdpZnkoZCl9YCk7CiAgfQogIHJldHVybiBuZXcgVWludDhBcnJheShhd2FpdCByLmFycmF5QnVmZmVyKCkpOwp9Cg==
+// Signa Platform (MitSoft) el. parašo integracija.
+// Aplinkos paslaptys (Cloudflare Pages secrets – reikia nustatyti ATSKIRAI "dev" (Preview) ir
+// "2uno.lt" (Production) aplinkoms, kad veiktų abiejose):
+//   SIGNA_CID              – kliento ID, suteiktas MitSoft (pvz. "v5Zs49a6QEIFqeqYoJyK").
+//   SIGNA_BASE_URL         – REST kvietimai eina per fiksuoto IP proxy (Google Cloud VM,
+//                            34.66.99.68), kuris turi fiksuotą išeinančią IP, todėl
+//                            Signa whitelist nepažeidžiama. Galutinė veikianti reikšmė:
+//                            "http://34.66.99.68.nip.io:8444" (nip.io hostas – GENUINAI ne
+//                            Cloudflare zonos, tam, kad šis TTP prieglauga nejudintų priartintų proxy
+//                            problemos; prievadas 8444 - VM's firewall "allow-signa-proxy-8443"
+//                            taisyklė leidžia tcp:8443,8444) BE jokio kelio priedo – proxy
+//                            pats prideda "/signa-platform" dalį prie kelio, kurį mes siunčiame
+//                            ("/app/api/...").
+//   SIGNA_PROXY_SECRET     – proxy reikalaujama bendroji paslaptis; siunčiama kaip "X-Proxy-Auth"
+//                            antraštė KIEKVIENAME REST kvietime, kitaip proxy atmeta su 403.
+//                            PRIVALO sutapti su proxy serviso aplinkos kintamuoju PROXY_SECRET.
+//   SIGNA_PUBLIC_BASE_URL  – nebūtina; numatytoji reikšmė jau yra tikras Signa Platform adresas.
+//   SIGNA_DOC_SPEC_ID      – dokumento specifikacijos ID (formato identifikatorius). Numatytoji
+//                            reikšmė "PDF-PAdES-TS" – paprastas PDF su laiko žyma, be PDF/A
+//                            reikalavimo (žr. MitSoft dokumentų formatų aprašą). Kitas galimas
+//                            formatas – "PDF-LT-V1.0", bet jam reikalaujama, kad pradinis failas
+//                            būtų PDF/A-1 ar aukštesnės versijos, todėl jis mums netinka be
+//                            papildomos PDF/A konversijos.
+//
+// SVARBU – du skirtingi adresai:
+// 1) REST operacijos (store/initSign/download), kurias kviečia MŪSŲ SERVERIS – jų kreipimasis
+//    tikrinamas pagal IP (whitelisting pagal cid). Signa serveris IP whitelist tikrinimui naudoja
+//    "X-Forwarded-For" (ar panašią) antraštę, ne tikrą TCP ryšio IP – todėl PROXY PRIVALO
+//    ISFILTRUOTI Cloudflare Worker'io automatiškai pridedamas antraštes ("cf-*", "x-forwarded-*",
+//    "cdn-loop", "forwarded") prieš persiunčiant užklausą į Signa (žr. /opt/proxy/proxy.py VM-e
+//    34.66.99.68; tai NĖRA git repozitorijos dalis). Be šio filtro Signa matydavo Cloudflare edge
+//    IP (pvz. "2a06:98c0:3600::103") ir atmesdavo užklausą su 401 noPermission, nepriklausomai nuo
+//    to, kad proxy pats siųsdavo iš teisingame, whitelist'e esančio VM IP (34.66.99.68).
+//    Patvirtinta veikianti 2026-11-22 18:35 UTC (audit_log id 221, signing_started_signa).
+// 2) "sign" operacija (naršyklės nukreipimas) – ją tiesiogiai atidaro KLIENTO naršyklė iš JO PAČIO
+//    IP, ne mūsų serveris, todėl IP whitelisting jai netaikomas ir ji visada turi eiti tiesiai į
+//    tikrą signa.mitsoft.lt adresą (SIGNA_PUBLIC_BASE_URL), NIEKADA per proxy – priešingu atveju
+//    klientas būtų nukreiptas į adresą, kuris nerodo pasirašymo vartotojo sąsajos.
+const DEFAULT_BASE = 'https://signa.mitsoft.lt/signa-platform';
+
+export function signaEnabled(env) {
+  return !!env.SIGNA_CID;
+}
+
+// Serverio REST kvietimams (store/initSign/download) – gali tapti proxy adresu.
+function baseUrl(env) {
+  return String(env.SIGNA_BASE_URL || DEFAULT_BASE).replace(/\/+$/, '');
+}
+
+// Kliento naršyklės nukreipimui (sign) – visada tikras Signa Platform adresas.
+function publicBaseUrl(env) {
+  return String(env.SIGNA_PUBLIC_BASE_URL || DEFAULT_BASE).replace(/\/+$/, '');
+}
+
+function cid(env) {
+  return env.SIGNA_CID || 'default';
+}
+
+// Antraštė, kurią reikalauja fiksuoto IP proxy (žr. SIGNA_PROXY_SECRET aukščiau). Jei
+// SIGNA_BASE_URL nukreiptas tiesiai į signa.mitsoft.lt (proxy nenaudojamas), ši antraštė
+// paprasčiausiai nesiunčiama – tikrasis Signa Platform serveris jos nepaiso.
+function proxyHeaders(env) {
+  return env.SIGNA_PROXY_SECRET ? { 'X-Proxy-Auth': env.SIGNA_PROXY_SECRET } : {};
+}
+
+// Diagnostika (žr. functions/api/debug-env.js) – tiesiogiai bando pasiekti proxy iš Worker'io su
+// tikra antrašte. Naudinga ateityje tikrinant proxy/IP whitelist būseną be realaus store/initSign
+// kvietimo. Palikta kaip pagalbinė diagnostika po to, kai pagrindinė IP whitelist klaida (žr.
+// aukščiau) buvo surasta ir ištaisyta.
+export async function proxyPing(env) {
+  const url = `${baseUrl(env)}/app/api/rs/link/store`;
+  try {
+    const r = await fetch(url, { method: 'POST', headers: proxyHeaders(env) });
+    const text = await r.text().catch(() => '');
+    return { ok: true, status: r.status, bodySnippet: text.slice(0, 200) };
+  } catch (e) {
+    return { ok: false, error: String(e && e.message || e) };
+  }
+}
+
+// Patalpina dokumentą į Signa Platform pasirašymui (operacija "store").
+// docExtUid – mūsų sutarties ID (contracts.id). docTitle – PRIVALOMAS kuriant naują dokumentą
+// (taikoma ADOC/PDF-LT/PDF formatams). callbackUrl – mūsų endpoint'as, į kurį Signa vėliau praneš
+// apie būsenos pasikeitimus (žr. functions/api/sign/signa.js).
+export async function storeDocument(env, { docExtUid, docTitle, pdfBytes, fileName, callbackUrl }) {
+  const fd = new FormData();
+  fd.set('cid', cid(env));
+  fd.set('docExtUid', docExtUid);
+  fd.set('docSpecId', env.SIGNA_DOC_SPEC_ID || 'PDF-PAdES-TS');
+  fd.set('docTitle', docTitle);
+  fd.set('callbackUrl', callbackUrl);
+  // docFileSort1 = "cnt" (turinio failas) – tai ir yra numatytoji reikšmė, jei šio parametro
+  // visai nenurodytume, tad ją nurodome tik dėl aiškumo. NIEKADA nerašyti čia skaičiaus/indekso –
+  // šis parametras nurodo failo RŪŠĮ, leistinos reikšmės yra tik main/annx/attc/cnt/edoc.
+  fd.set('docFileElem1', new Blob([pdfBytes], { type: 'application/pdf' }), fileName);
+  fd.set('docFileSort1', 'cnt');
+  const r = await fetch(`${baseUrl(env)}/app/api/rs/link/store`, { method: 'POST', headers: proxyHeaders(env), body: fd });
+  const d = await r.json().catch(() => ({}));
+  if (!r.ok || d.status !== 'success') throw new Error(`Signa store klaida: ${r.status} ${JSON.stringify(d)}`);
+  return d;
+}
+
+// Paruošia patalpintą dokumentą pasirašymui integruojančios sistemos naudotojui (operacija
+// "initSign", variantas A – pasirašantysis nėra registruotas Signa Platform sistemoje).
+// Grąžina { status, signExtUid }.
+export async function initSign(env, { docExtUid, signerId, signerFirstName, signerLastName, signerSerialIds, postbackUrl, ln = 'lt' }) {
+  const body = new URLSearchParams({
+    cid: cid(env),
+    docExtUid,
+    signerType: 'I',
+    signerId,
+    signerFirstName,
+    signerLastName,
+    postbackUrl,
+    ln,
+  });
+  if (signerSerialIds) body.set('signerSerialIds', signerSerialIds);
+  const r = await fetch(`${baseUrl(env)}/app/api/rs/link/initSign`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8', ...proxyHeaders(env) },
+    body,
+  });
+  const d = await r.json().catch(() => ({}));
+  if (!r.ok || d.status !== 'success' || !d.signExtUid) throw new Error(`Signa initSign klaida: ${r.status} ${JSON.stringify(d)}`);
+  return d;
+}
+
+// Nuoroda, į kurią nukreipiama kliento naršyklė (ar iframe) pasirašymui atlikti (operacija "sign").
+// Tyčia naudoja publicBaseUrl(), NE baseUrl() – žr. paaiškinimą failo viršuje.
+export function signUrl(env, signExtUid, { ln = 'lt' } = {}) {
+  return `${publicBaseUrl(env)}/app/api/da/link/sign/${encodeURIComponent(signExtUid)}?ln=${encodeURIComponent(ln)}`;
+}
+
+// Atsisiunčia anksčiau patalpintą dokumentą (operacija "download"). PDF formatui turinio failas
+// ir visas dokumentas yra tas pats, todėl contentId nenurodomas. SVARBU: šis endpoint'as grąžina
+// dokumentą nepriklausomai nuo to, ar jis jau pasirašytas – kviesti tik gavus patikimą signalą,
+// kad pasirašymas įvyko (žr. _lib/signa-check.js ir api/sign/signa.js callback'ą), o ne kiekvieno
+// kliento naršyklės užklausimo metu.
+export async function downloadDocument(env, docExtUid) {
+  const body = new URLSearchParams({ cid: cid(env), docExtUid });
+  const r = await fetch(`${baseUrl(env)}/app/api/rs/link/download`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8', ...proxyHeaders(env) },
+    body,
+  });
+  if (!r.ok) {
+    const d = await r.json().catch(() => ({}));
+    throw new Error(`Signa download klaida: ${r.status} ${d.message || JSON.stringify(d)}`);
+  }
+  return new Uint8Array(await r.arrayBuffer());
+}
