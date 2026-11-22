@@ -8,14 +8,17 @@ import { dokobitEnabled } from '../_lib/dokobit.js';
 // galima atskirti, ar Preview deploy'as perskaitė NAUJĄ paslapties reikšmę po rotacijos, ar
 // vis dar naudoja seną. Papildomai – tiesioginis proxyPing() bandymas pasiekti proxy iš paties
 // Worker'io, kad atskirtume: ar problema pačiame SIGNA_PROXY_SECRET, ar Cloudflare Worker'io
-// išeinančio fetch() negalėjime pasiekti plain-HTTP adreso ne-standartiniu prievadu (8443).
+// išeinančio fetch() negalėjime pasiekti plain-HTTP adreso ne-standartiniu prievadu.
 // Pašalinti, kai Signa integracija bus patvirtinta veikianti.
-// (2026-11-22: SIGNA_BASE_URL dabar turi naudoti hostą "34.66.99.68.nip.io", NE raidinį IP ir
-// NE 2uno.lt subdomeną – Cloudflare Worker'io fetch() į raidinį IP blokuojamas su "error code:
-// 1003" (Direct IP Access Not Allowed), O fetch() į hostą tos pačios Cloudflare zonos (2uno.lt)
-// Workers viduje nukreipiamas per Cloudflare'o pačio tinklą ir pasiekia Signa su KLAIDINGU
-// (Cloudflare'o, ne mūsų VM) IP adresu. "nip.io" (laisvai prieinama <ip>.nip.io => <ip> DNS
-// paslauga, visiškai NESUSIJUSI su Cloudflare) išsprendžia abi problemas vienu metu.)
+// (2026-11-22: SIGNA_BASE_URL dabar turi naudoti hostą "34.66.99.68.nip.io" IR prievadą 8444
+// (NE 8443!) – 8443 yra VIENAS IŠ Cloudflare REZERVUOTŲ "HTTPS" prievadų (žr. Cloudflare
+// dokumentaciją "Network ports": 443, 2053, 2083, 2087, 2096, 8443), todėl net ir Worker'io
+// fetch() į mūsų PAČIŲ (ne Cloudflare zonos) VM tuo prievadu gaudavo atsakymą su Cloudflare'o
+// pačios IP, ne mūsų VM IP. Proxy serviso prievadas VM pakeistas į 8444 ir atidaryta nauja
+// užkardos (firewall) taisyklė. Taip pat NE raidinis IP (žr. "error code: 1003" / "Direct IP
+// Access Not Allowed") ir NE 2uno.lt subdomenas (Workers viduje nukreipiamas per Cloudflare'o
+// pačio tinklą tai pačiai zonai) – "nip.io" (<ip>.nip.io => <ip>, visiškai NESUSIJĘS su
+// Cloudflare) + prievadas 8444 išsprendžia visas tris problemas vienu metu.)
 export async function onRequestGet({ env }) {
   if (isProduction(env)) return notFound();
   let baseUrlHost = null;
