@@ -42,8 +42,10 @@
     return ok;
   }
 
-  // Sutarties peržiūra: glausta santrauka su įvestais duomenimis. Galutinė sutartis bus sudaroma
-  // pagal pasirinktos buhalterinės įmonės pačios šabloną – čia rodoma tik orientacinė santrauka.
+  // Sutarties peržiūra: VISAS sutarties projekto tekstas (perduotas iš palyginimo puslapio kaip
+  // data.contractHtml - apima paslaugų apimtį, kainos skaičiavimą, metines deklaracijas ir t.t.),
+  // kurio 1-ą skyrių (šalys) čia perrašome su jau įvestais tikrais įmonės/atstovo duomenimis, kad
+  // pasirašymo puslapyje būtų matoma visa sutartis, ne tik glausta santrauka.
   function refreshPreview() {
     var box = document.getElementById('contractPreview');
     if (!box.classList.contains('show')) return;
@@ -51,16 +53,25 @@
   }
   function buildPreview() {
     if (!data || !data.providerName) return '';
-    var s = data.summary || {};
-    return '' +
+    var parties = '' +
       '<h4>1. Sutarties šalys</h4><p>Klientas: ' + esc(F('name').value || '[įmonės pavadinimas]') + ', kodas ' + esc(F('code').value || '[įmonės kodas]') +
       (F('vat').value.trim() ? ', PVM kodas ' + esc(F('vat').value.trim()) : '') + ', buveinės adresas: ' + esc(F('address').value || '[adresas]') + '.<br>' +
       'Atstovas: ' + esc(F('representative').value || '[vardas ir pavardė]') + ', pareigos: ' + esc(F('position').value || '[pareigos]') + ', veikia pagal ' + esc(F('basis').value) + '.<br>' +
-      'Paslaugų teikėjas: <b>' + esc(data.providerName) + '</b>.</p>' +
-      '<h4>2. Paslaugų apimtis</h4><p>Veiklos forma: ' + esc(s.legalForm) + '. Situacija: ' + esc(s.situation) + '. Darbuotojai: ' + esc(s.employees) + '. Sąskaitos: ' + esc(s.invoices) + '.</p>' +
-      '<h4>3. Kaina</h4><p>Orientacinė suma: <b>' + eur(data.priceEur) + ' / mėn. be PVM</b>. Galutinę kainą ir sąlygas patvirtina pasirinkta buhalterinė įmonė savo sutartyje.</p>' +
-      '<h4>4. Pradžia</h4><p>' + (s.startDate ? 'Pageidaujama pradžia: ' + esc(s.startDate) + '.' : 'Pradžios data nenurodyta.') + '</p>' +
-      '<h4>5. Pasirašymas</h4><p>Tai orientacinė santrauka, ne galutinis dokumentas. Sutartis bus sudaroma pagal ' + esc(data.providerName) + ' naudojamą šabloną ir pasirašoma kvalifikuotu elektroniniu parašu.</p>';
+      'Paslaugų teikėjas: <b>' + esc(data.providerName) + '</b>. Teikėjo rekvizitai ir įgaliotas atstovas turi būti patvirtinti.</p>';
+    // Sekcijos nuo "2. Paslaugų apimtis" toliau - jau paruoštos palyginimo puslapyje su visu kainos
+    // skaičiavimu. Senesniems (dar be contractHtml) sessionStorage įrašams - atsarginis trumpas variantas.
+    var rest = data.contractHtml || '';
+    var idx = rest.indexOf('<h4>2.');
+    if (idx !== -1) {
+      rest = rest.slice(idx);
+    } else {
+      var s = data.summary || {};
+      rest = '<h4>2. Paslaugų apimtis</h4><p>Veiklos forma: ' + esc(s.legalForm) + '. Situacija: ' + esc(s.situation) + '. Darbuotojai: ' + esc(s.employees) + '. Sąskaitos: ' + esc(s.invoices) + '.</p>' +
+        '<h4>3. Kaina</h4><p>Orientacinė suma: <b>' + eur(data.priceEur) + ' / mėn. be PVM</b>. Galutinę kainą ir sąlygas patvirtina pasirinkta buhalterinė įmonė savo sutartyje.</p>' +
+        '<h4>4. Pradžia</h4><p>' + (s.startDate ? 'Pageidaujama pradžia: ' + esc(s.startDate) + '.' : 'Pradžios data nenurodyta.') + '</p>' +
+        '<h4>5. Pasirašymas</h4><p>Tai orientacinė santrauka, ne galutinis dokumentas. Sutartis bus sudaroma pagal ' + esc(data.providerName) + ' naudojamą šabloną ir pasirašoma kvalifikuotu elektroniniu parašu.</p>';
+    }
+    return parties + rest;
   }
   document.getElementById('previewBtn').addEventListener('click', function () {
     validateClientFields();
