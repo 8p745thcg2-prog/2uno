@@ -2,9 +2,13 @@
 // Aplinkos paslaptys (Cloudflare Pages secrets – reikia nustatyti ATSKIRAI "dev" (Preview) ir
 // "2uno.lt" (Production) aplinkoms, kad veiktų abiejose):
 //   SIGNA_CID              – kliento ID, suteiktas MitSoft (pvz. "v5Zs49a6QEIFqeqYoJyK").
-//   SIGNA_BASE_URL         – nebūtina kol IP nepatvirtintas; KAI Arūnas patvirtins fiksuotą IP ir
-//                            bus žinomas proxy adresas, čia turės būti ĖJO (proxy) adresas, NE
-//                            tiesiai signa.mitsoft.lt – žr. paaiškinimą žemiau.
+//   SIGNA_BASE_URL         – kai REST kvietimai turi eiti per fiksuoto IP proxy (Google Cloud VM,
+//                            34.66.99.68), čia nurodomas proxy adresas (pvz.
+//                            "http://34.66.99.68:8443") BE jokio kelio priedo – proxy pats prideda
+//                            "/signa-platform" dalį prie kelio, kurį mes siunčiame ("/app/api/...").
+//   SIGNA_PROXY_SECRET     – proxy reikalaujama bendroji paslaptis; siunčiama kaip "X-Proxy-Auth"
+//                            antraštė KIEKVIENAME REST kvietime, kitaip proxy atmeta su 403.
+//                            PRIVALO sutapti su proxy serviso aplinkos kintamuoju PROXY_SECRET.
 //   SIGNA_PUBLIC_BASE_URL  – nebūtina; numatytoji reikšmė jau yra tikras Signa Platform adresas.
 //   SIGNA_DOC_SPEC_ID      – dokumento specifikacijos ID (formato identifikatorius). Numatytoji
 //                            reikšmė "PDF-PAdES-TS" – paprastas PDF su laiko žyma, be PDF/A
@@ -15,8 +19,10 @@
 //
 // SVARBU – du skirtingi adresai:
 // 1) REST operacijos (store/initSign/download), kurias kviečia MŪSŲ SERVERIS – jų kreipimasis
-//    tikrinamas pagal IP (whitelisting pagal cid), tad kai Arūnas patvirtins fiksuotą IP
-//    (34.66.99.68, per Google Cloud proxy), SIGNA_BASE_URL reikės nukreipti per tą proxy.
+//    tikrinamas pagal IP (whitelisting pagal cid). IP 34.66.99.68 (Google Cloud proxy) Arūno
+//    PATVIRTINTAS cid "v5Zs49a6QEIFqeqYoJyK" (patikrinta tiesiog paklausus Signa API per proxy –
+//    2026-11-22 grąžino klaidą tik dėl multipart formato, ne dėl IP/cid), todėl SIGNA_BASE_URL
+//    turi būti nukreiptas per tą proxy (žr. SIGNA_BASE_URL aukščiau).
 // 2) "sign" operacija (naršyklės nukreipimas) – ją tiesiogiai atidaro KLIENTO naršyklė iš JO PAČIO
 //    IP, ne mūsų serveris, todėl IP whitelisting jai netaikomas ir ji visada turi eiti tiesiai į
 //    tikrą signa.mitsoft.lt adresą (SIGNA_PUBLIC_BASE_URL), NIEKADA per proxy – priešingu atveju
@@ -41,6 +47,13 @@ function cid(env) {
   return env.SIGNA_CID || 'default';
 }
 
+// Antraštė, kurią reikalauja fiksuoto IP proxy (žr. SIGNA_PROXY_SECRET aukščiau). Jei
+// SIGNA_BASE_URL nukreiptas tiesiai į signa.mitsoft.lt (proxy nenaudojamas), ši antraštė
+// paprasčiausiai nesiunčiama – tikrasis Signa Platform serveris jos nepaiso.
+function proxyHeaders(env) {
+  return env.SIGNA_PROXY_SECRET ? { 'X-Proxy-Auth': env.SIGNA_PROXY_SECRET } : {};
+}
+
 // Patalpina dokumentą į Signa Platform pasirašymui (operacija "store").
 // docExtUid – mūsų sutarties ID (contracts.id). docTitle – PRIVALOMAS kuriant naują dokumentą
 // (taikoma ADOC/PDF-LT/PDF formatams). callbackUrl – mūsų endpoint'as, į kurį Signa vėliau praneš
@@ -57,7 +70,7 @@ export async function storeDocument(env, { docExtUid, docTitle, pdfBytes, fileNa
   // šis parametras nurodo failo RŪŠĮ, leistinos reikšmės yra tik main/annx/attc/cnt/edoc.
   fd.set('docFileElem1', new Blob([pdfBytes], { type: 'application/pdf' }), fileName);
   fd.set('docFileSort1', 'cnt');
-  const r = await fetch(`${baseUrl(env)}/app/api/rs/link/store`, { method: 'POST', body: fd });
+  const r = await fetch(`${baseUrl(env)}/app/api/rs/link/store`, { method: 'POST', headers: proxyHeaders(env), body: fd });
   const d = await r.json().catch(() => ({}));
   if (!r.ok || d.status !== 'success') throw new Error(`Signa store klaida: ${r.status} ${JSON.stringify(d)}`);
   return d;
@@ -80,7 +93,7 @@ export async function initSign(env, { docExtUid, signerId, signerFirstName, sign
   if (signerSerialIds) body.set('signerSerialIds', signerSerialIds);
   const r = await fetch(`${baseUrl(env)}/app/api/rs/link/initSign`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8', ...proxyHeaders(env) },
     body,
   });
   const d = await r.json().catch(() => ({}));
@@ -103,7 +116,7 @@ export async function downloadDocument(env, docExtUid) {
   const body = new URLSearchParams({ cid: cid(env), docExtUid });
   const r = await fetch(`${baseUrl(env)}/app/api/rs/link/download`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8', ...proxyHeaders(env) },
     body,
   });
   if (!r.ok) {
