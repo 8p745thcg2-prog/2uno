@@ -6,8 +6,7 @@ import { dokobitEnabled } from '../_lib/dokobit.js';
 // Nerodo jokių slaptų reikšmių – tik ar jos aptinkamos (true/false), kad būtų galima
 // patikrinti, kodėl /api/requests pasirenka vidinį (imitacinį) parašą vietoj Signa.
 // Pašalinti, kai Signa integracija bus patvirtinta veikianti.
-// (Pakeitimo data: naujas diegimas, kad Preview aplinka perskaitytų naujas Previews Base
-// SIGNA_BASE_URL/SIGNA_PROXY_SECRET reikšmes.)
+// (Pakeitimo data: naujas deploy po SIGNA_PROXY_SECRET rotacijos Previews Base.)
 export async function onRequestGet({ env }) {
   if (isProduction(env)) return notFound();
   return json({
