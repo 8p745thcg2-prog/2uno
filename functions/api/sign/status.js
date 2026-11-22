@@ -2,11 +2,14 @@ import { json, notFound } from '../../_lib/http.js';
 import { sha256Hex, decryptField } from '../../_lib/crypto.js';
 import { dokobitEnabled } from '../../_lib/dokobit.js';
 import { completeIfSigned } from '../../_lib/sign-check.js';
-import { completeIfSignedSigna } from '../../_lib/signa-check.js';
 import { clientDownloadToken } from '../../_lib/request-flow.js';
 
 // GET /api/sign/status?t=<kliento būsenos žetonas> – pasirašymo puslapis klausia, ar parašas jau gautas.
-// Jei pranešimas (Dokobit postback / Signa callback) dar neatėjo, būsena patikrinama tiesiogiai.
+// Dokobit: jei postback dar neatėjo, būsena patikrinama tiesiogiai (Dokobit API pati pasako, ar
+// pasirašymas baigtas – saugu klausti pakartotinai). Signa Platform: tyčia NEI tikrinama čia – ten
+// dokumento atsisiuntimas saugus tik gavus patikimą signalą iš Signa callback'o (žr.
+// api/sign/signa.js ir _lib/signa-check.js), todėl būsena atsinaujina tik kai callback jau pakeitė
+// requests.status; čia tik perskaitoma esama būsena.
 export async function onRequestGet({ request, env, waitUntil }) {
   const t = new URL(request.url).searchParams.get('t') || '';
   if (!/^[A-Za-z0-9_-]{40,64}$/.test(t)) return notFound();
@@ -23,13 +26,6 @@ export async function onRequestGet({ request, env, waitUntil }) {
       if (r.signed) status = 'laukia_apmokejimo';
     } catch (e) {
       console.error('Būsenos tikrinimo klaida', e && e.message);
-    }
-  } else if (status === 'laukia_kliento_paraso' && c.signing_provider === 'signa') {
-    try {
-      const r = await completeIfSignedSigna(env, { contractId: c.id, requestId: c.request_id, docExtUid: c.id, origin: new URL(request.url).origin, waitUntil });
-      if (r.signed) status = 'laukia_apmokejimo';
-    } catch (e) {
-      console.error('Signa būsenos tikrinimo klaida', e && e.message);
     }
   }
   const number = JSON.parse(c.summary || '{}').number;
