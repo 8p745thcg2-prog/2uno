@@ -18,7 +18,11 @@ import { dokobitEnabled } from '../_lib/dokobit.js';
 // užkardos (firewall) taisyklė. Taip pat NE raidinis IP (žr. "error code: 1003" / "Direct IP
 // Access Not Allowed") ir NE 2uno.lt subdomenas (Workers viduje nukreipiamas per Cloudflare'o
 // pačio tinklą tai pačiai zonai) – "nip.io" (<ip>.nip.io => <ip>, visiškai NESUSIJĘS su
-// Cloudflare) + prievadas 8444 išsprendžia visas tris problemas vienu metu.)
+// Cloudflare) + prievadas 8444 išsprendžia visas tris problemas vienu metu.
+// (2026-11-22, vėliau: pastebėta, kad ankstesnis SIGNA_BASE_URL atnaujinimas per Cloudflare
+// Pages dashboard'ą liko neišsaugotas – Preview aplinkos kintamajame vis tiek buvo senas
+// prievadas 8443, nors naudotoja buvo patvirtinusi pakeitimą. Reikšmė iš naujo perrašyta
+// tiesiogiai ("Unsaved changes" juostoje paspaudus "Save"), kad būtų tikrai išsaugota.)
 export async function onRequestGet({ env }) {
   if (isProduction(env)) return notFound();
   let baseUrlHost = null;
