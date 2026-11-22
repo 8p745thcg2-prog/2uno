@@ -1,6 +1,7 @@
 (function () {
   var $ = function (id) { return document.getElementById(id); };
   var emailForm = $('emailForm'), codeForm = $('codeForm');
+  var grid = $('grid');
   var currentEmail = '';
   var current = null;
 
@@ -18,14 +19,13 @@
   function badgeClass(s) { return s === 'laukia_apmokejimo' ? 'wait' : (s === 'apmoketa' || s === 'pasirasyta') ? 'open' : 'off'; }
   function el(tag, attrs, text) { var e = document.createElement(tag); if (attrs) Object.keys(attrs).forEach(function (k) { e.setAttribute(k, attrs[k]); }); if (text != null) e.textContent = text; return e; }
 
-  // Telefone sąrašas ir detalė sudedami į vieną stulpelį (žr. partneris.html @media(max-width:820px)),
-  // tad ilgame sąraše detalę reikia įslinkti į matomą sritį, kai ji užkraunama po sąrašo elemento pasirinkimo.
-  function scrollDetailIntoView() {
-    if (window.matchMedia && window.matchMedia('(max-width:820px)').matches) {
-      var box = $('detail');
-      if (box && box.scrollIntoView) box.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  }
+  // Telefone sąrašas ir detalė nerodomi vienu metu (žr. partneris.html @media(max-width:820px)) –
+  // pasirinkus klientą, sąrašas paslepiamas ir rodoma tik jo kortelė; „Atgal“ arba pakartotinis
+  // paspaudimas ant to paties kliento grąžina į sąrašą. Darbalaukyje ši klasė įtakos neturi (abu matomi greta).
+  function showDetailPanel() { if (grid) grid.classList.add('show-detail'); }
+  function showListPanel() { if (grid) grid.classList.remove('show-detail'); }
+  var backBtn = $('backToList');
+  if (backBtn) backBtn.addEventListener('click', showListPanel);
 
   function showLogin() { $('loginView').hidden = false; $('appView').hidden = true; $('who').hidden = true; }
   function showApp(me) { $('loginView').hidden = true; $('appView').hidden = false; $('who').hidden = false; $('whoName').textContent = me.partnerName + ' · ' + me.email; loadList(); openFromLink(); }
@@ -34,7 +34,7 @@
     var q = new URLSearchParams(location.search);
     var u = q.get('u'), pay = q.get('pay');
     if (u && /^[A-Za-z0-9_-]{8,64}$/.test(u)) {
-      current = u; loadList(); loadDetail(u, pay);
+      current = u; loadList(); loadDetail(u, pay); showDetailPanel();
       history.replaceState(null, '', '/partneris');
     }
   }
@@ -86,7 +86,11 @@
         b.appendChild(el('small', null, 'Gauta ' + when(r.createdAt) + ' · ' + eur(r.priceEur) + '/mėn.'));
         b.appendChild(el('br'));
         b.appendChild(el('span', { class: 'badge ' + badgeClass(r.status) }, r.statusLabel));
-        b.addEventListener('click', function () { current = r.id; loadList(); loadDetail(r.id); scrollDetailIntoView(); });
+        b.addEventListener('click', function () {
+          // Antras paspaudimas ant jau atidaryto (aktyvaus) kliento telefone – grąžina į sąrašą, nekraunant iš naujo.
+          if (current === r.id && grid && grid.classList.contains('show-detail')) { showListPanel(); return; }
+          current = r.id; loadList(); loadDetail(r.id); showDetailPanel();
+        });
         list.appendChild(b);
       });
     });
@@ -154,7 +158,6 @@
         acts.appendChild(pay); acts.appendChild(dec);
       }
       box.appendChild(out);
-      scrollDetailIntoView();
     });
   }
 
