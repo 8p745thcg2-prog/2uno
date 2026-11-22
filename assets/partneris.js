@@ -18,6 +18,15 @@
   function badgeClass(s) { return s === 'laukia_apmokejimo' ? 'wait' : (s === 'apmoketa' || s === 'pasirasyta') ? 'open' : 'off'; }
   function el(tag, attrs, text) { var e = document.createElement(tag); if (attrs) Object.keys(attrs).forEach(function (k) { e.setAttribute(k, attrs[k]); }); if (text != null) e.textContent = text; return e; }
 
+  // Telefone sąrašas ir detalė sudedami į vieną stulpelį (žr. partneris.html @media(max-width:820px)),
+  // tad ilgame sąraše detalę reikia įslinkti į matomą sritį, kai ji užkraunama po sąrašo elemento pasirinkimo.
+  function scrollDetailIntoView() {
+    if (window.matchMedia && window.matchMedia('(max-width:820px)').matches) {
+      var box = $('detail');
+      if (box && box.scrollIntoView) box.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
   function showLogin() { $('loginView').hidden = false; $('appView').hidden = true; $('who').hidden = true; }
   function showApp(me) { $('loginView').hidden = true; $('appView').hidden = false; $('who').hidden = false; $('whoName').textContent = me.partnerName + ' · ' + me.email; loadList(); openFromLink(); }
   // Nuoroda iš el. laiško arba iš Paysera (success/failure_url): /partneris?u=<id>[&pay=ok|fail] atidaro konkrečią užklausą.
@@ -77,7 +86,7 @@
         b.appendChild(el('small', null, 'Gauta ' + when(r.createdAt) + ' · ' + eur(r.priceEur) + '/mėn.'));
         b.appendChild(el('br'));
         b.appendChild(el('span', { class: 'badge ' + badgeClass(r.status) }, r.statusLabel));
-        b.addEventListener('click', function () { current = r.id; loadList(); loadDetail(r.id); });
+        b.addEventListener('click', function () { current = r.id; loadList(); loadDetail(r.id); scrollDetailIntoView(); });
         list.appendChild(b);
       });
     });
@@ -145,6 +154,7 @@
         acts.appendChild(pay); acts.appendChild(dec);
       }
       box.appendChild(out);
+      scrollDetailIntoView();
     });
   }
 
