@@ -1,15 +1,19 @@
 // Patikrina Signa Platform pasirašymo būseną ir, jei klientas pasirašė, užbaigia užklausą.
 //
-// TODO (blokuoja pilną veikimą): Signa Platform "callback" pranešime ateina tik įvykių sąrašas
-// (pvz. lastEventCode: "sign"), bet NE pats pasirašytas failas. Kad užbaigtume sutartį, reikia
-// atsisiųsti pasirašytą dokumentą – tam skirta Signa Platform operacija "download", kurios
-// dokumentacijos dar neturime. Kai ją gausime, reikės parašyti fetchSignedPdf() realiai
-// kviečiant tą operaciją (cid + docExtUid → pasirašyto PDF baitai).
+// SVARBU: šią funkciją saugu kviesti TIK gavus patikimą signalą, kad pasirašymas jau įvyko
+// (t. y. iš Signa Platform callback'o – žr. api/sign/signa.js), o ne kiekvieną kartą, kai klientas
+// atnaujina pasirašymo puslapį. Operacija "download" grąžina dokumentą nepriklausomai nuo to, ar jis
+// jau pasirašytas, todėl kviečiant ją be tokio signalo būtų rizika užbaigti sutartį su nepasirašytu failu.
+import { downloadDocument } from './signa.js';
 import { finalizeClientSigned } from './request-flow.js';
 import { audit } from './http.js';
 
 async function fetchSignedPdf(env, docExtUid) {
-  throw new Error('Signa Platform "download" operacija dar neintegruota – reikia MitSoft dokumentacijos.');
+  const bytes = await downloadDocument(env, docExtUid);
+  if (!(bytes[0] === 0x25 && bytes[1] === 0x50 && bytes[2] === 0x44 && bytes[3] === 0x46)) {
+    throw new Error('Signa: gautas ne PDF');
+  }
+  return bytes;
 }
 
 export async function completeIfSignedSigna(env, { contractId, requestId, docExtUid, origin, waitUntil }) {
