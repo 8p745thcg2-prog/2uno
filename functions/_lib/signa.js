@@ -6,9 +6,12 @@
 //                            bus žinomas proxy adresas, čia turės būti ĖJO (proxy) adresas, NE
 //                            tiesiai signa.mitsoft.lt – žr. paaiškinimą žemiau.
 //   SIGNA_PUBLIC_BASE_URL  – nebūtina; numatytoji reikšmė jau yra tikras Signa Platform adresas.
-//   SIGNA_DOC_SPEC_ID      – dokumento specifikacijos ID. TODO: patvirtinti su Arūnu Stočkumi
-//                            (MitSoft), kokią reikšmę naudoti paprastam PDF dokumentui – šiuo
-//                            metu spėjama "PDF".
+//   SIGNA_DOC_SPEC_ID      – dokumento specifikacijos ID (formato identifikatorius). Numatytoji
+//                            reikšmė "PDF-PAdES-TS" – paprastas PDF su laiko žyma, be PDF/A
+//                            reikalavimo (žr. MitSoft dokumentų formatų aprašą). Kitas galimas
+//                            formatas – "PDF-LT-V1.0", bet jam reikalaujama, kad pradinis failas
+//                            būtų PDF/A-1 ar aukštesnės versijos, todėl jis mums netinka be
+//                            papildomos PDF/A konversijos.
 //
 // SVARBU – du skirtingi adresai:
 // 1) REST operacijos (store/initSign/download), kurias kviečia MŪSŲ SERVERIS – jų kreipimasis
@@ -45,7 +48,7 @@ export async function storeDocument(env, { docExtUid, pdfBytes, fileName, callba
   const fd = new FormData();
   fd.set('cid', cid(env));
   fd.set('docExtUid', docExtUid);
-  fd.set('docSpecId', env.SIGNA_DOC_SPEC_ID || 'PDF');
+  fd.set('docSpecId', env.SIGNA_DOC_SPEC_ID || 'PDF-PAdES-TS');
   fd.set('callbackUrl', callbackUrl);
   fd.set('docFileElem1', new Blob([pdfBytes], { type: 'application/pdf' }), fileName);
   fd.set('docFileSort1', '1');
