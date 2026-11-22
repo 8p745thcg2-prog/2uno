@@ -4,9 +4,9 @@ import { completeIfSignedSigna } from '../../_lib/signa-check.js';
 
 // POST /api/sign/signa – Signa Platform praneša apie pasirašomo dokumento būsenos pasikeitimą
 // (operacija "callback" – žr. _lib/signa.js). Pranešimas ateina be parašo/autentifikacijos, todėl
-// jo turiniu tik orientuojamasi, kad dokumentas galėjo būti pasirašytas; tikras užbaigimas vyksta
-// completeIfSignedSigna() viduje, atsisiunčiant dokumentą tiesiai iš Signa Platform (kai bus
-// integruota "download" operacija – žr. _lib/signa-check.js TODO).
+// jo turiniu tik orientuojamasi, kad dokumentas galėjo būti pasirašytas; tikras užbaigimas (su
+// pasirašyto dokumento atsisiuntimu per "download" operaciją) vyksta completeIfSignedSigna() viduje
+// (žr. _lib/signa-check.js).
 export async function onRequestPost({ request, env, waitUntil }) {
   if (!signaEnabled(env)) return json({ ok: true });
   let body;
