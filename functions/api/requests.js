@@ -77,7 +77,8 @@ export async function onRequestPost({ request, env, waitUntil }) {
     const { name: signerFirstName, surname: signerLastName } = splitName(client.representative);
     try {
       await storeDocument(env, {
-        docExtUid: contractId, pdfBytes: pdf, fileName: `${number}.pdf`, callbackUrl: `${origin}/api/sign/signa`,
+        docExtUid: contractId, docTitle: `Buhalterinių paslaugų sutartis ${number}`,
+        pdfBytes: pdf, fileName: `${number}.pdf`, callbackUrl: `${origin}/api/sign/signa`,
       });
       const init = await initSign(env, {
         docExtUid: contractId, signerId: requestId, signerFirstName, signerLastName,
