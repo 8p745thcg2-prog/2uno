@@ -113,6 +113,19 @@ export async function onRequest(context) {
 
   response = new Response(response.body, response);
   for (const [k, v] of Object.entries(SECURITY_HEADERS)) response.headers.set(k, v);
+  // /api/sign/signa-return yra puslapis, į kurį Signa Platform nukreipia MŪSŲ PAČIŲ puslapyje
+  // (pasirasymas.html) įterptą <iframe> pasirašymo pabaigoje (žr. functions/api/sign/signa-return.js).
+  // Numatytieji "X-Frame-Options: DENY" / "frame-ancestors 'none'" aukščiau uždraudžia bet kokį
+  // įkėlimą <iframe>'e – ĮSKAITANT mūsų pačių puslapį mūsų pačių iframe'e, todėl be šios išimties
+  // naršyklė po pasirašymo rodo tuščią/sulūžusį lauką vietoj "Pasirašymas užbaigtas" pranešimo.
+  // Leidžiama tik šiam vienam keliui ir tik to paties domeno (SAMEORIGIN / 'self') rėmeliui.
+  if (url.pathname === '/api/sign/signa-return') {
+    response.headers.set('X-Frame-Options', 'SAMEORIGIN');
+    response.headers.set(
+      'Content-Security-Policy',
+      response.headers.get('Content-Security-Policy').replace("frame-ancestors 'none'", "frame-ancestors 'self'"),
+    );
+  }
   if (!isProduction(env)) response.headers.set('X-Robots-Tag', 'noindex, nofollow');
   if (url.pathname.startsWith('/api/')) response.headers.set('Cache-Control', 'no-store');
   return response;
