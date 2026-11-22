@@ -54,6 +54,21 @@ function proxyHeaders(env) {
   return env.SIGNA_PROXY_SECRET ? { 'X-Proxy-Auth': env.SIGNA_PROXY_SECRET } : {};
 }
 
+// LAIKINA diagnostika (žr. functions/api/debug-env.js) – tiesiogiai bando pasiekti proxy iš
+// Worker'io su tikru antrašte, kad atskirtume: ar problema pačiame SIGNA_PROXY_SECRET, ar
+// Cloudflare Worker'io išeinančio fetch() negalėjime pasiekti plain-HTTP adreso ne-standartiniu
+// prievadu. Pašalinti kartu su debug-env.js.
+export async function proxyPing(env) {
+  const url = `${baseUrl(env)}/app/api/rs/link/store`;
+  try {
+    const r = await fetch(url, { method: 'POST', headers: proxyHeaders(env) });
+    const text = await r.text().catch(() => '');
+    return { ok: true, status: r.status, bodySnippet: text.slice(0, 200) };
+  } catch (e) {
+    return { ok: false, error: String(e && e.message || e) };
+  }
+}
+
 // Patalpina dokumentą į Signa Platform pasirašymui (operacija "store").
 // docExtUid – mūsų sutarties ID (contracts.id). docTitle – PRIVALOMAS kuriant naują dokumentą
 // (taikoma ADOC/PDF-LT/PDF formatams). callbackUrl – mūsų endpoint'as, į kurį Signa vėliau praneš
