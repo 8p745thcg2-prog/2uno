@@ -42,16 +42,21 @@ function cid(env) {
 }
 
 // Patalpina dokumentą į Signa Platform pasirašymui (operacija "store").
-// docExtUid – mūsų sutarties ID (contracts.id). callbackUrl – mūsų endpoint'as, į kurį Signa
-// vėliau praneš apie būsenos pasikeitimus (žr. functions/api/sign/signa.js).
-export async function storeDocument(env, { docExtUid, pdfBytes, fileName, callbackUrl }) {
+// docExtUid – mūsų sutarties ID (contracts.id). docTitle – PRIVALOMAS kuriant naują dokumentą
+// (taikoma ADOC/PDF-LT/PDF formatams). callbackUrl – mūsų endpoint'as, į kurį Signa vėliau praneš
+// apie būsenos pasikeitimus (žr. functions/api/sign/signa.js).
+export async function storeDocument(env, { docExtUid, docTitle, pdfBytes, fileName, callbackUrl }) {
   const fd = new FormData();
   fd.set('cid', cid(env));
   fd.set('docExtUid', docExtUid);
   fd.set('docSpecId', env.SIGNA_DOC_SPEC_ID || 'PDF-PAdES-TS');
+  fd.set('docTitle', docTitle);
   fd.set('callbackUrl', callbackUrl);
+  // docFileSort1 = "cnt" (turinio failas) – tai ir yra numatytoji reikšmė, jei šio parametro
+  // visai nenurodytume, tad ją nurodome tik dėl aiškumo. NIEKADA nerašyti čia skaičiaus/indekso –
+  // šis parametras nurodo failo RŪŠĮ, leistinos reikšmės yra tik main/annx/attc/cnt/edoc.
   fd.set('docFileElem1', new Blob([pdfBytes], { type: 'application/pdf' }), fileName);
-  fd.set('docFileSort1', '1');
+  fd.set('docFileSort1', 'cnt');
   const r = await fetch(`${baseUrl(env)}/app/api/rs/link/store`, { method: 'POST', body: fd });
   const d = await r.json().catch(() => ({}));
   if (!r.ok || d.status !== 'success') throw new Error(`Signa store klaida: ${r.status} ${JSON.stringify(d)}`);
