@@ -20,9 +20,6 @@ export async function onRequestPost({ request, env }) {
 
   const orderId = extractOrderId(body);
 
-  // LAIKINA diagnostika: patvirtina, kad Paysera apskritai pasiekė šį endpoint'ą.
-  await audit(env, { actorType: 'system', action: `webhook_hit:${raw.slice(0, 100)}`, objectType: 'order', objectId: orderId, request }).catch(() => {});
-
   const sig = request.headers.get('X-Paysera-Signature');
   if (sig) {
     const ok = await verifyWebhookSignature(env, raw, sig).catch(() => false);
@@ -51,9 +48,6 @@ export async function onRequestPost({ request, env }) {
 
   // Paysera API laukų pavadinimai yra snake_case (patikrinta tikru atsakymu, ne dokumentacija).
   const amountPaid = Number(order.amount_paid ?? order.amountPaid ?? 0);
-
-  // LAIKINA diagnostika: ką tiksliai grąžino getOrder.
-  await audit(env, { actorType: 'system', action: `webhook_order_state:status=${order.status},paid=${amountPaid},need=${pay.amount_cents}`, objectType: 'order', objectId: orderId, request }).catch(() => {});
 
   if (order.status === 'paid' && amountPaid >= pay.amount_cents) {
     const now = new Date().toISOString();
