@@ -1,24 +1,37 @@
 // Signa Platform (MitSoft) el. parašo integracija.
 // Aplinkos paslaptys (Cloudflare Pages secrets – reikia nustatyti ATSKIRAI "dev" (Preview) ir
 // "2uno.lt" (Production) aplinkoms, kad veiktų abiejose):
-//   SIGNA_CID          – kliento ID, suteiktas MitSoft (pvz. "v5Zs49a6QEIFqeqYoJyK").
-//   SIGNA_BASE_URL      – nebūtina; numatytoji reikšmė žemiau.
-//   SIGNA_DOC_SPEC_ID   – dokumento specifikacijos ID. TODO: patvirtinti su Arūnu Stočkumi (MitSoft),
-//                         kokią reikšmę naudoti paprastam PDF dokumentui – šiuo metu spėjama "PDF".
+//   SIGNA_CID              – kliento ID, suteiktas MitSoft (pvz. "v5Zs49a6QEIFqeqYoJyK").
+//   SIGNA_BASE_URL         – nebūtina kol IP nepatvirtintas; KAI Arūnas patvirtins fiksuotą IP ir
+//                            bus žinomas proxy adresas, čia turės būti ĖJO (proxy) adresas, NE
+//                            tiesiai signa.mitsoft.lt – žr. paaiškinimą žemiau.
+//   SIGNA_PUBLIC_BASE_URL  – nebūtina; numatytoji reikšmė jau yra tikras Signa Platform adresas.
+//   SIGNA_DOC_SPEC_ID      – dokumento specifikacijos ID. TODO: patvirtinti su Arūnu Stočkumi
+//                            (MitSoft), kokią reikšmę naudoti paprastam PDF dokumentui – šiuo
+//                            metu spėjama "PDF".
 //
-// SVARBU: Signa Platform reikalauja, kad užklausos ateitų iš iš anksto patvirtinto (whitelisted) IP
-// adreso pagal cid. Šios funkcijos kviečiamos per fiksuoto IP tarpinį serverį (Google Cloud proxy,
-// IP 34.66.99.68) – jei SIGNA_BASE_URL nukreipia tiesiai į signa.mitsoft.lt, o ne per tą proxy,
-// užklausos bus atmestos, kol IP nebus įtrauktas į leidžiamų sąrašą.
-
+// SVARBU – du skirtingi adresai:
+// 1) REST operacijos (store/initSign/download), kurias kviečia MŪSŲ SERVERIS – jų kreipimasis
+//    tikrinamas pagal IP (whitelisting pagal cid), tad kai Arūnas patvirtins fiksuotą IP
+//    (34.66.99.68, per Google Cloud proxy), SIGNA_BASE_URL reikės nukreipti per tą proxy.
+// 2) "sign" operacija (naršyklės nukreipimas) – ją tiesiogiai atidaro KLIENTO naršyklė iš JO PAČIO
+//    IP, ne mūsų serveris, todėl IP whitelisting jai netaikomas ir ji visada turi eiti tiesiai į
+//    tikrą signa.mitsoft.lt adresą (SIGNA_PUBLIC_BASE_URL), NIEKADA per proxy – priešingu atveju
+//    klientas būtų nukreiptas į adresą, kuris nerodo pasirašymo vartotojo sąsajos.
 const DEFAULT_BASE = 'https://signa.mitsoft.lt/signa-platform';
 
 export function signaEnabled(env) {
   return !!env.SIGNA_CID;
 }
 
+// Serverio REST kvietimams (store/initSign/download) – gali tapti proxy adresu.
 function baseUrl(env) {
   return String(env.SIGNA_BASE_URL || DEFAULT_BASE).replace(/\/+$/, '');
+}
+
+// Kliento naršyklės nukreipimui (sign) – visada tikras Signa Platform adresas.
+function publicBaseUrl(env) {
+  return String(env.SIGNA_PUBLIC_BASE_URL || DEFAULT_BASE).replace(/\/+$/, '');
 }
 
 function cid(env) {
@@ -68,8 +81,9 @@ export async function initSign(env, { docExtUid, signerId, signerFirstName, sign
 }
 
 // Nuoroda, į kurią nukreipiama kliento naršyklė (ar iframe) pasirašymui atlikti (operacija "sign").
+// Tyčia naudoja publicBaseUrl(), NE baseUrl() – žr. paaiškinimą failo viršuje.
 export function signUrl(env, signExtUid, { ln = 'lt' } = {}) {
-  return `${baseUrl(env)}/app/api/da/link/sign/${encodeURIComponent(signExtUid)}?ln=${encodeURIComponent(ln)}`;
+  return `${publicBaseUrl(env)}/app/api/da/link/sign/${encodeURIComponent(signExtUid)}?ln=${encodeURIComponent(ln)}`;
 }
 
 // Atsisiunčia anksčiau patalpintą dokumentą (operacija "download"). PDF formatui turinio failas
