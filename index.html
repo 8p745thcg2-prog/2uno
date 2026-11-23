@@ -355,7 +355,15 @@ body{background:#f4f7fa}
 <dialog id="nextsteps"><button id="close-next" class="btn light" type="button" style="float:right" aria-label="Uždaryti">×</button><div class="eyebrow">Tolimesni veiksmai</div><h2>Pasiruoškite apskaitos pradžiai</h2><p id="next-provider"></p><p>Pasirašius sutartį pasirinkta buhalterinė įmonė su jumis susisieks sutartyje nurodytu terminu ir pateiks dokumentų perdavimo instrukcijas.</p><h3>Kokių dokumentų gali prireikti</h3><ul><li>Elektroninio sertifikuoto išrašo (ESI).</li><li>Įstatų arba nuostatų.</li><li>Atstovo tapatybės ir įgaliojimų patvirtinimo pagal įmonės nurodytą tvarką.</li><li>Ankstesnės apskaitos ir kitų veiklos dokumentų, jei taikoma.</li></ul><div class="notice">Dokumentus siųskite tiesiai pasirinktai buhalterinei įmonei jos nurodytu saugiu kanalu. 2uno jų įkelti nereikia. Tikslų dokumentų sąrašą ir tapatybės patvirtinimo būdą nurodys paslaugų teikėjas.</div><p style="font-size:12px;color:#64758e">Pasirašymas šiuo metu neprijungtas. Šis langas nepatvirtina sutarties sudarymo.</p></dialog><script>
 document.querySelectorAll('[data-lt-date]').forEach(el=>{
 el.addEventListener('input',()=>{
-const v=el.value,day=el.dataset.ltDate==='date';
+const day=el.dataset.ltDate==='date';
+if(!el.value.includes('-')){
+const digits=el.value.replace(/\D/g,'').slice(0,day?8:6);
+let formatted=digits.slice(0,4);
+if(digits.length>4)formatted+='-'+digits.slice(4,6);
+if(day&&digits.length>6)formatted+='-'+digits.slice(6,8);
+if(formatted!==el.value){el.value=formatted;el.setSelectionRange(formatted.length,formatted.length)}
+}
+const v=el.value;
 const match=v.match(day?/^(\d{4})-(\d{2})-(\d{2})$/:/^(\d{4})-(\d{2})$/);
 let valid=!v;
 if(match){const y=Number(match[1]),m=Number(match[2]),d=day?Number(match[3]):1;const dt=new Date(Date.UTC(y,m-1,d));valid=y>=1000&&dt.getUTCFullYear()===y&&dt.getUTCMonth()===m-1&&dt.getUTCDate()===d}
