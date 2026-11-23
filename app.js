@@ -149,11 +149,16 @@ $('sign').onclick=()=>{
  const historical=historyOnly();
  if(!historical&&!$('startdate').value.trim()){$('startdate').classList.add('invalid');$('startdate-msg').textContent='Nurodykite pageidaujamą pradžios datą.';$('startdate').focus();return;}
  $('startdate').classList.remove('invalid');$('startdate-msg').textContent='';
+ updateContract();
  const situationOpt=document.querySelector('#situation option:checked');
- const payload={providerName:providers[selected].name,priceEur:estimate(selected),summary:{legalForm:$('type').value,situation:situationOpt?situationOpt.textContent:$('situation').value,employees:amount('employees'),invoices:amount('purchases')+amount('sales'),startDate:historical?'':$('startdate').value}};
+ // contractHtml - pilnas sutarties projekto tekstas (paslaugų apimtis, kainos skaičiavimas,
+ // metinės deklaracijos ir t.t.), kad pasirašymo puslapyje "Peržiūrėti sutartį" rodytų VISĄ
+ // sutartį, ne tik glaustą santrauką. 1-ą skyrių (šalys) pasirašymo puslapis perrašo pats su
+ // tikrais įmonės/atstovo duomenimis, tad čia perduodamas sekcijas nuo 2 toliau pakanka turėti.
+ const payload={providerName:providers[selected].name,priceEur:estimate(selected),contractHtml:$('contracttext').innerHTML,summary:{legalForm:$('type').value,situation:situationOpt?situationOpt.textContent:$('situation').value,employees:amount('employees'),invoices:amount('purchases')+amount('sales'),startDate:historical?'':$('startdate').value}};
  try{sessionStorage.setItem('2uno-sign',JSON.stringify(payload));}catch(e){}
  location.href='pasirasymas.html';
-};$('download').onclick=()=>{updateContract();const blob=new Blob([`<!doctype html><html lang="lt"><meta charset="utf-8"><meta name="color-scheme" content="light only"><meta name="supported-color-schemes" content="light"><meta name="theme-color" content="#f4f7fc"><title>2uno sutarties projektas</title><body><h1>SUTARTIES PROJEKTAS - NEPASIRAŠYTA</h1>${$('document').innerHTML}</body></html>`],{type:'text/html;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='2uno_sutarties_projektas.html';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};
+};
 
 render();
 
