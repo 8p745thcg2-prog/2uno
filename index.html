@@ -358,8 +358,8 @@ el.addEventListener('input',()=>{
 const day=el.dataset.ltDate==='date';
 const digits=el.value.replace(/\D/g,'').slice(0,day?8:6);
 let formatted=digits.slice(0,4);
-if(digits.length>4)formatted+='-'+digits.slice(4,6);
-if(day&&digits.length>6)formatted+='-'+digits.slice(6,8);
+if(digits.length>=4)formatted+='-'+digits.slice(4,6);
+if(day&&digits.length>=6)formatted+='-'+digits.slice(6,8);
 if(formatted!==el.value){el.value=formatted;el.setSelectionRange(formatted.length,formatted.length)}
 const v=el.value;
 const match=v.match(day?/^(\d{4})-(\d{2})-(\d{2})$/:/^(\d{4})-(\d{2})$/);
