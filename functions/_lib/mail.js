@@ -10,6 +10,13 @@ export function esc(s) {
   return String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 }
 
+// Suformatuoja kainą laiškui (pvz. "105,00 €"). Tarp kablelio ir centų įterpiamas nematomas
+// tarpas (zero-width space) – be jo Gmail kartais klaidingai aptinka skaičių kaip adresą ir
+// paverčia jį aktyvia nuoroda į Google Maps.
+export function formatEur(n) {
+  return `${Number(n).toFixed(2).replace('.', ',​')} €`;
+}
+
 // Paprastas, visuose pašto klientuose tvarkingai atrodantis laiško šablonas.
 export function layout({ title, lines = [], button = null, footer = '' }) {
   const body = lines.map((l) => `<p style="margin:0 0 12px">${esc(l)}</p>`).join('');
@@ -81,7 +88,7 @@ export function newRequestMail({ origin, requestId, summary, priceEur, deadlineA
     ...layout({
       title: 'Klientas pasirašė sutartį su jūsų įmone',
       lines: [
-        `Sutarties Nr. ${summary.number}. Mėnesio kaina pagal sutartį: ${Number(priceEur).toFixed(2).replace('.', ',')} €.`,
+        `Sutarties Nr. ${summary.number}. Mėnesio kaina pagal sutartį: ${formatEur(priceEur)}.`,
         ...facts,
         `Kliento duomenys ir sutartis atrakinami apmokėjus komisinį mokestį. Atsakyti reikia iki ${when}.`,
       ],
@@ -110,7 +117,7 @@ export function reminderMail({ origin, requestId, summary, priceEur, deadlineAt 
     ...layout({
       title: 'Baigiasi atsakymo terminas',
       lines: [
-        `Klientas pasirašė sutartį Nr. ${summary.number || '–'} (mėnesio kaina ${Number(priceEur).toFixed(2).replace('.', ',')} €), tačiau komisinis dar neapmokėtas.`,
+        `Klientas pasirašė sutartį Nr. ${summary.number || '–'} (mėnesio kaina ${formatEur(priceEur)}), tačiau komisinis dar neapmokėtas.`,
         `Atsakyti reikia iki ${when}.`,
       ],
       button: { label: 'Peržiūrėti užklausą', url: `${origin}/partneris?u=${encodeURIComponent(requestId)}` },
