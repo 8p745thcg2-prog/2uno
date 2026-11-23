@@ -6,9 +6,9 @@ const BLOCKED = [
   /^\/\.git/, /^\/README-dev/, /^\/package\.json$/, /^\/cron(\/|$)/,
 ];
 
-// index.html (4), buhalteriams.html (1), partnerio-paskyra.html (1) įterptinių skriptų SHA-256.
+// index.html (3), buhalteriams.html (1), partnerio-paskyra.html (1) įterptinių skriptų SHA-256.
 export const INLINE_SCRIPT_HASHES = [
-  "'sha256-P25jVaQ7LBEeAXCMvmvnHzyT38vO6LKC1VwMf+PqgSE='",
+  "'sha256-juLur7Vo9U0uGGy3M796njqUxvzWRabYK2uyWXZHpWk='",
   "'sha256-ZEcKaPEsyA0/3sDbe/Q0efuYdIzw68GhWbkukRXiGDU='",
   "'sha256-GctPturq1sts0NsV+Cowsebf+6QURvQ6G2oUkOeNRcY='",
   "'sha256-jn3kRDjkRhiZOgf7/v8vzWzyFo+sGJyK4PAHsUPGyDg='",
