@@ -1,0 +1,57 @@
+[
+  {
+    "slug": "a",
+    "mark": "A",
+    "name": "Pavyzdinė įmonė A",
+    "tag": "Skaitmeninė apskaita",
+    "desc": "Pavyzdinis pasiūlymas verslui, norinčiam apskaitą tvarkyti nuotoliniu būdu.",
+    "features": ["Asmeninis buhalteris ir atsakymas per 1 darbo dieną", "Dokumentai pateikiami vienoje sistemoje"],
+    "rating": 4.9,
+    "reviews": 48,
+    "clients": 126
+  },
+  {
+    "slug": "b",
+    "mark": "B",
+    "name": "Pavyzdinė įmonė B",
+    "tag": "Smulkiajam verslui",
+    "desc": "Pavyzdinis apskaitos paslaugų pasiūlymas mažoms įmonėms.",
+    "features": ["Specializacija naujose MB ir mažose UAB", "Pagalba perimant apskaitą iš ankstesnio tiekėjo"],
+    "rating": 4.8,
+    "reviews": 36,
+    "clients": 98
+  },
+  {
+    "slug": "c",
+    "mark": "C",
+    "name": "Pavyzdinė įmonė C",
+    "tag": "Prekybai ir e. prekybai",
+    "desc": "Pavyzdinis pasiūlymas prekybos ir elektroninės prekybos veiklai.",
+    "features": ["E. parduotuvių ir prekybos apskaitos patirtis", "Mokėjimų ir sandėlio duomenų suderinimas"],
+    "rating": 4.7,
+    "reviews": 29,
+    "clients": 87
+  },
+  {
+    "slug": "d",
+    "mark": "D",
+    "name": "Pavyzdinė įmonė D",
+    "tag": "Apskaita ir konsultacijos",
+    "desc": "Pavyzdinis pasiūlymas įmonėms, kurioms aktualios ir konsultacijos.",
+    "features": ["Mėnesinė konsultacija su buhalteriu", "Mokestinių terminų priminimai iš anksto"],
+    "rating": 4.9,
+    "reviews": 24,
+    "clients": 64
+  },
+  {
+    "slug": "e",
+    "mark": "E",
+    "name": "Pavyzdinė įmonė E",
+    "tag": "Apskaita ir finansai",
+    "desc": "Pavyzdinis pasiūlymas apskaitai ir finansinių rezultatų stebėjimui.",
+    "features": ["Aiškios mėnesinės pelno ir pinigų srautų ataskaitos", "Rezultatų aptarimas su finansų specialistu"],
+    "rating": 4.8,
+    "reviews": 31,
+    "clients": 105
+  }
+]
