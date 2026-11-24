@@ -476,20 +476,28 @@ setTimeout(function(){document.querySelectorAll('.reveal:not(.is-visible)').forE
 </script>
 <script>
 (function(){
-var track=document.getElementById('cards');
+function getTrack(){return document.getElementById('cards');}
 var prev=document.querySelector('.carousel-prev'),next=document.querySelector('.carousel-next');
-if(!track||!prev||!next)return;
-function cardStep(){var c=track.querySelector('.provider');return c?c.getBoundingClientRect().width+18:280;}
+if(!prev||!next)return;
+function cardStep(t){var c=t.querySelector('.provider');return c?c.getBoundingClientRect().width+18:280;}
 function update(){
-prev.disabled=track.scrollLeft<=4;
-next.disabled=track.scrollLeft>=track.scrollWidth-track.clientWidth-4;
+var t=getTrack();if(!t)return;
+prev.disabled=t.scrollLeft<=4;
+next.disabled=t.scrollLeft>=t.scrollWidth-t.clientWidth-4;
 }
-prev.addEventListener('click',function(){track.scrollBy({left:-cardStep(),behavior:'smooth'});});
-next.addEventListener('click',function(){track.scrollBy({left:cardStep(),behavior:'smooth'});});
-track.addEventListener('scroll',update);
-new MutationObserver(update).observe(track,{childList:true});
+prev.addEventListener('click',function(){var t=getTrack();if(t)t.scrollBy({left:-cardStep(t),behavior:'smooth'});});
+next.addEventListener('click',function(){var t=getTrack();if(t)t.scrollBy({left:cardStep(t),behavior:'smooth'});});
+var bound=null;
+function bind(){
+var t=getTrack();if(!t||t===bound)return;
+bound=t;
+t.addEventListener('scroll',update);
+new MutationObserver(update).observe(t,{childList:true});
+}
+bind();
 window.addEventListener('resize',update);
-setTimeout(update,300);
+setTimeout(function(){bind();update();},300);
+window.addEventListener('load',function(){bind();update();});
 })();
 </script>
 </body>
