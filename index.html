@@ -440,7 +440,6 @@ button.onclick=()=>{target=input;const now=new Date(),parts=input.value.split('-
 })();
 </script>
 <script>
-(function(){
 document.querySelectorAll('.faq-q').forEach(function(btn){
 btn.addEventListener('click',function(){
 var item=btn.closest('.faq-item');
@@ -448,6 +447,7 @@ item.classList.toggle('is-open');
 btn.querySelector('.faq-icon').textContent=item.classList.contains('is-open')?'×':'+';
 });
 });
+function initReveal(){
 if('IntersectionObserver' in window){
 var io=new IntersectionObserver(function(entries){
 entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('is-visible'); io.unobserve(e.target); } });
@@ -456,7 +456,9 @@ document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
 } else {
 document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('is-visible'); });
 }
-})();
+}
+if(document.readyState==='complete'){initReveal();}else{window.addEventListener('load',initReveal);}
+setTimeout(function(){document.querySelectorAll('.reveal:not(.is-visible)').forEach(function(el){el.classList.add('is-visible');});},2500);
 </script>
 </body>
 </html>
