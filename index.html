@@ -477,27 +477,27 @@ setTimeout(function(){document.querySelectorAll('.reveal:not(.is-visible)').forE
 <script>
 (function(){
 function getTrack(){return document.getElementById('cards');}
-var prev=document.querySelector('.carousel-prev'),next=document.querySelector('.carousel-next');
-if(!prev||!next)return;
 function cardStep(t){var c=t.querySelector('.provider');return c?c.getBoundingClientRect().width+18:280;}
 function update(){
-var t=getTrack();if(!t)return;
+var t=getTrack();
+var prev=document.querySelector('.carousel-prev'),next=document.querySelector('.carousel-next');
+if(!t||!prev||!next)return;
 prev.disabled=t.scrollLeft<=4;
 next.disabled=t.scrollLeft>=t.scrollWidth-t.clientWidth-4;
 }
-prev.addEventListener('click',function(){var t=getTrack();if(t)t.scrollBy({left:-cardStep(t),behavior:'smooth'});});
-next.addEventListener('click',function(){var t=getTrack();if(t)t.scrollBy({left:cardStep(t),behavior:'smooth'});});
-var bound=null;
-function bind(){
-var t=getTrack();if(!t||t===bound)return;
-bound=t;
-t.addEventListener('scroll',update);
-new MutationObserver(update).observe(t,{childList:true});
-}
-bind();
+document.addEventListener('click',function(e){
+var btn=e.target.closest('.carousel-prev,.carousel-next');
+if(!btn)return;
+var t=getTrack();if(!t)return;
+var step=cardStep(t);
+t.scrollBy({left:btn.classList.contains('carousel-next')?step:-step,behavior:'smooth'});
+});
+document.addEventListener('scroll',function(e){
+if(e.target&&e.target.id==='cards')update();
+},true);
 window.addEventListener('resize',update);
-setTimeout(function(){bind();update();},300);
-window.addEventListener('load',function(){bind();update();});
+window.addEventListener('load',function(){setTimeout(update,300);});
+setTimeout(update,300);
 })();
 </script>
 </body>
