@@ -55,6 +55,21 @@ section.block p{color:var(--muted);font-size:15px}
 .note{font-size:12px;color:#8a99a9;margin-top:10px}
 footer{max-width:1420px;margin:40px auto 0;padding:25px 30px;display:flex;gap:22px;align-items:center;justify-content:space-between;font-size:11px;color:var(--muted);border-top:1px solid var(--line)}
 @media(max-width:800px){header{height:auto;min-height:76px;flex-wrap:wrap;padding:8px 16px}nav{order:3;width:100%;overflow-x:auto;padding-bottom:6px}.company-hero h1{font-size:24px}}
+
+/* ===== 2UNO UNIFIED DESIGN SYSTEM (same block on every page — edit identically everywhere) ===== */
+.btn{border-radius:9px;padding:12px 18px;font-size:13px;padding:13px 20px}
+.monogram{background:#eaf6f6;color:var(--accent)}
+.site-footer{max-width:1420px;margin:40px auto 0;padding:40px 30px 25px;border-top:1px solid var(--line)}
+.footer-top{display:flex;gap:60px;flex-wrap:wrap;justify-content:space-between}
+.footer-brand{max-width:260px}
+.f-logo{font-weight:700;letter-spacing:-1px;font-size:20px;color:var(--ink)}
+.footer-brand p{margin:10px 0 0;font-size:13px;color:var(--muted)}
+.footer-col{display:flex;flex-direction:column;gap:10px;font-size:13px}
+.footer-col h4{font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:#8a99a9;margin:0 0 4px}
+.footer-col a,.footer-col span{color:var(--muted)}
+.footer-col a:hover{color:var(--ink)}
+.footer-bottom{margin-top:30px;padding-top:20px;border-top:1px solid var(--line);font-size:11px;color:var(--muted)}
+@media(max-width:800px){.site-footer{padding:30px 16px 20px}.footer-top{gap:28px}}
 </style>
 </head>
 <body>
@@ -94,11 +109,30 @@ ${featuresHtml}
 </section>
 </main>
 
-<footer>
-<span style="font-weight:700;letter-spacing:-1px;font-size:20px">2uno.</span>
-<span>Atrinkti buhalteriai jūsų verslui</span>
-<span>© 2026 2uno</span>
+<footer class="site-footer">
+<div class="footer-top">
+<div class="footer-brand">
+<a class="f-logo" href="/index.html">2UNO</a>
+<p>Atrinkti buhalteriai jūsų verslui.</p>
+</div>
+<div class="footer-col">
+<h4>Naudinga informacija</h4>
+<a href="/kaip-tai-veikia.html">Kaip tai veikia</a>
+<a href="/imones.html">Įmonės</a>
+<a href="/buhalteriams.html">Buhalteriams</a>
+<a href="/index.html#duk">Dažniausi klausimai</a>
 <a href="/teisiniai-dokumentai.html">Privatumas ir taisyklės</a>
+</div>
+<div class="footer-col">
+<h4>Kontaktai</h4>
+<span>Ežero g. 65, Šiauliai</span>
+<a href="tel:+37064111306">+370 641 11306</a>
+<a href="mailto:info@2uno.lt">info@2uno.lt</a>
+</div>
+</div>
+<div class="footer-bottom">
+<span>© 2026 2UNO</span>
+</div>
 </footer>
 
 <script type="application/ld+json">
