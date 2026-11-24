@@ -134,6 +134,11 @@
   }
   document.getElementById('lookup').addEventListener('click', lookup);
   F('code').addEventListener('change', function () { if (/^\d{9}$/.test(this.value.trim())) lookup(); });
+  // Paspaudus Enter įmonės kodo lauke, turi suveikti tik "Ieškoti registre" mygtukas,
+  // o ne visos formos pateikimas (kuris anksčiau paraudonindavo visus dar neužpildytus laukus).
+  F('code').addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') { e.preventDefault(); lookup(); }
+  });
   if (data && data.client && /^\d{9}$/.test(data.client.code || '')) lookup();
 
   function showDone(number, url) {
