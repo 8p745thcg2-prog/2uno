@@ -317,6 +317,21 @@ body{background:#f4f7fa}
 .toggle-switch input:checked+.toggle-slider{background:#279da7}
 .toggle-switch input:checked+.toggle-slider:before{transform:translateX(20px)}
 .toggle-switch input:focus-visible+.toggle-slider{outline:3px solid #79c6ce;outline-offset:2px}
+
+/* ===== 2UNO UNIFIED DESIGN SYSTEM (same block on every page — edit identically everywhere) ===== */
+.btn{border-radius:9px;padding:12px 18px;font-size:13px}
+.monogram{background:#eaf6f6;color:#279da7}
+.site-footer{max-width:1420px;margin:40px auto 0;padding:40px 30px 25px;border-top:1px solid var(--line)}
+.footer-top{display:flex;gap:60px;flex-wrap:wrap;justify-content:space-between}
+.footer-brand{max-width:260px}
+.f-logo{font-weight:700;letter-spacing:-1px;font-size:20px;color:var(--ink)}
+.footer-brand p{margin:10px 0 0;font-size:13px;color:var(--muted)}
+.footer-col{display:flex;flex-direction:column;gap:10px;font-size:13px}
+.footer-col h4{font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:#8a99a9;margin:0 0 4px}
+.footer-col a,.footer-col span{color:var(--muted)}
+.footer-col a:hover{color:var(--ink)}
+.footer-bottom{margin-top:30px;padding-top:20px;border-top:1px solid var(--line);font-size:11px;color:var(--muted)}
+@media(max-width:800px){.site-footer{padding:30px 16px 20px}.footer-top{gap:28px}}
 </style><meta name="2uno-build" content="compact-motion-20261030"></head><body>
 <header><a class="logo brand-logo" href="index.html" aria-label="2uno pradžia"><img src="assets/2uno-logo.jpg" alt="2UNO.lt"></a><nav><a href="kaip-tai-veikia.html">Kaip tai veikia</a><a href="imones.html">Įmonės</a><a href="#duk">Klausimai</a><a class="partner-link" href="buhalteriams.html">Buhalteriams</a></nav><a class="navcta" href="#skaiciuokle">Rasti buhalterį</a></header>
 <main class="wrap"><section class="calculator-intro"><div class="eyebrow">Atrinkti buhalteriai jūsų verslui</div><h1>Raskite buhalterį, kuris tinka jūsų verslui.</h1><p>Aprašykite savo veiklą ir susipažinkite su atrinktomis buhalterinėmis įmonėmis: jų specializacija, stiprybėmis ir sąlygomis. Pasirinkę įmonę, sutartį pasirašysite čia pat.</p></section><section class="workspace" id="skaiciuokle"><div class="workspace-heading heading-form"><span>01</span><h2>Aprašykite savo verslą.</h2></div><div class="workspace-heading heading-offers"><span>02</span><h2>Susipažinkite su įmonėmis.</h2><div class="toolbar"><label style="font-size:13px">Rikiuoti <select id="sort"><option value="default">Pradinis sąrašas</option><option value="price-asc">Kaina: nuo mažiausios</option><option value="price-desc">Kaina: nuo didžiausios</option><option value="rating">Pagal reitingą</option><option value="clients">Pagal klientų pasirinkimus</option><option value="name">Pagal pavadinimą</option></select></label></div></div><div class="flowtop"><span id="s1" class="active">01 Jūsų verslas</span><span id="s2">02 Palyginimas</span><span id="s3">03 Sutartis</span></div><div id="formview" class="formgrid"><div class="formbody"><div class="eyebrow">Pradėkime nuo poreikių</div><h2>Aprašykite savo verslą.</h2><p style="color:var(--muted);font-size:14px">Nurodykite įprastas vieno mėnesio apimtis.</p><form id="business" action="#resultview">
@@ -351,7 +366,31 @@ body{background:#f4f7fa}
 <div class="strip" id="imones"><small>ĮMONĖS, KURIAS<br>GALITE PERŽIŪRĖTI</small><span>Pavyzdinė įmonė A</span><span>Pavyzdinė įmonė B</span><span>Pavyzdinė įmonė C</span><span>Pavyzdinė įmonė D</span><span>Pavyzdinė įmonė E</span></div>
 <section class="section" id="kaip"><div class="section-head"><div><div class="eyebrow">Nuo paieškos iki pasirinkimo</div><h2>Aiškus kelias į tvarkingą apskaitą.</h2></div><p>Susipažinkite su skirtingais paslaugų teikėjais ir žinokite, ką renkatės.</p></div><div class="steps"><div class="step"><b>01 / APIE VERSLĄ</b><h3>Vienas klausimynas</h3><p>Juridinė forma, dokumentai ir apskaitos poreikiai. Duomenų nereikia kartoti kiekvienai įmonei.</p></div><div class="step"><b>02 / PASIRINKIMAS</b><h3>Atrinkti partneriai</h3><p>Peržiūrėkite įmonių specializaciją, stiprybes ir bendradarbiavimo sąlygas.</p></div><div class="step"><b>03 / SUTARTIS</b><h3>Sąlygos prieš parašą</h3><p>Numatyta sutarties peržiūra, abiejų šalių kvalifikuotas pasirašymas ir dokumento atsisiuntimas.</p></div></div><p style="margin-top:26px"><a class="btn light" href="kaip-tai-veikia.html">Visas procesas žingsnis po žingsnio →</a></p></section>
 
-<section class="section" id="duk"><div class="faq"><div class="eyebrow">Prieš renkantis</div><h2>Verta žinoti.</h2><details><summary>Kaip sužinosiu paslaugų kainą?</summary><p>Pagal jūsų nurodytas apimtis matysite orientacinę mėnesio kainą. Visi įkainiai ir įskaičiuotos paslaugos nurodomi sutartyje, o mokėtina suma priklauso nuo faktinio darbų kiekio.</p></details><details><summary>Kaip veiks sutarties pasirašymas?</summary><p>Pasirinkę įmonę peržiūrėsite jos patvirtintą sutartį su galutine kaina. Pasirašymo integracija leis klientui ir įgaliotam tiekėjo atstovui pasirašyti kvalifikuotu elektroniniu parašu. Abiem šalims bus prieinamas pasirašytas dokumentas.</p></details><details><summary>Ar mano duomenys siunčiami įmonėms?</summary><p>Taip, bet tik pasirinktai įmonei ir tik po pasirašymo. Duomenys saugomi šifruotai. Pasirašius sutartį, pasirinkta buhalterinė įmonė iš karto gauna pranešimą apie naują klientą, o pilną sutarties turinį ir jūsų duomenis pamato, kai patvirtina bendradarbiavimą ir apmoka komisinį mokestį 2uno.</p></details></div></section><div class="closing"><div><div class="eyebrow" style="color:var(--lime);margin-bottom:12px">Pradėkite nuo aiškumo</div><h2>Jūsų apskaitos partneris<br>prasideda nuo jūsų poreikių.</h2></div><a class="btn" href="#skaiciuokle">Peržiūrėti įmones</a></div></main><footer><span class="logo" style="font-size:28px">2uno.</span><span>Atrinkti buhalteriai jūsų verslui</span><span>© 2026 2uno</span><a href="teisiniai-dokumentai.html">Privatumas ir taisyklės</a></footer>
+<section class="section" id="duk"><div class="faq"><div class="eyebrow">Prieš renkantis</div><h2>Verta žinoti.</h2><details><summary>Kaip sužinosiu paslaugų kainą?</summary><p>Pagal jūsų nurodytas apimtis matysite orientacinę mėnesio kainą. Visi įkainiai ir įskaičiuotos paslaugos nurodomi sutartyje, o mokėtina suma priklauso nuo faktinio darbų kiekio.</p></details><details><summary>Kaip veiks sutarties pasirašymas?</summary><p>Pasirinkę įmonę peržiūrėsite jos patvirtintą sutartį su galutine kaina. Pasirašymo integracija leis klientui ir įgaliotam tiekėjo atstovui pasirašyti kvalifikuotu elektroniniu parašu. Abiem šalims bus prieinamas pasirašytas dokumentas.</p></details><details><summary>Ar mano duomenys siunčiami įmonėms?</summary><p>Taip, bet tik pasirinktai įmonei ir tik po pasirašymo. Duomenys saugomi šifruotai. Pasirašius sutartį, pasirinkta buhalterinė įmonė iš karto gauna pranešimą apie naują klientą, o pilną sutarties turinį ir jūsų duomenis pamato, kai patvirtina bendradarbiavimą.</p></details></div></section><div class="closing"><div><div class="eyebrow" style="color:var(--lime);margin-bottom:12px">Pradėkite nuo aiškumo</div><h2>Jūsų apskaitos partneris<br>prasideda nuo jūsų poreikių.</h2></div><a class="btn" href="#skaiciuokle">Peržiūrėti įmones</a></div></main><footer class="site-footer">
+<div class="footer-top">
+<div class="footer-brand">
+<a class="f-logo" href="index.html">2UNO</a>
+<p>Atrinkti buhalteriai jūsų verslui.</p>
+</div>
+<div class="footer-col">
+<h4>Naudinga informacija</h4>
+<a href="kaip-tai-veikia.html">Kaip tai veikia</a>
+<a href="imones.html">Įmonės</a>
+<a href="buhalteriams.html">Buhalteriams</a>
+<a href="#duk">Dažniausi klausimai</a>
+<a href="teisiniai-dokumentai.html">Privatumas ir taisyklės</a>
+</div>
+<div class="footer-col">
+<h4>Kontaktai</h4>
+<span>Ežero g. 65, Šiauliai</span>
+<a href="tel:+37064111306">+370 641 11306</a>
+<a href="mailto:info@2uno.lt">info@2uno.lt</a>
+</div>
+</div>
+<div class="footer-bottom">
+<span>© 2026 2UNO</span>
+</div>
+</footer>
 <dialog id="nextsteps"><button id="close-next" class="btn light" type="button" style="float:right" aria-label="Uždaryti">×</button><div class="eyebrow">Tolimesni veiksmai</div><h2>Pasiruoškite apskaitos pradžiai</h2><p id="next-provider"></p><p>Pasirašius sutartį pasirinkta buhalterinė įmonė su jumis susisieks sutartyje nurodytu terminu ir pateiks dokumentų perdavimo instrukcijas.</p><h3>Kokių dokumentų gali prireikti</h3><ul><li>Elektroninio sertifikuoto išrašo (ESI).</li><li>Įstatų arba nuostatų.</li><li>Atstovo tapatybės ir įgaliojimų patvirtinimo pagal įmonės nurodytą tvarką.</li><li>Ankstesnės apskaitos ir kitų veiklos dokumentų, jei taikoma.</li></ul><div class="notice">Dokumentus siųskite tiesiai pasirinktai buhalterinei įmonei jos nurodytu saugiu kanalu. 2uno jų įkelti nereikia. Tikslų dokumentų sąrašą ir tapatybės patvirtinimo būdą nurodys paslaugų teikėjas.</div></dialog><script>
 document.querySelectorAll('[data-lt-date]').forEach(el=>{
 el.addEventListener('input',()=>{
@@ -392,7 +431,12 @@ for(let d=1;d<=new Date(year,month+1,0).getDate();d++){const value=year+'-'+pad(
 dialog.querySelector('.calendar-close').onclick=()=>dialog.close();
 dialog.querySelector('#calendar-year').onchange=e=>{year=Number(e.target.value);render()};
 const ms=dialog.querySelector('#calendar-month');if(ms)ms.onchange=e=>{month=Number(e.target.value);render()};
-dialog.querySelectorAll('[data-nav]').forEach(b=>b.onclick=()=>{const step=Number(b.dataset.nav);if(monthOnly)year+=step;else{const dt=new Date(year,month+step,1);year=dt.getFullYear();month=dt.getMonth()}year=Math.max(1970,Math.min(2090,year));render();dialog.showModal()};
+dialog.querySelectorAll('[data-nav]').forEach(b=>b.onclick=()=>{const step=Number(b.dataset.nav);if(monthOnly)year+=step;else{const dt=new Date(year,month+step,1);year=dt.getFullYear();month=dt.getMonth()}year=Math.max(1970,Math.min(2090,year));render()});
+}
+document.querySelectorAll('[data-lt-date]').forEach(input=>{
+const wrap=document.createElement('div');wrap.className='date-entry';input.before(wrap);wrap.append(input);
+const button=document.createElement('button');button.type='button';button.className='date-toggle';button.setAttribute('aria-label','Atidaryti kalendorių: '+(document.querySelector('label[for="'+input.id+'"]')?.textContent||'data'));button.innerHTML='<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18M7 15h2M12 15h2M7 18h2"/></svg>';wrap.append(button);
+button.onclick=()=>{target=input;const now=new Date(),parts=input.value.split('-');year=Number(parts[0])||now.getFullYear();month=parts[1]?Number(parts[1])-1:now.getMonth();if(month<0||month>11)month=now.getMonth();year=Math.max(1970,Math.min(2090,year));render();dialog.showModal()};
 });
 })();
 </script></body></html>
