@@ -14,10 +14,10 @@ function renderPage(p, baseUrl) {
 <meta charset="utf-8">
 <meta name="color-scheme" content="light only">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>${esc(p.name)} – ${esc(p.tag)} | 2uno</title>
-<meta name="description" content="${esc(p.name)}: ${esc(p.desc)} Peržiūrėkite specializaciją, stiprybes ir reitingą, tada gaukite orientacinę kainą per 2uno.">
+<title>${esc(p.name)} – ${esc(p.tag)} | 2UNO</title>
+<meta name="description" content="${esc(p.name)}: ${esc(p.desc)} Peržiūrėkite specializaciją, stiprybes ir reitingą, tada gaukite orientacinę kainą per 2UNO.">
 <link rel="canonical" href="${url}">
-<meta property="og:title" content="${esc(p.name)} | 2uno">
+<meta property="og:title" content="${esc(p.name)} | 2UNO">
 <meta property="og:description" content="${esc(p.tag)}: ${esc(p.desc)}">
 <meta property="og:type" content="website">
 <meta property="og:url" content="${url}">
@@ -56,7 +56,7 @@ section.block p{color:var(--muted);font-size:15px}
 footer{max-width:1420px;margin:40px auto 0;padding:25px 30px;display:flex;gap:22px;align-items:center;justify-content:space-between;font-size:11px;color:var(--muted);border-top:1px solid var(--line)}
 @media(max-width:800px){header{height:auto;min-height:76px;flex-wrap:wrap;padding:8px 16px}nav{order:3;width:100%;overflow-x:auto;padding-bottom:6px}.company-hero h1{font-size:24px}}
 
-/* ===== 2UNO UNIFIED DESIGN SYSTEM (same block on every page — edit identically everywhere) ===== */
+/* ===== 2UNO UNIFIED DESIGN SYSTEM (same block on every page, edit identically everywhere) ===== */
 .btn{border-radius:9px;padding:12px 18px;font-size:13px;padding:13px 20px}
 .monogram{background:#eaf6f6;color:var(--accent)}
 .site-footer{max-width:1420px;margin:40px auto 0;padding:40px 30px 25px;border-top:1px solid var(--line)}
@@ -74,7 +74,7 @@ footer{max-width:1420px;margin:40px auto 0;padding:25px 30px;display:flex;gap:22
 </head>
 <body>
 <header>
-<a class="logo brand-logo" href="/index.html" aria-label="2uno pradžia"><img src="/assets/2uno-logo.jpg" alt="2UNO.lt"></a>
+<a class="logo brand-logo" href="/index.html" aria-label="2UNO pradžia"><img src="/assets/2uno-logo.jpg" alt="2UNO.lt"></a>
 <nav>
 <a href="/index.html">Pradžia</a>
 <a href="/kaip-tai-veikia.html">Kaip tai veikia</a>
