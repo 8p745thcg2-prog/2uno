@@ -2037,23 +2037,23 @@ main.wrap > .hero > p {
    ========================================================================== */
 
 main.wrap.page-how > .hero {
-  text-align: center;
-  padding: 72px 0 36px;
+  text-align: left;
+  padding: var(--page-top-space) 0 36px;
 }
 
 main.wrap.page-how > .hero > .eyebrow {
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 main.wrap.page-how > .hero h1 {
-  margin: 0 auto 16px;
-  max-width: 720px;
+  margin: 0 0 14px;
+  max-width: 780px;
   color: var(--btn-bg);
 }
 
 main.wrap.page-how > .hero > p {
-  margin: 0 auto;
-  max-width: 54ch;
+  margin: 0;
+  max-width: 60ch;
   line-height: 1.72;
   color: var(--text-secondary);
 }
@@ -2140,8 +2140,8 @@ main.wrap.page-how > .steps .step p {
 }
 
 main.wrap.page-how > section.block {
-  text-align: center;
-  padding: 80px 0;
+  text-align: left;
+  padding: 76px 0;
   border-top: 1px solid #edf2f7;
 }
 
@@ -2151,13 +2151,13 @@ main.wrap.page-how > section.block > .eyebrow {
 
 main.wrap.page-how > section.block > h2 {
   color: var(--btn-bg);
-  margin: 0 auto 14px;
-  max-width: 680px;
+  margin: 0 0 12px;
+  max-width: 720px;
 }
 
 main.wrap.page-how > section.block > p {
-  margin: 0 auto;
-  max-width: 56ch;
+  margin: 0;
+  max-width: 60ch;
   line-height: 1.72;
   color: var(--text-secondary);
 }
@@ -2246,7 +2246,7 @@ main.wrap.page-how > section.block .card p {
 
 @media (max-width: 800px) {
   main.wrap.page-how > .hero {
-    padding: 44px 0 24px;
+    padding: var(--page-top-space) 0 24px;
   }
 }
 
