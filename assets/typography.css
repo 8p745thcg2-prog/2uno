@@ -2030,3 +2030,223 @@ main.wrap > .hero > p {
     flex: 0 0 100%;
   }
 }
+
+/* ==========================================================================
+   8. Izoliuotas /kaip-tai-veikia (.page-how) išdėstymas
+      Netaikoma homepage (#skaiciuokle, #kaip), CTA (.closing) ar kitiems puslapiams
+   ========================================================================== */
+
+main.wrap.page-how > .hero {
+  text-align: center;
+  padding: 72px 0 36px;
+}
+
+main.wrap.page-how > .hero > .eyebrow {
+  margin-bottom: 12px;
+}
+
+main.wrap.page-how > .hero h1 {
+  margin: 0 auto 16px;
+  max-width: 720px;
+  color: var(--btn-bg);
+}
+
+main.wrap.page-how > .hero > p {
+  margin: 0 auto;
+  max-width: 54ch;
+  line-height: 1.72;
+  color: var(--text-secondary);
+}
+
+main.wrap.page-how > .steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 48px;
+  max-width: 1080px;
+  margin: 12px auto 0;
+  padding: 20px 0 80px;
+  border-top: 0;
+}
+
+main.wrap.page-how > .steps .step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0;
+  padding: 24px 16px;
+  background: transparent;
+  border: 0;
+  border-radius: 14px;
+  box-shadow: none;
+  transition: background-color 0.22s ease;
+}
+
+main.wrap.page-how > .steps .step:hover {
+  background: #f8fbfc;
+}
+
+main.wrap.page-how > .steps .step:not(:last-child)::after {
+  content: "→";
+  position: absolute;
+  top: 47px;
+  right: -33px;
+  color: #cbd5e1;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1;
+  pointer-events: none;
+}
+
+main.wrap.page-how > .steps .step .num {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 22px;
+  background: #ffffff;
+  border: 1px solid rgba(20, 46, 82, 0.16);
+  color: var(--btn-bg);
+  font-size: 1rem;
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.06em;
+  font-variant-numeric: tabular-nums;
+  transition: border-color 0.22s ease, background-color 0.22s ease, color 0.22s ease;
+}
+
+main.wrap.page-how > .steps .step:hover .num {
+  border-color: var(--brand-teal);
+  background: rgba(56, 179, 179, 0.06);
+  color: var(--btn-bg);
+}
+
+main.wrap.page-how > .steps .step h2 {
+  font-size: var(--text-h3);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-h3);
+  color: var(--btn-bg);
+  margin: 0 0 10px;
+}
+
+main.wrap.page-how > .steps .step p {
+  margin: 0 auto;
+  max-width: 28ch;
+  font-size: 0.9375rem;
+  line-height: 1.72;
+  color: var(--text-secondary);
+}
+
+main.wrap.page-how > section.block {
+  text-align: center;
+  padding: 80px 0;
+  border-top: 1px solid #edf2f7;
+}
+
+main.wrap.page-how > section.block > .eyebrow {
+  margin-bottom: 10px;
+}
+
+main.wrap.page-how > section.block > h2 {
+  color: var(--btn-bg);
+  margin: 0 auto 14px;
+  max-width: 680px;
+}
+
+main.wrap.page-how > section.block > p {
+  margin: 0 auto;
+  max-width: 56ch;
+  line-height: 1.72;
+  color: var(--text-secondary);
+}
+
+main.wrap.page-how > section.block .grid2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 36px 64px;
+  max-width: 880px;
+  margin: 48px auto 0;
+}
+
+main.wrap.page-how > section.block .card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0;
+  padding: 24px 20px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 14px;
+  box-shadow: none;
+  transition: background-color 0.22s ease, border-color 0.22s ease;
+}
+
+main.wrap.page-how > section.block .card::before {
+  content: "";
+  display: block;
+  width: 28px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--brand-teal);
+  margin-bottom: 18px;
+  transition: width 0.22s ease, background-color 0.22s ease;
+}
+
+main.wrap.page-how > section.block .card:hover {
+  background: #f8fbfc;
+  border-color: #e6eff2;
+}
+
+main.wrap.page-how > section.block .card:hover::before {
+  width: 40px;
+  background: var(--btn-bg);
+}
+
+main.wrap.page-how > section.block .card h3 {
+  color: var(--btn-bg);
+  margin: 0 0 8px;
+}
+
+main.wrap.page-how > section.block .card p {
+  margin: 0 auto;
+  max-width: 34ch;
+  font-size: 0.9375rem;
+  line-height: 1.72;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 960px) {
+  main.wrap.page-how > .steps {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 16px 0 56px;
+  }
+
+  main.wrap.page-how > .steps .step {
+    padding: 20px 16px;
+  }
+
+  main.wrap.page-how > .steps .step:not(:last-child)::after {
+    display: none;
+  }
+
+  main.wrap.page-how > section.block {
+    padding: 56px 0;
+  }
+
+  main.wrap.page-how > section.block .grid2 {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-top: 32px;
+  }
+}
+
+@media (max-width: 800px) {
+  main.wrap.page-how > .hero {
+    padding: 44px 0 24px;
+  }
+}
+
