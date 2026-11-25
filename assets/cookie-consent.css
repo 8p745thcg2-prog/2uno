@@ -1,0 +1,32 @@
+.cc-banner{position:fixed;left:0;right:0;bottom:0;z-index:999;display:none;background:#fff;border-top:1px solid #e8edf2;box-shadow:0 -8px 30px rgba(21,43,89,.12);padding:18px 24px;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
+.cc-banner.cc-visible{display:block}
+.cc-banner-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+.cc-text{flex:1;min-width:240px;margin:0;font-size:13px;line-height:1.6;color:#64758e}
+.cc-text a{color:#173777;text-decoration:underline}
+.cc-actions{display:flex;gap:10px;flex-wrap:wrap}
+.cc-btn{border:0;border-radius:9px;padding:11px 18px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap}
+.cc-btn-primary{background:#173777;color:#fff}
+.cc-btn-primary:hover{background:#234c9b}
+.cc-btn-outline{background:#eef3fb;color:#173777}
+.cc-btn-outline:hover{background:#e2ecf9}
+.cc-btn-text{background:transparent;color:#64758e;padding:11px 8px}
+.cc-btn-text:hover{color:#152b59}
+.cc-panel{max-width:1200px;margin:16px auto 0;padding-top:16px;border-top:1px solid #e8edf2}
+.cc-panel.hidden{display:none}
+.cc-panel-row{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:12px 0}
+.cc-panel-row strong{display:block;font-size:13px;color:#152b59;margin-bottom:4px}
+.cc-panel-row p{margin:0;font-size:12px;color:#64758e;line-height:1.6;max-width:640px}
+.cc-toggle{position:relative;display:inline-block;width:44px;height:25px;flex-shrink:0}
+.cc-toggle input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer}
+.cc-toggle span{position:absolute;inset:0;background:#d7dee5;border-radius:999px;transition:background .2s}
+.cc-toggle span:before{content:"";position:absolute;height:19px;width:19px;left:3px;top:3px;background:#fff;border-radius:50%;transition:transform .2s;box-shadow:0 1px 2px rgba(0,0,0,.25)}
+.cc-toggle input:checked+span{background:#279da7}
+.cc-toggle input:checked+span:before{transform:translateX(19px)}
+.cc-toggle-locked span{background:#279da7;opacity:.55;cursor:not-allowed}
+.cc-toggle-locked span:before{transform:translateX(19px)}
+@media(max-width:800px){
+.cc-banner{padding:16px}
+.cc-banner-inner{flex-direction:column;align-items:stretch}
+.cc-actions{justify-content:stretch}
+.cc-actions .cc-btn{flex:1}
+}
