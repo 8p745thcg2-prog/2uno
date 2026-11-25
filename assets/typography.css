@@ -1131,10 +1131,15 @@ main.wrap > .hero > p {
   padding-top: 10px;
 }
 
+#resultview .annual-label {
+  min-height: 2.8em;
+}
+
 #resultview .annual-price > b {
   font-size: var(--text-ui);
   font-weight: var(--weight-semibold);
   color: var(--text-primary);
+  min-height: 3em;
 }
 
 #resultview .quote-note {
