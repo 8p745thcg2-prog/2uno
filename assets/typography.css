@@ -220,6 +220,8 @@ header img,
 }
 
 body > header {
+  height: 68px;
+  min-height: 68px;
   background: rgba(247, 249, 252, 0.92);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
@@ -394,30 +396,49 @@ button.light:hover {
 }
 
 /* ==========================================================================
-   4. Kompaktiška pradžios puslapio įžanga (akcentas pirmame ekrane – #skaiciuokle)
+   4. Vienodas puslapio pradžios (H1 ir aprašymo) aukštis visuose puslapiuose
    ========================================================================== */
 
-.calculator-intro {
-  padding: 14px 0 20px;
+.calculator-intro,
+main.wrap > .hero {
+  padding: 24px 0 20px;
   text-align: left;
   display: block;
 }
 
-.calculator-intro .eyebrow {
+.wrap-1200 > .hero {
   display: none;
 }
 
-.calculator-intro h1 {
+.account,
+main:where(:not(.authshell, .wrap, .account, :has(> #signup))) {
+  margin-top: 0;
+  padding-top: 24px;
+}
+
+.calculator-intro > .eyebrow,
+main.wrap > .hero > .eyebrow,
+.account > .eyebrow {
+  display: none;
+}
+
+.calculator-intro h1,
+main.wrap > .hero h1,
+.account > h1,
+main > h1,
+#form-area > h1,
+#appView > h1 {
   font-size: var(--text-h1);
   font-weight: var(--weight-medium);
   line-height: var(--leading-tight);
   letter-spacing: var(--tracking-h1);
   color: var(--text-primary);
-  margin: 0 0 6px;
+  margin: 0 0 8px;
   max-width: 900px;
 }
 
-.calculator-intro p {
+.calculator-intro p,
+main.wrap > .hero > p {
   font-size: var(--text-base);
   line-height: var(--leading-base);
   color: var(--text-secondary);
@@ -1137,8 +1158,14 @@ button.light:hover {
     padding: 0 14px;
   }
 
-  .calculator-intro {
-    padding: 12px 0 16px;
+  .calculator-intro,
+  main.wrap > .hero {
+    padding: 16px 0 16px;
+  }
+
+  .account,
+  main:where(:not(.authshell, .wrap, .account, :has(> #signup))) {
+    padding-top: 16px;
   }
 
   #formview .formbody {
