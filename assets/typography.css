@@ -443,241 +443,6 @@ header:has(.brand-logo) .navcta:hover {
   box-shadow: var(--shadow-panel);
 }
 
-.company {
-  background: var(--surface-card);
-  border: 1px solid #e6edf4;
-  box-shadow: var(--shadow-card);
-  transition: border-color 0.22s ease, box-shadow 0.22s ease;
-}
-
-.company:hover {
-  border-color: rgba(20, 46, 82, 0.22);
-  box-shadow: var(--shadow-card-hover);
-}
-
-/* Lengvos, vienodo stiliaus linijinės SVG piktogramos ploname apskritime (2UNO #142e52 ir #38b3b3) */
-.card-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 46px;
-  height: 46px;
-  flex-shrink: 0;
-  border-radius: 50%;
-  background: #ffffff;
-  border: 1px solid rgba(20, 46, 82, 0.16);
-  color: var(--btn-bg);
-  transition: border-color 0.22s ease, background-color 0.22s ease, color 0.22s ease;
-}
-
-.card-icon svg {
-  width: 20px;
-  height: 20px;
-  display: block;
-}
-
-.card-icon .icon-accent {
-  stroke: var(--brand-teal);
-  transition: stroke 0.22s ease;
-}
-
-main.wrap > .steps .step:hover .card-icon,
-main.wrap > section.block .card:hover .card-icon,
-#kaip .step:hover .card-icon,
-.account .steps .step:hover .card-icon {
-  border-color: var(--brand-teal);
-  background: rgba(56, 179, 179, 0.06);
-  color: var(--btn-bg);
-}
-
-.card-body {
-  min-width: 0;
-  flex: 1 1 auto;
-}
-
-.step-head {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 12px;
-}
-
-/* /kaip-tai-veikia (01, 02, 03) – atviras, lengvai prabėgamas išdėstymas be „dėžučių dėžutėje“ */
-main.wrap > .steps {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0;
-  margin: 12px 0 16px;
-  border-top: 1px solid var(--border-subtle);
-}
-
-main.wrap > .steps .step {
-  display: grid;
-  grid-template-columns: 64px minmax(0, 1fr);
-  gap: 28px;
-  align-items: start;
-  min-width: 0;
-  padding: 32px 16px;
-  background: transparent;
-  border: 0;
-  border-bottom: 1px solid var(--border-subtle);
-  border-radius: 0;
-  box-shadow: none;
-  transition: background-color 0.22s ease;
-}
-
-main.wrap > .steps .step:hover {
-  background: #fafcfd;
-}
-
-main.wrap > .steps .step .step-head {
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 8px;
-}
-
-main.wrap > .steps .step .card-icon {
-  order: -1;
-  width: 54px;
-  height: 54px;
-}
-
-main.wrap > .steps .step .card-icon svg {
-  width: 22px;
-  height: 22px;
-}
-
-main.wrap > .steps .step .num {
-  width: auto;
-  height: auto;
-  padding: 0;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  color: var(--brand-teal-text);
-  font-size: var(--text-xs);
-  font-weight: var(--weight-semibold);
-  letter-spacing: 0.1em;
-  font-variant-numeric: tabular-nums;
-}
-
-main.wrap > .steps .step > div:last-child {
-  display: grid;
-  grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
-  column-gap: 40px;
-  row-gap: 10px;
-  align-items: start;
-  min-width: 0;
-}
-
-main.wrap > .steps .step > div:last-child > h2 {
-  grid-column: 1;
-  grid-row: 1;
-  color: var(--btn-bg);
-  margin: 0;
-}
-
-main.wrap > .steps .step > div:last-child > p {
-  grid-column: 1;
-  grid-row: 2;
-  margin: 0;
-  max-width: 54ch;
-  line-height: 1.75;
-  color: var(--text-secondary);
-}
-
-main.wrap > .steps .step > div:last-child > ul {
-  grid-column: 2;
-  grid-row: 1 / span 2;
-  list-style: none;
-  display: grid;
-  gap: 14px;
-  margin: 0;
-  padding: 4px 0 4px 32px;
-  background: transparent;
-  border: 0;
-  border-left: 1px solid #e8eef4;
-  border-radius: 0;
-  align-self: center;
-}
-
-main.wrap > .steps .step ul li {
-  position: relative;
-  padding-left: 24px;
-  font-size: 0.9375rem;
-  line-height: 1.65;
-  color: var(--text-secondary);
-}
-
-main.wrap > .steps .step ul li::before {
-  content: "✓";
-  position: absolute;
-  left: 0;
-  top: 0;
-  color: var(--brand-teal);
-  font-weight: var(--weight-bold);
-  font-size: 0.95rem;
-  line-height: 1.65;
-}
-
-main.wrap > section.block {
-  padding: 44px 0;
-  border-top: 1px solid var(--border-subtle);
-}
-
-main.wrap > .steps + section.block {
-  border-top: 0;
-  padding-top: 36px;
-}
-
-main.wrap > section.block h2 {
-  color: var(--btn-bg);
-  margin-bottom: 12px;
-}
-
-main.wrap > section.block > p {
-  max-width: 66ch;
-  line-height: 1.75;
-  color: var(--text-secondary);
-  margin: 0 0 8px;
-}
-
-main.wrap > section.block .grid2 {
-  gap: 20px 36px;
-  margin-top: 28px;
-}
-
-/* Atviri, lengvi punktai be sunkių rėmelių ir šešėlių */
-main.wrap > section.block .card {
-  display: flex;
-  align-items: flex-start;
-  gap: 18px;
-  padding: 20px 22px;
-  background: transparent;
-  border: 1px solid transparent;
-  border-radius: 14px;
-  box-shadow: none;
-  transition: background-color 0.22s ease, border-color 0.22s ease;
-}
-
-main.wrap > section.block .card:hover {
-  background: #f8fbfc;
-  border-color: #e4eef2;
-}
-
-main.wrap > section.block .card h3 {
-  color: var(--btn-bg);
-  margin: 0 0 6px;
-}
-
-main.wrap > section.block .card p {
-  margin: 0;
-  line-height: 1.72;
-  color: var(--text-secondary);
-  max-width: 48ch;
-}
-
 /* Įmonių katalogas (imones.html) – 2 subalansuoti stulpeliai ir švarūs filtrų mygtukai */
 .jumplist {
   gap: 8px;
@@ -1526,7 +1291,7 @@ main.wrap > .hero > p {
 #kaip .step:not(:last-child)::after {
   content: "→";
   position: absolute;
-  top: 45px;
+  top: 33px;
   right: -25px;
   color: #94a3b8;
   font-size: 18px;
@@ -1535,28 +1300,24 @@ main.wrap > .hero > p {
   pointer-events: none;
 }
 
-#kaip .step .step-head {
-  justify-content: flex-start;
-  gap: 14px;
-  margin-bottom: 18px;
-}
-
-#kaip .step .card-icon {
-  order: -1;
-  width: 52px;
-  height: 52px;
-}
-
-#kaip .step .card-icon svg {
-  width: 22px;
-  height: 22px;
-}
-
-#kaip .step .step-head > b,
 #kaip .step > b {
+  display: inline-flex;
+  align-items: center;
+  height: 28px;
+  padding: 0 10px;
+  border-radius: 6px;
+  background: #eef4f9;
+  color: var(--btn-bg);
   font-size: var(--text-xs);
   font-weight: var(--weight-semibold);
   letter-spacing: var(--tracking-eyebrow);
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 16px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+#kaip .step:hover > b {
+  background: #e6f5f5;
   color: var(--brand-teal-text);
 }
 
@@ -1584,6 +1345,11 @@ main.wrap > .hero > p {
   border-bottom: 1px solid #e6edf4;
 }
 
+#duk .faq {
+  max-width: 860px;
+  margin: 0;
+}
+
 #duk .faq h2 {
   font-size: var(--text-h2) !important;
   font-weight: var(--weight-h2) !important;
@@ -1602,9 +1368,7 @@ main.wrap > .hero > p {
   font-size: 1.03125rem;
   line-height: 1.8;
   color: var(--text-secondary);
-  text-align: justify;
-  text-justify: inter-word;
-  hyphens: auto;
+  text-align: left;
 }
 
 #duk .faq details:last-child {
@@ -1650,9 +1414,7 @@ main.wrap > .hero > p {
 }
 
 .authstory .step {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
+  display: block;
   padding-top: 20px;
   margin-top: 20px;
   transition: border-color 0.24s var(--ease-mercury);
@@ -1660,29 +1422,6 @@ main.wrap > .hero > p {
 
 .authstory .step p {
   line-height: 1.68;
-}
-
-.authstory .card-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: transparent;
-  border: 1px solid rgba(56, 179, 179, 0.38);
-  color: #e6f4f7;
-}
-
-.authstory .card-icon svg {
-  width: 18px;
-  height: 18px;
-}
-
-.authstory .card-icon .icon-accent {
-  stroke: var(--brand-teal);
-}
-
-.authstory .step:hover .card-icon {
-  background: rgba(56, 179, 179, 0.14);
-  border-color: var(--brand-teal);
 }
 
 /* Šviesus, lengvas CTA blokas – suderintas su puslapio švara, #142e52 ir #38b3b3 akcentais */
@@ -1844,37 +1583,8 @@ main.wrap > .hero > p {
 }
 
 @media (max-width: 960px) {
-  main.wrap > .steps,
   .companies {
     grid-template-columns: 1fr;
-  }
-
-  main.wrap > .steps .step {
-    grid-template-columns: 1fr;
-    gap: 16px;
-    padding: 26px 8px;
-  }
-
-  main.wrap > .steps .step .step-head {
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 14px;
-    width: 100%;
-  }
-
-  main.wrap > .steps .step > div:last-child {
-    grid-template-columns: 1fr;
-    row-gap: 12px;
-  }
-
-  main.wrap > .steps .step > div:last-child > ul {
-    grid-column: 1;
-    grid-row: 3;
-    margin-top: 6px;
-    padding: 16px 0 0;
-    border-left: 0;
-    border-top: 1px solid #edf2f7;
   }
 
   .companies .company {
@@ -2068,10 +1778,10 @@ main.wrap.page-how > .steps .step {
   position: relative;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
+  align-items: flex-start;
+  text-align: left;
   gap: 0;
-  padding: 32px 24px;
+  padding: 28px 26px;
   background: #ffffff;
   border: 1px solid #e6edf4;
   border-radius: 14px;
@@ -2087,9 +1797,9 @@ main.wrap.page-how > .steps .step:hover {
 main.wrap.page-how > .steps .step:not(:last-child)::after {
   content: "→";
   position: absolute;
-  top: 55px;
+  top: 33px;
   right: -25px;
-  color: #cbd5e1;
+  color: #94a3b8;
   font-size: 18px;
   font-weight: 400;
   line-height: 1;
@@ -2097,27 +1807,28 @@ main.wrap.page-how > .steps .step:not(:last-child)::after {
 }
 
 main.wrap.page-how > .steps .step .num {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
+  width: auto;
+  min-width: 36px;
+  height: 28px;
+  padding: 0 10px;
+  border-radius: 6px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 22px;
-  background: #ffffff;
-  border: 1px solid rgba(20, 46, 82, 0.16);
+  margin-bottom: 16px;
+  background: #eef4f9;
+  border: 0;
   color: var(--btn-bg);
-  font-size: 1rem;
-  font-weight: var(--weight-medium);
-  letter-spacing: 0.06em;
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-eyebrow);
   font-variant-numeric: tabular-nums;
-  transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 main.wrap.page-how > .steps .step:hover .num {
-  border-color: var(--brand-teal);
-  background: rgba(56, 179, 179, 0.06);
-  color: var(--btn-bg);
+  background: #e6f5f5;
+  color: var(--brand-teal-text);
 }
 
 main.wrap.page-how > .steps .step h2 {
@@ -2125,14 +1836,14 @@ main.wrap.page-how > .steps .step h2 {
   font-weight: var(--weight-semibold);
   line-height: var(--leading-h3);
   color: var(--btn-bg);
-  margin: 0 0 12px;
+  margin: 0 0 10px;
 }
 
 main.wrap.page-how > .steps .step p {
-  margin: 0 auto;
-  max-width: 28ch;
-  font-size: 0.96875rem;
-  line-height: 1.75;
+  margin: 0;
+  max-width: 34ch;
+  font-size: 1rem;
+  line-height: 1.76;
   color: var(--text-secondary);
 }
 
@@ -2171,10 +1882,10 @@ main.wrap.page-how > section.block .grid2 {
 main.wrap.page-how > section.block .card {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
+  align-items: flex-start;
+  text-align: left;
   gap: 0;
-  padding: 28px 26px;
+  padding: 26px 28px;
   background: #ffffff;
   border: 1px solid #e6edf4;
   border-radius: 14px;
@@ -2182,25 +1893,9 @@ main.wrap.page-how > section.block .card {
   transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
-main.wrap.page-how > section.block .card::before {
-  content: "";
-  display: block;
-  width: 28px;
-  height: 2px;
-  border-radius: 2px;
-  background: var(--brand-teal);
-  margin-bottom: 18px;
-  transition: width 0.2s ease, background-color 0.2s ease;
-}
-
 main.wrap.page-how > section.block .card:hover {
   background: #f5f9fd;
   border-color: #cddae8;
-}
-
-main.wrap.page-how > section.block .card:hover::before {
-  width: 40px;
-  background: var(--btn-bg);
 }
 
 main.wrap.page-how > section.block .card h3 {
@@ -2209,10 +1904,10 @@ main.wrap.page-how > section.block .card h3 {
 }
 
 main.wrap.page-how > section.block .card p {
-  margin: 0 auto;
-  max-width: 34ch;
-  font-size: 0.96875rem;
-  line-height: 1.75;
+  margin: 0;
+  max-width: 42ch;
+  font-size: 1rem;
+  line-height: 1.76;
   color: var(--text-secondary);
 }
 
@@ -2381,9 +2076,7 @@ body:not(:has(#skaiciuokle)) main.wrap:not(.page-how, .page-company) > section.b
   line-height: 1.8;
   max-width: 72ch;
   color: var(--text-secondary);
-  text-align: justify;
-  text-justify: inter-word;
-  hyphens: auto;
+  text-align: left;
 }
 
 body:not(:has(#skaiciuokle)) main.authshell {
@@ -2425,9 +2118,7 @@ body:not(:has(#skaiciuokle, header)) > p {
   margin-bottom: 18px;
   max-width: 70ch;
   color: var(--text-secondary);
-  text-align: justify;
-  text-justify: inter-word;
-  hyphens: auto;
+  text-align: left;
 }
 
 /* ==========================================================================
