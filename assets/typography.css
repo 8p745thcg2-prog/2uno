@@ -1,11 +1,10 @@
 /* ==========================================================================
-   2UNO – Bendra šriftų, tipografijos ir prekės ženklo spalvų sistema
+   2UNO – Bendra Mercury stiliaus B2B dizaino, tipografijos ir spalvų sistema
    Spalvos paimtos tiesiogiai iš logotipo (assets/2uno-logo.jpg):
    - Pagrindinė tamsiai mėlyna: #0b2569
    - Akcentinė turkio spalva:   #38b3b3
-   Norint pakeisti šriftą ar spalvas visoje svetainėje, pakanka atnaujinti
-   kintamuosius šiame faile.
-   Išimtis: #skaiciuokle ir jos vidiniai elementai išlaiko savo esamus stilius.
+   Norint pakeisti šriftą, plotį ar spalvas visoje svetainėje, pakanka
+   atnaujinti kintamuosius šiame faile.
    ========================================================================== */
 
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
@@ -19,17 +18,31 @@
   /* Prekės ženklo spalvos pagal logotipą */
   --brand-navy: #0b2569;
   --brand-navy-hover: #14358a;
-  --brand-navy-deep: #081c52;
+  --brand-navy-deep: #071949;
   --brand-teal: #38b3b3;
-  --brand-teal-hover: #2da2a2;
+  --brand-teal-hover: #48c2c2;
   --brand-teal-text: #176f74;
-  --brand-teal-soft: #eaf7f7;
-  --brand-teal-tint: #d8f1f1;
+  --brand-teal-soft: #eef9f9;
+  --brand-teal-tint: #dcf3f3;
+  --brand-teal-border: #c5e8e8;
 
-  /* Paviršiai ir linijos */
-  --surface-page: #f5f8fc;
+  /* Mercury tipo švarūs paviršiai, linijos ir gylis */
+  --surface-page: #f8f9fc;
   --surface-card: #ffffff;
-  --border-subtle: #e1e8f2;
+  --surface-subtle: #f3f6fa;
+  --surface-input: #fafbfd;
+  --border-subtle: #e5eaf2;
+  --border-input: #d8e1ee;
+  --border-strong: #c3d0e3;
+  --shadow-xs: 0 1px 2px rgba(11, 37, 105, 0.03);
+  --shadow-sm: 0 1px 2px rgba(11, 37, 105, 0.03), 0 8px 24px rgba(11, 37, 105, 0.04);
+  --shadow-md: 0 2px 6px rgba(11, 37, 105, 0.04), 0 18px 44px rgba(11, 37, 105, 0.07);
+
+  /* Spinduliai */
+  --radius-pill: 999px;
+  --radius-card: 16px;
+  --radius-panel: 18px;
+  --radius-input: 10px;
 
   /* Vienodas visų puslapių plotis (keisti vienoje vietoje) */
   --container-width: 1280px;
@@ -37,34 +50,34 @@
   --container-max: calc(var(--container-width) + var(--container-pad) * 2);
 
   /* Tipografinė skalė */
-  --text-h1: clamp(1.75rem, 2.3vw, 2.25rem);         /* 28px – 36px */
-  --text-h1-compact: clamp(1.5rem, 1.9vw, 1.875rem); /* 24px – 30px (kompaktiška pradžia) */
-  --text-h2: clamp(1.25rem, 1.5vw, 1.5rem);          /* 20px – 24px */
-  --text-h2-card: 1.125rem;                          /* 18px (kortelių / žingsnių antraštės) */
-  --text-h3: 1.0625rem;                              /* 17px */
-  --text-h4: 0.875rem;                               /* 14px */
-  --text-lead: 0.96875rem;                           /* 15.5px */
-  --text-body: 0.9375rem;                            /* 15px */
-  --text-sm: 0.875rem;                               /* 14px */
-  --text-xs: 0.75rem;                                /* 12px */
-  --text-eyebrow: 0.6875rem;                         /* 11px */
+  --text-h1: clamp(1.75rem, 2.4vw, 2.375rem);         /* 28px – 38px */
+  --text-h1-compact: clamp(1.5rem, 2.05vw, 2rem);     /* 24px – 32px (pradžios puslapis) */
+  --text-h2: clamp(1.25rem, 1.55vw, 1.5625rem);       /* 20px – 25px */
+  --text-h2-card: 1.125rem;                           /* 18px */
+  --text-h3: 1.03125rem;                              /* 16.5px */
+  --text-h4: 0.875rem;                                /* 14px */
+  --text-lead: 0.96875rem;                            /* 15.5px */
+  --text-body: 0.9375rem;                             /* 15px */
+  --text-sm: 0.875rem;                                /* 14px */
+  --text-xs: 0.75rem;                                 /* 12px */
+  --text-eyebrow: 0.6875rem;                          /* 11px */
 
-  /* Šriftų storiai */
+  /* Šriftų storiai (Mercury estetika – lengvesnis, ramesnis svoris) */
   --weight-regular: 400;
   --weight-medium: 500;
   --weight-semibold: 600;
   --weight-bold: 700;
 
   /* Eilučių aukščiai */
-  --leading-tight: 1.18;
-  --leading-snug: 1.3;
+  --leading-tight: 1.16;
+  --leading-snug: 1.28;
   --leading-body: 1.6;
   --leading-relaxed: 1.65;
 
   /* Raidžių tarpai */
-  --tracking-h1: -0.028em;
-  --tracking-h2: -0.022em;
-  --tracking-h3: -0.015em;
+  --tracking-h1: -0.032em;
+  --tracking-h2: -0.025em;
+  --tracking-h3: -0.016em;
   --tracking-eyebrow: 0.1em;
 
   /* Teksto spalvos */
@@ -74,7 +87,10 @@
   --text-eyebrow-color: var(--brand-teal-text);
 }
 
-/* Bazinis teksto ir fono nustatymas visoje svetainėje */
+/* ==========================================================================
+   1. Bazinė tipografija ir puslapio fonas
+   ========================================================================== */
+
 body {
   font-family: var(--font-sans);
   font-size: var(--text-body);
@@ -90,31 +106,33 @@ body header,
 body header nav a,
 body header .navcta,
 body .site-footer,
-body footer {
+body footer,
+body button,
+body input,
+body select {
   font-family: var(--font-sans);
 }
 
-/* Vienoda antraščių hierarchija visuose puslapiuose
-   (:where(...) išlaiko žemą specifiškumą, o #skaiciuokle ir jos dialogai lieka nepaliesti) */
-h1:where(:not(#skaiciuokle *, #nextsteps *, #lt-calendar *)) {
+/* Vienoda antraščių hierarchija visuose puslapiuose */
+h1 {
   font-family: var(--font-heading);
   font-size: var(--text-h1);
-  font-weight: var(--weight-semibold);
+  font-weight: var(--weight-medium);
   line-height: var(--leading-tight);
   letter-spacing: var(--tracking-h1);
   color: var(--text-primary);
 }
 
-h2:where(:not(#skaiciuokle *, #nextsteps *, #lt-calendar *)) {
+h2 {
   font-family: var(--font-heading);
   font-size: var(--text-h2);
-  font-weight: var(--weight-semibold);
+  font-weight: var(--weight-medium);
   line-height: var(--leading-snug);
   letter-spacing: var(--tracking-h2);
   color: var(--text-primary);
 }
 
-h3:where(:not(#skaiciuokle *, #nextsteps *, #lt-calendar *)) {
+h3 {
   font-family: var(--font-heading);
   font-size: var(--text-h3);
   font-weight: var(--weight-semibold);
@@ -123,7 +141,7 @@ h3:where(:not(#skaiciuokle *, #nextsteps *, #lt-calendar *)) {
   color: var(--text-primary);
 }
 
-h4:where(:not(#skaiciuokle *, #nextsteps *, #lt-calendar *)) {
+h4 {
   font-family: var(--font-heading);
   font-size: var(--text-h4);
   font-weight: var(--weight-semibold);
@@ -131,28 +149,26 @@ h4:where(:not(#skaiciuokle *, #nextsteps *, #lt-calendar *)) {
   color: var(--text-primary);
 }
 
-/* Kortelių, žingsnių ir sąrašų sub-antraštės */
-.step h2:where(:not(#skaiciuokle *)),
-.card h2:where(:not(#skaiciuokle *)),
-.company-id h2:where(:not(#skaiciuokle *)) {
+.step h2,
+.card h2,
+.company-id h2 {
   font-size: var(--text-h2-card);
+  font-weight: var(--weight-semibold);
   line-height: var(--leading-snug);
 }
 
-/* Viršutinė kategorijos žyma (.eyebrow) */
-.eyebrow:where(:not(#skaiciuokle *, #nextsteps *)) {
+.eyebrow {
   font-family: var(--font-sans);
   font-size: var(--text-eyebrow);
-  font-weight: var(--weight-bold);
+  font-weight: var(--weight-semibold);
   line-height: 1.3;
   letter-spacing: var(--tracking-eyebrow);
   text-transform: uppercase;
   color: var(--text-eyebrow-color);
 }
 
-/* Pagrindiniai puslapio įžangos aprašymai */
-.lead:where(:not(#skaiciuokle *)),
-.hero > p:where(:not(#skaiciuokle *)),
+.lead,
+.hero > p,
 .calculator-intro > p {
   font-size: var(--text-lead);
   font-weight: var(--weight-regular);
@@ -161,38 +177,772 @@ h4:where(:not(#skaiciuokle *, #nextsteps *, #lt-calendar *)) {
   max-width: 66ch;
 }
 
-/* Sekcijų įvadiniai aprašymai */
-section.block > p:where(:not(#skaiciuokle *)),
-.section-head p:where(:not(#skaiciuokle *)) {
+section.block > p,
+.section-head p {
   font-size: var(--text-body);
   line-height: var(--leading-body);
   color: var(--text-secondary);
 }
 
-/* Kortelių, žingsnių, DUK ir sąrašų aprašymai */
-.card p:where(:not(.lead, .alert, .hint, .msg, .foot, #skaiciuokle *)),
-.step p:where(:not(#skaiciuokle *)),
-.faq p:where(:not(#skaiciuokle *)),
-details p:where(:not(#skaiciuokle *)),
-.company p.desc:where(:not(#skaiciuokle *)) {
+.card p:where(:not(.lead, .alert, .hint, .msg, .foot)),
+.step p,
+.faq p,
+details p,
+.company p.desc {
   font-size: var(--text-sm);
   line-height: var(--leading-body);
   color: var(--text-muted);
 }
 
-/* DUK klausimai */
-.faq summary:where(:not(#skaiciuokle *)) {
+.faq summary {
   font-family: var(--font-heading);
   font-size: var(--text-body);
-  font-weight: var(--weight-semibold);
+  font-weight: var(--weight-medium);
   line-height: 1.45;
   color: var(--text-primary);
 }
 
-/* Tamsūs blokai (logotipo tamsiai mėlyna + aiškus šviesus kontrastas) */
-.closing:where(:not(#skaiciuokle *)),
-.authstory {
+/* ==========================================================================
+   2. Vienodas puslapių konteinerio plotis ir Mercury antraštė (<header>)
+   ========================================================================== */
+
+.wrap,
+.wrap-1200,
+.account,
+main:where(:not(.authshell, .wrap, .account, :has(> #signup))) {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-pad);
+}
+
+main.authshell {
+  width: min(var(--container-width), calc(100% - var(--container-pad) * 2));
+  max-width: var(--container-width);
+  margin-inline: auto;
+}
+
+body > header {
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-subtle);
+  padding-inline: max(var(--container-pad), calc((100vw - var(--container-width)) / 2));
+}
+
+header:has(.brand-logo) {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  height: 64px;
+  min-height: 64px;
+  max-width: none;
+  margin: 0;
+  padding-block: 0;
+  padding-inline: max(var(--container-pad), calc((100vw - var(--container-width)) / 2));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  box-shadow: none;
+}
+
+header:has(.brand-logo) .brand-logo {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+header:has(.brand-logo) .brand-logo img {
+  display: block;
+  height: 40px;
+  width: auto;
+  max-width: 112px;
+  object-fit: contain;
+}
+
+header:has(.brand-logo) nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+header:has(.brand-logo) nav a {
+  padding: 7px 13px;
+  font-size: 0.84375rem;
+  font-weight: var(--weight-medium);
+  line-height: 1.3;
+  border-radius: var(--radius-pill);
+  color: var(--text-secondary);
+  background: transparent;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background 140ms ease, color 140ms ease;
+}
+
+header:has(.brand-logo) nav a:hover {
+  background: var(--surface-subtle);
+  color: var(--brand-navy);
+}
+
+header:has(.brand-logo) nav a.current {
+  background: #edf2fa;
+  color: var(--brand-navy);
+  font-weight: var(--weight-semibold);
+}
+
+header:has(.brand-logo) nav a.partner-link {
+  background: var(--brand-teal-soft);
+  color: var(--brand-teal-text);
+  border: 1px solid var(--brand-teal-border);
+  font-weight: var(--weight-medium);
+}
+
+header:has(.brand-logo) nav a.partner-link:hover {
+  background: var(--brand-teal-tint);
+  color: var(--brand-navy);
+}
+
+header:has(.brand-logo) .navcta {
+  padding: 9px 18px;
+  border-radius: var(--radius-pill);
   background: var(--brand-navy);
+  color: #ffffff;
+  font-size: 0.8125rem;
+  font-weight: var(--weight-medium);
+  line-height: 1.3;
+  border: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background 140ms ease, transform 100ms ease;
+}
+
+header:has(.brand-logo) .navcta:hover {
+  background: var(--brand-navy-hover);
+}
+
+/* ==========================================================================
+   3. Mercury mygtukai, kortelės ir įvestys visuose puslapiuose
+   ========================================================================== */
+
+.btn,
+button.primary,
+main button:where(:not(.item, .carousel-prev, .carousel-next, .date-toggle, .calendar-close, .menu button, .tabs button, .mobile-switch button, [data-nav])) {
+  border-radius: var(--radius-pill);
+  font-weight: var(--weight-medium);
+  transition: background 140ms ease, border-color 140ms ease, color 140ms ease, transform 100ms ease, box-shadow 140ms ease;
+}
+
+.btn:where(:not(.closing *, .light)),
+button.primary {
+  background: var(--brand-navy);
+  color: #ffffff;
+}
+
+.btn:where(:not(.closing *, .light)):hover,
+button.primary:hover {
+  background: var(--brand-navy-hover);
+}
+
+.btn.light,
+button.light {
+  background: #ffffff;
+  color: var(--brand-navy);
+  border: 1px solid var(--border-input);
+}
+
+.btn.light:hover,
+button.light:hover {
+  background: var(--surface-subtle);
+  border-color: var(--border-strong);
+}
+
+.card,
+.company,
+.panel,
+.authshell,
+.steps .step:where(.wrap .step) {
+  border-color: var(--border-subtle);
+  box-shadow: var(--shadow-xs);
+}
+
+.card,
+.company,
+.panel {
+  border-radius: var(--radius-card);
+}
+
+/* ==========================================================================
+   4. Pagrindinio puslapio kompaktiška įžanga (akcentas – #skaiciuokle)
+   ========================================================================== */
+
+.calculator-intro {
+  padding: 24px 0 20px;
+}
+
+.calculator-intro .eyebrow {
+  margin-bottom: 6px;
+}
+
+.calculator-intro h1 {
+  font-size: var(--text-h1-compact);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-h1);
+  color: var(--brand-navy);
+  margin: 0 0 6px;
+  max-width: 780px;
+}
+
+.calculator-intro p {
+  font-size: var(--text-lead);
+  line-height: 1.55;
+  color: var(--text-secondary);
+  max-width: 720px;
+}
+
+/* ==========================================================================
+   5. Skaičiuoklė (#skaiciuokle) – Mercury fintech dizainas (100 % išsaugota logika)
+   ========================================================================== */
+
+#skaiciuokle {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.5;
+  gap: 18px 24px;
+  margin-bottom: 12px;
+}
+
+/* Bendri 01 / 02 žingsnių pavadinimai */
+#skaiciuokle .workspace-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 36px;
+}
+
+#skaiciuokle .workspace-heading > span {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-pill);
+  background: var(--brand-teal-soft);
+  border: 1px solid var(--brand-teal-border);
+  color: var(--brand-teal-text);
+  font-size: 11px;
+  font-weight: var(--weight-semibold);
+  font-variant-numeric: tabular-nums;
+}
+
+#skaiciuokle .workspace-heading h2 {
+  font-size: 1.1875rem;
+  font-weight: var(--weight-medium);
+  letter-spacing: -0.022em;
+  color: var(--brand-navy);
+}
+
+#skaiciuokle .heading-offers .toolbar label {
+  font-size: 12px !important;
+  color: var(--text-muted);
+  gap: 8px;
+}
+
+#skaiciuokle .heading-offers .toolbar select {
+  background: #ffffff;
+  color: var(--brand-navy);
+  border: 1px solid var(--border-input);
+  border-radius: var(--radius-pill);
+  padding: 7px 14px;
+  font-size: 12.5px;
+  font-weight: var(--weight-medium);
+  max-width: 210px;
+  transition: border-color 140ms ease, box-shadow 140ms ease;
+}
+
+#skaiciuokle .heading-offers .toolbar select:hover {
+  border-color: var(--border-strong);
+}
+
+#skaiciuokle .heading-offers .toolbar select:focus {
+  outline: 0;
+  border-color: var(--brand-teal);
+  box-shadow: 0 0 0 3px rgba(56, 179, 179, 0.16);
+}
+
+/* Kairioji klausimyno kortelė – švarus baltas Mercury fintech paviršius */
+#formview {
+  background: var(--surface-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-panel);
+  color: var(--brand-navy);
+  box-shadow: var(--shadow-sm);
+}
+
+#formview .formbody {
+  padding: 24px 26px;
+}
+
+#formview .question-section {
+  padding: 18px 0;
+  border-bottom: 1px solid #edf1f7;
+}
+
+#formview .question-section:first-child {
+  padding-top: 0;
+}
+
+#formview .question-section:last-child {
+  border-bottom: 0;
+  padding-bottom: 2px;
+}
+
+#formview .question-section legend {
+  font-size: 0.9375rem;
+  font-weight: var(--weight-semibold);
+  letter-spacing: -0.015em;
+  color: var(--brand-navy);
+  padding: 0 0 12px;
+}
+
+#formview .field label,
+#formview .branch > .field label {
+  color: var(--text-secondary);
+  font-size: 0.8125rem;
+  font-weight: var(--weight-medium);
+  line-height: 1.4;
+  margin-bottom: 6px;
+}
+
+#formview .field input,
+#formview .field select,
+#formview .branch > .field select {
+  background: var(--surface-input);
+  border: 1px solid var(--border-input);
+  border-radius: var(--radius-input);
+  color: var(--brand-navy);
+  font-size: 0.875rem;
+  height: 42px;
+  min-height: 42px;
+  max-height: 42px;
+  padding: 8px 11px;
+  transition: border-color 140ms ease, background 140ms ease, box-shadow 140ms ease;
+}
+
+#formview .field input::placeholder {
+  color: #9aa7ba;
+}
+
+#formview .field input:hover,
+#formview .field select:hover,
+#formview .branch > .field select:hover {
+  border-color: var(--border-strong);
+  background: #ffffff;
+}
+
+#formview .field input:focus,
+#formview .field select:focus,
+#formview .field input:focus-visible,
+#formview .field select:focus-visible {
+  background: #ffffff;
+  border-color: var(--brand-teal);
+  box-shadow: 0 0 0 3px rgba(56, 179, 179, 0.16);
+  outline: 0;
+}
+
+#formview .field input.invalid,
+#formview .field select.invalid {
+  border-color: #b42318;
+  background: #fff6f5;
+}
+
+#formview .branch {
+  padding: 11px 0;
+  border-bottom: 1px solid #f0f3f8;
+}
+
+#formview .branch:last-child {
+  border-bottom: 0;
+  padding-bottom: 2px;
+}
+
+#formview .branch-children {
+  margin-top: 10px;
+  padding: 12px 0 4px 14px;
+  border-left: 2px solid var(--brand-teal);
+}
+
+/* Mercury tipo perjungikliai (toggles) */
+#formview .toggle-slider {
+  background: #d7e0ec;
+}
+
+#formview .toggle-switch input:checked + .toggle-slider {
+  background: var(--brand-teal);
+}
+
+#formview .toggle-switch input:focus-visible + .toggle-slider {
+  outline: 3px solid rgba(56, 179, 179, 0.35);
+  outline-offset: 2px;
+}
+
+/* Kalendoriaus piktograma ir modalas */
+#formview .date-toggle {
+  color: var(--text-muted);
+  border-radius: 7px;
+}
+
+#formview .date-toggle:hover {
+  background: var(--brand-teal-soft);
+  color: var(--brand-navy);
+}
+
+#lt-calendar {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-panel);
+  box-shadow: var(--shadow-md);
+  color: var(--brand-navy);
+}
+
+#lt-calendar .calendar-head button,
+#lt-calendar .calendar-close {
+  background: var(--surface-subtle);
+  color: var(--brand-navy);
+  border-radius: 8px;
+}
+
+#lt-calendar .calendar-grid button:hover {
+  background: var(--brand-teal-soft);
+}
+
+#lt-calendar .calendar-grid button[aria-pressed="true"] {
+  background: var(--brand-navy);
+  color: #ffffff;
+}
+
+/* Dešinioji pasiūlymų panelė (#resultview) ir įmonių kortelės */
+#resultview {
+  color: var(--brand-navy);
+}
+
+#resultview .cards {
+  gap: 14px;
+  padding: 2px 2px 8px;
+}
+
+#resultview .provider {
+  flex: 0 0 248px;
+  background: var(--surface-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-panel);
+  padding: 20px;
+  gap: 12px;
+  box-shadow: var(--shadow-xs);
+  color: var(--brand-navy);
+  transition: border-color 150ms ease, box-shadow 150ms ease, transform 150ms ease;
+}
+
+#resultview .provider:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-sm);
+}
+
+#resultview .provider.is-selected {
+  border: 1.5px solid var(--brand-teal);
+  padding: 19.5px;
+  box-shadow: 0 0 0 3px rgba(56, 179, 179, 0.14), var(--shadow-sm);
+}
+
+#resultview .providerhead {
+  gap: 10px;
+}
+
+#resultview .providerhead .monogram {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: var(--brand-teal-soft);
+  border: 1px solid var(--brand-teal-border);
+  color: var(--brand-teal-text);
+  font-size: 13px;
+  font-weight: var(--weight-semibold);
+}
+
+#resultview .providerhead h3 {
+  font-size: 0.96875rem;
+  font-weight: var(--weight-semibold);
+  letter-spacing: -0.018em;
+  color: var(--brand-navy);
+}
+
+#resultview .provider > .tag {
+  background: var(--surface-subtle);
+  color: var(--text-secondary);
+  border: 1px solid #e6ecf4;
+  border-radius: var(--radius-pill);
+  padding: 4px 10px;
+  font-size: 11.5px;
+  font-weight: var(--weight-medium);
+}
+
+#resultview .review-stats {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.65;
+  font-variant-numeric: tabular-nums;
+}
+
+#resultview .review-stats strong {
+  font-size: 14px;
+  font-weight: var(--weight-semibold);
+  color: var(--brand-navy);
+}
+
+#resultview .review-stats .star {
+  color: #e0a42a;
+}
+
+#resultview .provider > ul {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text-secondary);
+  gap: 8px;
+}
+
+#resultview .provider li:before {
+  color: var(--brand-teal);
+  font-weight: var(--weight-bold);
+}
+
+/* Kainos blokas kortelėje */
+#resultview .provider .price {
+  margin: 2px 0 0;
+  padding: 14px;
+  background: #f6f9fc;
+  border: 1px solid #e7edf5;
+  border-radius: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+#resultview .provider .price-main > strong {
+  font-size: 1.75rem;
+  font-weight: var(--weight-semibold);
+  letter-spacing: -0.03em;
+  color: var(--brand-navy);
+}
+
+#resultview .provider .price-main > span {
+  font-size: 12.5px;
+  color: var(--text-muted);
+}
+
+#resultview .provider .price > small {
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+
+#resultview .annual-price {
+  border-top: 1px solid #e2eaf3;
+  margin-top: 10px;
+  padding-top: 10px;
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+
+#resultview .annual-price > b {
+  font-size: 13px;
+  font-weight: var(--weight-semibold);
+  color: var(--brand-navy);
+}
+
+#resultview .quote-note {
+  margin-top: 8px;
+  background: #fff9eb;
+  border: 1px solid #f2dfb1;
+  color: #7a5200;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+#resultview .cardactions .btn {
+  width: 100%;
+  min-height: 40px;
+  padding: 9px 14px;
+  border-radius: var(--radius-pill);
+  background: var(--brand-navy);
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: var(--weight-medium);
+}
+
+#resultview .cardactions .btn:hover:not(:disabled) {
+  background: var(--brand-navy-hover);
+}
+
+#resultview .cardactions .btn:disabled {
+  background: #eef2f7;
+  color: #8f9db3;
+}
+
+#resultview .price-breakdown summary,
+#resultview .provider-more summary {
+  font-size: 12.5px;
+  font-weight: var(--weight-medium);
+  color: var(--brand-teal-text);
+}
+
+#resultview .price-breakdown table {
+  margin: 8px 0;
+  font-variant-numeric: tabular-nums;
+}
+
+#resultview .price-breakdown td {
+  border-bottom-color: #edf1f7;
+  color: var(--text-secondary);
+}
+
+#resultview .carousel-prev,
+#resultview .carousel-next {
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--border-input);
+  background: rgba(255, 255, 255, 0.96);
+  color: var(--brand-navy);
+  box-shadow: 0 4px 14px rgba(11, 37, 105, 0.1);
+}
+
+#resultview .carousel-prev:hover,
+#resultview .carousel-next:hover {
+  background: #ffffff;
+  border-color: var(--border-strong);
+}
+
+html {
+  scroll-padding-top: 84px;
+}
+
+@media (min-width: 1101px) {
+  #resultview {
+    top: 80px;
+    max-height: calc(100dvh - 96px);
+  }
+}
+
+@media (min-width: 801px) and (max-width: 1100px) {
+  #resultview {
+    top: 112px;
+    max-height: calc(100dvh - 128px);
+  }
+}
+
+/* Sutarties peržiūros rodinys (#contractview) */
+#contractview {
+  background: var(--surface-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-panel);
+  box-shadow: var(--shadow-sm);
+  padding: 28px;
+}
+
+#contractview .contract-navigation {
+  top: 64px;
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 12px 0 16px;
+  margin-bottom: 20px;
+}
+
+#contractview .contract-navigation .btn,
+#contractview .contract-bottom-navigation .btn {
+  border-radius: var(--radius-pill);
+  background: var(--surface-subtle);
+  color: var(--brand-navy);
+  border: 1px solid var(--border-input);
+  font-size: 13px;
+  min-height: 40px;
+  padding: 8px 16px;
+}
+
+#contractview .contract-navigation .btn:hover,
+#contractview .contract-bottom-navigation .btn:hover {
+  background: #e9eff8;
+}
+
+#contractview .notice {
+  background: var(--brand-teal-soft);
+  border: 1px solid var(--brand-teal-border);
+  border-radius: 10px;
+  color: #214e57;
+  font-size: 13px;
+}
+
+#contractview .document {
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  background: #ffffff;
+}
+
+#contractview .side {
+  background: #fafbfd;
+  border: 1px solid var(--border-subtle) !important;
+  border-radius: 14px !important;
+}
+
+#contractview #sign {
+  border-radius: var(--radius-pill);
+  background: var(--brand-navy);
+  color: #ffffff;
+  font-size: 13.5px;
+  padding: 12px 18px;
+  margin-top: 12px;
+}
+
+#contractview #sign:hover {
+  background: var(--brand-navy-hover);
+}
+
+#nextsteps {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-panel);
+  box-shadow: var(--shadow-md);
+}
+
+/* ==========================================================================
+   6. Žemiau skaičiuoklės esančios sekcijos, DUK, tamsūs blokai ir poraštė
+   ========================================================================== */
+
+#kaip {
+  padding: 56px 0;
+}
+
+#kaip .step {
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 18px;
+}
+
+#duk {
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+#duk .faq details {
+  border-bottom-color: var(--border-subtle);
+}
+
+#duk .faq details:last-child {
+  border-bottom: 0;
+}
+
+/* Tamsūs prekės ženklo blokai (logotipo mėlyna su švelniu turkio akcentu) */
+.closing,
+.authstory {
+  background: radial-gradient(560px circle at 96% 12%, rgba(56, 179, 179, 0.22), transparent 62%), var(--brand-navy);
+}
+
+.closing {
+  border-radius: 20px;
 }
 
 .closing h2,
@@ -213,16 +963,19 @@ details p:where(:not(#skaiciuokle *)),
   color: var(--brand-teal-tint);
 }
 
-.closing .btn:where(:not(#skaiciuokle *)) {
+.closing .btn {
   background: var(--brand-teal);
   color: var(--brand-navy);
+  border-radius: var(--radius-pill);
+  font-weight: var(--weight-semibold);
+  padding: 12px 22px;
 }
 
-.closing .btn:where(:not(#skaiciuokle *)):hover {
-  background: #48c2c2;
+.closing .btn:hover {
+  background: var(--brand-teal-hover);
 }
 
-/* Poraštės tipografija, spalvos ir vienodas plotis */
+/* Poraštė */
 .site-footer {
   width: 100%;
   max-width: var(--container-max);
@@ -261,121 +1014,9 @@ details p:where(:not(#skaiciuokle *)),
   color: var(--text-muted);
 }
 
-/* Vienodas puslapių turinio plotis visuose puslapiuose */
-.wrap,
-.wrap-1200,
-.account,
-main:where(:not(.authshell, .wrap, .account, :has(> #signup))) {
-  width: 100%;
-  max-width: var(--container-max);
-  margin-inline: auto;
-  padding-inline: var(--container-pad);
-}
-
-main.authshell {
-  width: min(var(--container-width), calc(100% - var(--container-pad) * 2));
-  max-width: var(--container-width);
-  margin-inline: auto;
-}
-
-/* Vienodas antraštės turinio plotis visuose puslapiuose */
-body > header {
-  padding-inline: max(var(--container-pad), calc((100vw - var(--container-width)) / 2));
-}
-
-/* Kompaktiška, lakoniška viešųjų puslapių antraštė */
-header:has(.brand-logo) {
-  position: static;
-  height: 64px;
-  min-height: 64px;
-  max-width: none;
-  margin: 0;
-  padding-block: 0;
-  padding-inline: max(var(--container-pad), calc((100vw - var(--container-width)) / 2));
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  background: #ffffff;
-  border-bottom: 1px solid var(--border-subtle);
-  box-shadow: none;
-}
-
-header:has(.brand-logo) .brand-logo {
-  display: flex;
-  align-items: center;
-  flex-shrink: 0;
-}
-
-header:has(.brand-logo) .brand-logo img {
-  display: block;
-  height: 42px;
-  width: auto;
-  max-width: 114px;
-  object-fit: contain;
-}
-
-header:has(.brand-logo) nav {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-header:has(.brand-logo) nav a {
-  padding: 7px 12px;
-  font-size: 0.84375rem;
-  font-weight: var(--weight-medium);
-  line-height: 1.3;
-  border-radius: 7px;
-  color: var(--text-secondary);
-  background: transparent;
-  white-space: nowrap;
-  flex-shrink: 0;
-  transition: background 120ms ease, color 120ms ease;
-}
-
-header:has(.brand-logo) nav a:hover {
-  background: #f0f4fa;
-  color: var(--brand-navy);
-}
-
-header:has(.brand-logo) nav a.current {
-  background: #ebf0fa;
-  color: var(--brand-navy);
-  font-weight: var(--weight-semibold);
-}
-
-header:has(.brand-logo) nav a.partner-link {
-  background: var(--brand-teal-soft);
-  color: var(--brand-teal-text);
-  font-weight: var(--weight-semibold);
-}
-
-header:has(.brand-logo) nav a.partner-link:hover {
-  background: var(--brand-teal-tint);
-  color: var(--brand-navy);
-}
-
-header:has(.brand-logo) .navcta {
-  padding: 8px 15px;
-  border-radius: 8px;
-  background: var(--brand-navy);
-  color: #ffffff;
-  font-size: 0.8125rem;
-  font-weight: var(--weight-semibold);
-  line-height: 1.3;
-  border: 0;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  white-space: nowrap;
-  flex-shrink: 0;
-  transition: background 120ms ease;
-}
-
-header:has(.brand-logo) .navcta:hover {
-  background: var(--brand-navy-hover);
-}
+/* ==========================================================================
+   7. Prisitaikymas prie mažesnių ekranų (tablet ir mobilieji)
+   ========================================================================== */
 
 @media (max-width: 1100px) {
   header:has(.brand-logo) {
@@ -401,6 +1042,7 @@ header:has(.brand-logo) .navcta:hover {
   }
 
   header:has(.brand-logo) {
+    position: static;
     padding-block: 8px;
     padding-inline: var(--container-pad);
     gap: 6px 12px;
@@ -423,33 +1065,32 @@ header:has(.brand-logo) .navcta:hover {
 
   header:has(.brand-logo) .navcta {
     font-size: 0.75rem;
-    padding: 7px 12px;
+    padding: 7px 13px;
   }
-}
 
-/* Mygtukai ir akcentai pagal logotipą (išskyrus skaičiuoklę) */
-.btn:where(:not(#skaiciuokle *, .closing *, .light)) {
-  background: var(--brand-navy);
-  color: #ffffff;
-}
+  .calculator-intro {
+    padding: 16px 0 14px;
+  }
 
-.btn:where(:not(#skaiciuokle *, .closing *, .light)):hover {
-  background: var(--brand-navy-hover);
-}
+  #formview .formbody {
+    padding: 20px 16px;
+  }
 
-.btn.light:where(:not(#skaiciuokle *)) {
-  background: #edf3fa;
-  color: var(--brand-navy);
-}
+  #formview .field input,
+  #formview .field select,
+  #formview .branch > .field select {
+    font-size: 16px;
+    height: 44px;
+    min-height: 44px;
+    max-height: 44px;
+  }
 
-.btn.light:where(:not(#skaiciuokle *)):hover {
-  background: #e1ebf7;
-}
+  #resultview .provider {
+    flex-basis: min(74vw, 270px);
+    padding: 18px;
+  }
 
-/* Skaičiuoklės izoliacija – #skaiciuokle išlaiko savo pradinį šrifto pagrindą,
-   kad pasauliniai body šrifto pakeitimai kol kas nekeistų pačios skaičiuoklės */
-#skaiciuokle {
-  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
-  font-size: 14px;
-  line-height: 1.5;
+  #contractview {
+    padding: 18px 16px;
+  }
 }
