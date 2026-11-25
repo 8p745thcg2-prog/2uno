@@ -2121,6 +2121,37 @@ body:not(:has(#skaiciuokle)) .companies .company .features li {
   line-height: 1.74;
 }
 
+body:not(:has(#skaiciuokle)) .companies .company .company-meta {
+  display: grid;
+  gap: 6px;
+  margin: 4px 0 18px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  background: #f8fafc;
+}
+
+body:not(:has(#skaiciuokle)) .companies .company .company-meta > span {
+  display: inline-flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+body:not(:has(#skaiciuokle)) .companies .company .company-meta small {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+body:not(:has(#skaiciuokle)) .companies .company .company-meta b {
+  color: var(--btn-bg);
+  font-weight: var(--weight-semibold);
+}
+
 body:not(:has(#skaiciuokle)) main.wrap:not(.page-how, .page-company) > section.block {
   padding: 52px 0;
   border-top: 1px solid #edf2f7;
@@ -2288,9 +2319,14 @@ main.wrap.page-company > section.block p {
   text-align: left;
 }
 
+main.wrap.page-company > section.block.company-about .eyebrow {
+  margin-bottom: 8px;
+}
+
 main.wrap.page-company > section.block .features {
   display: grid;
-  gap: 12px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 32px;
   margin: 22px 0 0;
   padding: 22px 0 0;
   border-top: 1px solid #e6eef5;
@@ -2310,6 +2346,183 @@ main.wrap.page-company > section.block .features li::before {
   left: 0;
   color: var(--brand-teal);
   font-weight: var(--weight-bold);
+}
+
+main.wrap.page-company > .company-section {
+  padding: 52px 0;
+  border-top: 1px solid #edf2f7;
+}
+
+main.wrap.page-company > .company-section .eyebrow {
+  margin-bottom: 10px;
+}
+
+main.wrap.page-company > .company-section > h2 {
+  font-size: var(--text-h2);
+  font-weight: var(--weight-h2);
+  line-height: var(--leading-snug);
+  color: var(--btn-bg);
+  margin: 0 0 12px;
+}
+
+main.wrap.page-company > .company-section .section-intro {
+  max-width: 68ch;
+  font-size: 1rem;
+  line-height: 1.76;
+  color: #52647d;
+  margin: 0;
+}
+
+main.wrap.page-company .specs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 36px;
+  margin-top: 28px;
+}
+
+main.wrap.page-company .spec-item {
+  border-top: 1px solid #dce6f0;
+  padding-top: 20px;
+  min-width: 0;
+}
+
+main.wrap.page-company .spec-item h3 {
+  font-size: var(--text-h3);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-h3);
+  color: var(--btn-bg);
+  margin: 0 0 12px;
+}
+
+main.wrap.page-company .spec-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+main.wrap.page-company .spec-chip {
+  display: inline-flex;
+  align-items: center;
+  height: 28px;
+  padding: 0 10px;
+  border-radius: 6px;
+  background: #eef4f9;
+  color: var(--btn-bg);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+}
+
+main.wrap.page-company .spec-item p {
+  margin: 0;
+  font-size: 0.96875rem;
+  line-height: 1.72;
+  color: #52647d;
+}
+
+main.wrap.page-company .spec-item p.spec-lead {
+  font-weight: var(--weight-semibold);
+  color: var(--btn-bg);
+  margin-bottom: 8px;
+}
+
+main.wrap.page-company .spec-item p.spec-sub {
+  margin-top: 8px;
+}
+
+main.wrap.page-company .pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 28px;
+}
+
+main.wrap.page-company .pricing-panel {
+  background: #f8fafc;
+  border: 0;
+  border-left: 2px solid rgba(56, 179, 179, 0.5);
+  border-radius: 0 12px 12px 0;
+  padding: 26px 28px;
+  min-width: 0;
+}
+
+main.wrap.page-company .pricing-badge {
+  display: inline-flex;
+  align-items: center;
+  height: 26px;
+  padding: 0 10px;
+  border-radius: 6px;
+  background: #eef4f9;
+  color: var(--btn-bg);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  margin-bottom: 12px;
+}
+
+main.wrap.page-company .pricing-panel h3 {
+  font-size: var(--text-h3);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-h3);
+  color: var(--btn-bg);
+  margin: 0 0 12px;
+}
+
+main.wrap.page-company .pricing-panel p {
+  margin: 0;
+  font-size: 0.96875rem;
+  line-height: 1.72;
+  color: #52647d;
+}
+
+main.wrap.page-company .pricing-panel p strong {
+  color: var(--btn-bg);
+  font-weight: var(--weight-semibold);
+}
+
+main.wrap.page-company .pricing-panel p.pricing-sub {
+  margin-top: 10px;
+}
+
+main.wrap.page-company .rate-list {
+  margin: 14px 0 0;
+  padding: 0;
+  display: grid;
+}
+
+main.wrap.page-company .rate-list > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  padding: 10px 0;
+  border-bottom: 1px solid #e6eef5;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+main.wrap.page-company .rate-list > div:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+main.wrap.page-company .rate-list dt {
+  color: #52647d;
+}
+
+main.wrap.page-company .rate-list dd {
+  margin: 0;
+  color: var(--btn-bg);
+  font-weight: var(--weight-semibold);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+main.wrap.page-company .pricing-footnote {
+  margin: 20px 0 0;
+  max-width: 78ch;
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: var(--text-muted);
 }
 
 main.wrap.page-company > section.block.company-cta {
@@ -2383,6 +2596,18 @@ main.wrap.page-company .company-cta .btn:hover {
   color: #ffffff;
 }
 
+@media (max-width: 960px) {
+  main.wrap.page-company > section.block .features,
+  main.wrap.page-company .specs-grid,
+  main.wrap.page-company .pricing-grid {
+    grid-template-columns: 1fr;
+  }
+
+  main.wrap.page-company .specs-grid {
+    gap: 24px;
+  }
+}
+
 @media (max-width: 800px) {
   main.wrap.page-company {
     padding-top: 20px;
@@ -2390,6 +2615,23 @@ main.wrap.page-company .company-cta .btn:hover {
 
   main.wrap.page-company > section.block {
     padding: 22px 20px;
+  }
+
+  main.wrap.page-company > .company-section {
+    padding: 36px 0;
+  }
+
+  main.wrap.page-company .pricing-panel {
+    padding: 22px 20px;
+  }
+
+  main.wrap.page-company .rate-list > div {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  main.wrap.page-company .rate-list dd {
+    text-align: left;
   }
 
   main.wrap.page-company > section.block.company-cta {

@@ -4,10 +4,40 @@ function esc(s) {
   return String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 }
 
+function fmtEur(n) {
+  return `${Number(n).toFixed(2).replace('.', ',')} €`;
+}
+
 function renderPage(p, baseUrl) {
   const url = `${baseUrl}/imone/${p.slug}`;
   const ratingStr = p.rating.toFixed(1).replace('.', ',');
-  const featuresHtml = p.features.map((f) => `<li>${esc(f)}</li>`).join('\n');
+  const allStrengths = [...(p.features || []), ...(p.highlights || [])];
+  const featuresHtml = allStrengths.map((f) => `<li>${esc(f)}</li>`).join('\n');
+  const software = Array.isArray(p.software) ? p.software : [];
+  const softwareChips = software.map((s) => `<span class="spec-chip">${esc(s)}</span>`).join('');
+  const legalFormsStr = Array.isArray(p.legalForms) ? p.legalForms.join(', ') : 'UAB, MB';
+  const ws = p.workStyle || {};
+  const pr = p.pricing || {};
+  const inc = pr.included || { invoices: 0, bank: 0, employees: 0 };
+  const ann = pr.annual || { included: false, base: 0, member: 8, employee: 4, asset: 2, vehicle: 15 };
+  const isPackage = pr.model === 'package';
+  const modelLabel = isPackage ? 'Planas su įskaičiuotais kiekiais' : 'Bazinis mokestis ir atskiri darbai';
+  const includedText = isPackage
+    ? `${inc.invoices} sąskaitų, ${inc.bank} banko operacijų, ${inc.employees} darbuotojas`
+    : '0 (visi kiekiai skaičiuojami atskirai)';
+  const annualShort = ann.included ? 'įskaičiuotos į mėnesinę kainą' : `vienkartinis mokestis (bazė ${ann.base} €)`;
+  const annualDetailsHtml = ann.included
+    ? `<p>Metinės finansinės atskaitomybės ir metinių deklaracijų parengimas nuolatiniams klientams yra <strong>įskaičiuotas į mėnesinį mokestį</strong> – atskiro metinio mokesčio nėra.</p>
+<p class="pricing-sub">Jei užsakomas tik ankstesnio laikotarpio apskaitos sutvarkymas (be nuolatinės mėnesinės apskaitos), skaičiuoklėje apskaičiuojama atskira bendra suma už pasirinktus laikotarpio metus ir kiekius.</p>`
+    : `<p>Metinės deklaracijos skaičiuojamos kaip <strong>vienkartinis mokestis</strong> pagal jūsų veiklos apimtį deklaruojamu laikotarpiu.</p>
+<dl class="rate-list">
+<div><dt>Metinių deklaracijų bazė</dt><dd>${ann.base} € be PVM</dd></div>
+<div><dt>MB narių metinės paslaugos</dt><dd>${fmtEur(ann.member)}</dd></div>
+<div><dt>Darbuotojų metinės paslaugos</dt><dd>${fmtEur(ann.employee)}</dd></div>
+<div><dt>Ilgalaikio turto metinės paslaugos</dt><dd>${fmtEur(ann.asset)}</dd></div>
+<div><dt>Transporto priemonių metinės paslaugos</dt><dd>${fmtEur(ann.vehicle)}</dd></div>
+</dl>`;
+
   return `<!doctype html>
 <html lang="lt">
 <head>
@@ -15,7 +45,7 @@ function renderPage(p, baseUrl) {
 <meta name="color-scheme" content="light only">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${esc(p.name)} – ${esc(p.tag)} | 2UNO</title>
-<meta name="description" content="${esc(p.name)}: ${esc(p.desc)} Peržiūrėkite specializaciją, stiprybes ir reitingą, tada gaukite orientacinę kainą per 2UNO.">
+<meta name="description" content="${esc(p.name)}: ${esc(p.desc)} Peržiūrėkite specializaciją, apskaitos programas, kainodaros principus ir reitingą, tada gaukite orientacinę kainą per 2UNO.">
 <link rel="canonical" href="${url}">
 <meta property="og:title" content="${esc(p.name)} | 2UNO">
 <meta property="og:description" content="${esc(p.tag)}: ${esc(p.desc)}">
@@ -65,7 +95,7 @@ section.block p{color:var(--muted);font-size:16px}
 .footer-bottom{margin-top:30px;padding-top:20px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
 @media(max-width:800px){.wrap{padding:0 16px}.site-footer{padding:30px 16px 20px}.footer-top{gap:28px}}
 </style>
-<link rel="stylesheet" href="/assets/typography.css?v=35">
+<link rel="stylesheet" href="/assets/typography.css?v=36">
 </head>
 <body>
 <header>
@@ -85,14 +115,67 @@ section.block p{color:var(--muted);font-size:16px}
 <div class="monogram">${esc(p.mark)}</div>
 <div><h1>${esc(p.name)}</h1><span class="tag">${esc(p.tag)}</span></div>
 </section>
-<div class="stats"><span><span class="star">★</span> <b>${ratingStr}</b> · ${p.reviews} atsiliepimai</span><span>Pasirinko <b>${p.clients}</b> klientai</span></div>
+<div class="stats">
+<span><span class="star">★</span> <b>${ratingStr}</b> · ${p.reviews} atsiliepimai</span>
+<span>Pasirinko <b>${p.clients}</b> klientai</span>
+<span>Bazinis mokestis nuo <b>${pr.base} € / mėn.</b></span>
+<span>Metinės deklaracijos: <b>${esc(annualShort)}</b></span>
+</div>
 
-<section class="block">
+<section class="block company-about">
+<div class="eyebrow">Apžvalga ir stiprybės</div>
 <h2>Apie įmonę: ${esc(p.name)}</h2>
-<p>${esc(p.desc)}</p>
+<p>${esc(p.summary || p.desc)}</p>
 <ul class="features">
 ${featuresHtml}
 </ul>
+</section>
+
+<section class="company-section company-specs">
+<div class="eyebrow">Darbo tvarka</div>
+<h2>Darbo ir apskaitos parametrai</h2>
+<div class="specs-grid">
+<div class="spec-item">
+<h3>Apskaitos programos</h3>
+<div class="spec-chips">${softwareChips}</div>
+<p>Jei jau naudojate vieną iš šių programų ir klausimyne pasirinksite jos nekeisti, šis partneris bus rodomas jūsų palyginime.</p>
+</div>
+<div class="spec-item">
+<h3>Aptarnaujamos formos ir sritys</h3>
+<p class="spec-lead">${esc(legalFormsStr)}</p>
+<p>${esc(ws.focus || p.desc)}</p>
+</div>
+<div class="spec-item">
+<h3>Dokumentai ir komunikacija</h3>
+<p>${esc(ws.documents || 'Dokumentai perduodami elektroniniu būdu pagal suderintą grafiką.')}</p>
+<p class="spec-sub">${esc(ws.communication || 'Tiesioginis ryšys su priskirtu buhalteriu darbo dienomis.')}</p>
+</div>
+</div>
+</section>
+
+<section class="company-section company-pricing">
+<div class="eyebrow">Kainodaros principai</div>
+<h2>Mėnesio ir metinių deklaracijų skaičiavimas</h2>
+<p class="section-intro">Skaičiuoklėje orientacinė kaina apskaičiuojama pagal tuos pačius tarifus, kurie pateikti žemiau, atsižvelgiant į jūsų įvestus mėnesio ar laikotarpio kiekius.</p>
+<div class="pricing-grid">
+<div class="pricing-panel">
+<span class="pricing-badge">${esc(modelLabel)}</span>
+<h3>Mėnesinė apskaita</h3>
+<dl class="rate-list">
+<div><dt>Bazinis mėnesio mokestis</dt><dd>nuo ${pr.base} € / mėn. be PVM</dd></div>
+<div><dt>Įskaičiuota į bazę</dt><dd>${esc(includedText)}</dd></div>
+<div><dt>${isPackage ? 'Sąskaita virš limito' : 'Sąskaita (pirkimo / pardavimo)'}</dt><dd>${fmtEur(pr.invoiceRate)}</dd></div>
+<div><dt>Banko operacija</dt><dd>${fmtEur(pr.bankImportRate)} (importas) · ${fmtEur(pr.bankPdfRate)} (PDF)</dd></div>
+<div><dt>Darbuotojo apskaita</dt><dd>${fmtEur(pr.employeeRate)} / mėn.</dd></div>
+</dl>
+</div>
+<div class="pricing-panel">
+<span class="pricing-badge">${ann.included ? 'Įskaičiuota į planą' : 'Vienkartinis mokestis'}</span>
+<h3>Metinės deklaracijos</h3>
+${annualDetailsHtml}
+</div>
+</div>
+<p class="pricing-footnote">Papildomos paslaugos (PVM / SVS apskaita, kasa, ilgalaikis turtas, transporto priemonės, komandiruotės, valiutiniai ar ES / OSS sandoriai, sandėlio apskaita) skaičiuoklėje pridedamos tik tada, kai jas pažymite klausimyne. Visi įkainiai nurodyti be PVM.</p>
 </section>
 
 <section class="block company-cta">

@@ -5,7 +5,32 @@
     "name": "Pavyzdinė įmonė A",
     "tag": "Skaitmeninė apskaita",
     "desc": "Pavyzdinis pasiūlymas verslui, norinčiam apskaitą tvarkyti nuotoliniu būdu.",
-    "features": ["Asmeninis buhalteris ir atsakymas per 1 darbo dieną", "Dokumentai pateikiami vienoje sistemoje"],
+    "summary": "Skaitmenizuota buhalterinė apskaita augančioms paslaugų, IT ir konsultacijų įmonėms, kurios vertina greitą komunikaciją ir popierinių dokumentų nebuvimą. Visi pirkimo, pardavimo ir banko duomenys apdorojami nuotoliniu būdu per vieną sistemą.",
+    "features": [
+      "Asmeninis buhalteris ir atsakymas per 1 darbo dieną",
+      "Dokumentai pateikiami vienoje sistemoje"
+    ],
+    "highlights": [
+      "Automatinis banko išrašų importas ir skaitmeninis dokumentų archyvas",
+      "Metinės finansinės ataskaitos ir deklaracijos įskaičiuotos į mėnesio planą"
+    ],
+    "software": ["Rivilė", "B1"],
+    "legalForms": ["UAB", "MB", "IĮ"],
+    "workStyle": {
+      "focus": "Paslaugų, IT, agentūrų ir nuotoliniu būdu dirbantis verslas",
+      "documents": "Skaitmeninis pateikimas per savitarną arba el. paštu, palaikomas banko importas ir PDF išrašai",
+      "communication": "Priskirtas asmeninis buhalteris, atsakymai darbo dienomis per 1 d. d."
+    },
+    "pricing": {
+      "model": "package",
+      "base": 85,
+      "included": { "invoices": 20, "bank": 20, "employees": 1 },
+      "invoiceRate": 1.2,
+      "bankImportRate": 0.3,
+      "bankPdfRate": 0.65,
+      "employeeRate": 18,
+      "annual": { "included": true, "base": 0, "member": 8, "employee": 4, "asset": 2, "vehicle": 15 }
+    },
     "rating": 4.9,
     "reviews": 48,
     "clients": 126
@@ -16,7 +41,32 @@
     "name": "Pavyzdinė įmonė B",
     "tag": "Smulkiajam verslui",
     "desc": "Pavyzdinis apskaitos paslaugų pasiūlymas mažoms įmonėms.",
-    "features": ["Specializacija naujose MB ir mažose UAB", "Pagalba perimant apskaitą iš ankstesnio tiekėjo"],
+    "summary": "Praktiškas ir lankstus sprendimas neseniai įsteigtoms mažosioms bendrijoms, mažoms UAB bei verslams su kintančiu dokumentų srautu. Mokate nedidelį bazinį mokestį ir tik už faktiškai per mėnesį atliktas operacijas.",
+    "features": [
+      "Specializacija naujose MB ir mažose UAB",
+      "Pagalba perimant apskaitą iš ankstesnio tiekėjo"
+    ],
+    "highlights": [
+      "Aiškus pirmųjų veiklos mėnesių nustatymas ir PVM registracijos konsultacija",
+      "Lanksti vienetinė kainodara – nepermokate mažesnio aktyvumo mėnesiais"
+    ],
+    "software": ["B1", "Site.pro"],
+    "legalForms": ["MB", "UAB", "Individuali veikla"],
+    "workStyle": {
+      "focus": "Naujai steigiamos MB, mažos UAB ir smulkios paslaugų įmonės",
+      "documents": "Paprastas dokumentų perdavimas el. būdu, pagalba susitvarkant pirminius likučius",
+      "communication": "Tiesioginis ryšys el. paštu ir telefonu su jūsų įmonę prižiūrinčiu buhalteriu"
+    },
+    "pricing": {
+      "model": "itemized",
+      "base": 65,
+      "included": { "invoices": 0, "bank": 0, "employees": 0 },
+      "invoiceRate": 1.3,
+      "bankImportRate": 0.3,
+      "bankPdfRate": 0.65,
+      "employeeRate": 19,
+      "annual": { "included": false, "base": 100, "member": 8, "employee": 4, "asset": 2, "vehicle": 15 }
+    },
     "rating": 4.8,
     "reviews": 36,
     "clients": 98
@@ -27,7 +77,32 @@
     "name": "Pavyzdinė įmonė C",
     "tag": "Prekybai ir e. prekybai",
     "desc": "Pavyzdinis pasiūlymas prekybos ir elektroninės prekybos veiklai.",
-    "features": ["E. parduotuvių ir prekybos apskaitos patirtis", "Mokėjimų ir sandėlio duomenų suderinimas"],
+    "summary": "Specializuota apskaita didmeninės, mažmeninės ir elektroninės prekybos įmonėms, dirbančioms su sandėliu, mokėjimų tarpininkais ir tarptautiniais pardavimais. Planas pritaikytas didesniam pirminių dokumentų kiekiui.",
+    "features": [
+      "E. parduotuvių ir prekybos apskaitos patirtis",
+      "Mokėjimų ir sandėlio duomenų suderinimas"
+    ],
+    "highlights": [
+      "Darbas su ES pardavimais, OSS / IOSS deklaravimu ir kelių valiutų operacijomis",
+      "Į mėnesio planą įskaičiuota didesnė sąskaitų apimtis (iki 40 vnt.)"
+    ],
+    "software": ["Rivilė", "ROBO"],
+    "legalForms": ["UAB", "MB"],
+    "workStyle": {
+      "focus": "E. parduotuvės, didmeninė ir mažmeninė prekyba, tarptautiniai pardavimai",
+      "documents": "Prekybos platformų, mokėjimo surinkėjų ir sandėlio ataskaitų importas",
+      "communication": "Reguliarus likučių bei mokėjimų sutikrinimas ir operatyvūs atsakymai darbo dienomis"
+    },
+    "pricing": {
+      "model": "package",
+      "base": 110,
+      "included": { "invoices": 40, "bank": 20, "employees": 1 },
+      "invoiceRate": 1.4,
+      "bankImportRate": 0.3,
+      "bankPdfRate": 0.65,
+      "employeeRate": 20,
+      "annual": { "included": false, "base": 120, "member": 8, "employee": 4, "asset": 2, "vehicle": 15 }
+    },
     "rating": 4.7,
     "reviews": 29,
     "clients": 87
@@ -38,7 +113,32 @@
     "name": "Pavyzdinė įmonė D",
     "tag": "Apskaita ir konsultacijos",
     "desc": "Pavyzdinis pasiūlymas įmonėms, kurioms aktualios ir konsultacijos.",
-    "features": ["Mėnesinė konsultacija su buhalteriu", "Mokestinių terminų priminimai iš anksto"],
+    "summary": "Buhalterinės apskaitos priežiūra kartu su nuolatinėmis mokesčių bei veiklos planavimo konsultacijomis. Tinka vadovams, norintiems iš anksto žinoti mokestines prievoles ir pasitarti prieš priimant finansinius sprendimus.",
+    "features": [
+      "Mėnesinė konsultacija su buhalteriu",
+      "Mokestinių terminų priminimai iš anksto"
+    ],
+    "highlights": [
+      "Platus palaikomų apskaitos programų pasirinkimas (Rivilė, B1, Site.pro)",
+      "Metinės deklaracijos įskaičiuotos į mėnesinę kainą be atskiro metinio mokesčio"
+    ],
+    "software": ["Rivilė", "B1", "Site.pro"],
+    "legalForms": ["UAB", "MB", "IĮ"],
+    "workStyle": {
+      "focus": "Augančios paslaugų, gamybos ir B2B įmonės, vertinančios aktyvų patarimą",
+      "documents": "Lankstus dokumentų teikimas ir pritaikymas prie jūsų turimos apskaitos programos",
+      "communication": "Suplanuota mėnesinė konsultacija bei išankstiniai priminimai apie mokesčių terminus"
+    },
+    "pricing": {
+      "model": "itemized",
+      "base": 80,
+      "included": { "invoices": 0, "bank": 0, "employees": 0 },
+      "invoiceRate": 1.5,
+      "bankImportRate": 0.3,
+      "bankPdfRate": 0.65,
+      "employeeRate": 21,
+      "annual": { "included": true, "base": 0, "member": 8, "employee": 4, "asset": 2, "vehicle": 15 }
+    },
     "rating": 4.9,
     "reviews": 24,
     "clients": 64
@@ -49,7 +149,32 @@
     "name": "Pavyzdinė įmonė E",
     "tag": "Apskaita ir finansai",
     "desc": "Pavyzdinis pasiūlymas apskaitai ir finansinių rezultatų stebėjimui.",
-    "features": ["Aiškios mėnesinės pelno ir pinigų srautų ataskaitos", "Rezultatų aptarimas su finansų specialistu"],
+    "summary": "Apskaita orientuota į aiškų verslo rezultatų matomumą kiekvieną mėnesį: šalia standartinių deklaracijų paruošiamos suprantamos pelno, sąnaudų ir pinigų srautų suvestinės vadovybei.",
+    "features": [
+      "Aiškios mėnesinės pelno ir pinigų srautų ataskaitos",
+      "Rezultatų aptarimas su finansų specialistu"
+    ],
+    "highlights": [
+      "Mėnesio plane įskaičiuota 30 sąskaitų, 20 banko operacijų ir 1 darbuotojas",
+      "Struktūrizuota vadovybės atskaitomybė finansiniams sprendimams ir augimui"
+    ],
+    "software": ["B1"],
+    "legalForms": ["UAB", "MB"],
+    "workStyle": {
+      "focus": "Komandos turinčios ir pelningumą aktyviai stebinčios UAB bei MB",
+      "documents": "Centralizuotas dokumentų surinkimas ir periodinis mėnesio uždarymas",
+      "communication": "Periodinės finansinių rodiklių apžvalgos su apskaitos ir finansų specialistu"
+    },
+    "pricing": {
+      "model": "package",
+      "base": 100,
+      "included": { "invoices": 30, "bank": 20, "employees": 1 },
+      "invoiceRate": 1.6,
+      "bankImportRate": 0.3,
+      "bankPdfRate": 0.65,
+      "employeeRate": 22,
+      "annual": { "included": false, "base": 150, "member": 8, "employee": 4, "asset": 2, "vehicle": 15 }
+    },
     "rating": 4.8,
     "reviews": 31,
     "clients": 105
