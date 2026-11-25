@@ -256,24 +256,24 @@ body > header {
   position: sticky;
   top: 0;
   z-index: 100;
-  height: 64px;
-  min-height: 64px;
+  height: 68px;
+  min-height: 68px;
   background: rgba(255, 255, 255, 0.94);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1px solid rgba(15, 32, 66, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(15, 30, 45, 0.06);
   padding-inline: max(var(--container-pad), calc((100vw - var(--container-width)) / 2));
   box-shadow: none;
 }
 
-/* Fiksuota vienos eilutės navigacija viršuje su švariu baltu fonu */
+/* Fiksuota, švari vienos eilutės navigacija viršuje */
 header:has(.brand-logo) {
   position: sticky;
   top: 0;
   z-index: 100;
   width: 100%;
-  height: 64px;
-  min-height: 64px;
+  height: 68px;
+  min-height: 68px;
   max-width: none;
   margin: 0;
   padding-block: 0;
@@ -281,12 +281,12 @@ header:has(.brand-logo) {
   display: flex;
   align-items: center;
   flex-wrap: nowrap;
-  gap: 8px;
+  gap: 12px;
   background: rgba(255, 255, 255, 0.94);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 0;
-  border-bottom: 1px solid rgba(15, 32, 66, 0.08);
+  border-bottom: 1px solid rgba(15, 30, 45, 0.06);
   border-radius: 0;
   box-shadow: none;
 }
@@ -299,21 +299,22 @@ header:has(.brand-logo) .brand-logo {
 
 header:has(.brand-logo) .brand-logo img {
   display: block;
-  height: 50px;
+  height: 44px;
   width: auto;
-  max-width: 140px;
+  max-width: 132px;
   object-fit: contain;
 }
 
-/* Dešinėje sugrupuotos nuorodos + veiksmų mygtukai vienoje eilutėje */
+/* Švari vienos eilutės nuorodų grupė darbalaukyje – be perteklinių rėmelių */
 header:has(.brand-logo) nav {
   order: 0;
   width: auto;
   margin-left: auto;
+  margin-right: 10px;
   padding-bottom: 0;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
 }
 
 header:has(.brand-logo) nav a {
@@ -324,40 +325,58 @@ header:has(.brand-logo) nav a {
   font-size: var(--text-ui);
   font-weight: var(--weight-medium);
   line-height: 1;
-  border-radius: 10px;
-  color: var(--text-primary);
+  border: 0;
+  border-radius: 8px;
+  color: var(--text-secondary);
   background: transparent;
   white-space: nowrap;
   flex-shrink: 0;
-  transition: background-color 0.2s var(--ease-mercury), color 0.2s var(--ease-mercury), border-color 0.2s var(--ease-mercury);
+  transition: background-color 0.2s var(--ease-mercury), color 0.2s var(--ease-mercury);
 }
 
 header:has(.brand-logo) nav a:hover {
-  background: rgba(11, 37, 105, 0.05);
-  color: var(--brand-navy);
+  background: rgba(15, 30, 45, 0.04);
+  color: var(--text-primary);
 }
 
 header:has(.brand-logo) nav a.current {
-  background: var(--brand-teal-soft);
-  color: var(--brand-teal-text);
+  background: transparent;
+  color: var(--text-eyebrow-color);
+  font-weight: var(--weight-semibold);
 }
 
-/* Antrinis mygtukas („Buhalteriams“) – tvarkingai atskirtas šalia pagrindinio CTA */
+/* „Buhalteriams“ nuoroda – švariai atskirta subtiliu brūkšniu be rėmelio */
 header:has(.brand-logo) nav a.partner-link {
-  margin-left: 10px;
-  height: 38px;
-  padding: 0 14px;
-  border-radius: var(--radius-btn);
-  background: #ffffff;
-  color: var(--btn-bg);
-  border: 1px solid var(--border-input);
+  position: relative;
+  margin-left: 8px;
+  padding: 0 12px 0 20px;
+  height: 36px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-secondary);
 }
 
-header:has(.brand-logo) nav a.partner-link:hover,
+header:has(.brand-logo) nav a.partner-link::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 14px;
+  background: rgba(15, 30, 45, 0.14);
+}
+
+header:has(.brand-logo) nav a.partner-link:hover {
+  background: rgba(15, 30, 45, 0.04);
+  color: var(--text-primary);
+}
+
 header:has(.brand-logo) nav a.partner-link.current {
-  background: var(--surface-pill);
-  border-color: var(--btn-bg);
-  color: var(--btn-bg);
+  background: transparent;
+  color: var(--text-eyebrow-color);
+  font-weight: var(--weight-semibold);
 }
 
 /* Pagrindinis CTA mygtukas („Rasti buhalterį“) */
@@ -383,6 +402,11 @@ header:has(.brand-logo) .navcta {
 header:has(.brand-logo) .navcta:hover {
   background: var(--btn-bg-hover);
   border-color: var(--btn-bg-hover);
+}
+
+/* Mobilaus meniu jungiklis darbalaukyje nerodomas */
+header:has(.brand-logo) .nav-mobile {
+  display: none;
 }
 
 /* ==========================================================================
@@ -1635,13 +1659,14 @@ main.wrap > .hero > p {
     flex-wrap: nowrap;
     padding-block: 0;
     padding-inline: var(--container-pad);
-    gap: 6px;
+    gap: 8px;
   }
 
   header:has(.brand-logo) nav {
     order: 0;
     width: auto;
     margin-left: auto;
+    margin-right: 6px;
     padding-bottom: 0;
     gap: 2px;
   }
@@ -1652,7 +1677,7 @@ main.wrap > .hero > p {
 
   header:has(.brand-logo) nav a.partner-link {
     margin-left: 6px;
-    padding: 0 12px;
+    padding: 0 10px 0 16px;
   }
 
   header:has(.brand-logo) .navcta {
@@ -1684,52 +1709,160 @@ main.wrap > .hero > p {
     position: sticky;
     top: 0;
     z-index: 100;
-    height: auto;
+    height: 60px;
     min-height: 60px;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    padding-block: 10px;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    padding-block: 0;
     padding-inline: var(--container-pad);
-    gap: 8px 12px;
-    background: rgba(255, 255, 255, 0.94);
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.96);
     border: 0;
-    border-bottom: 1px solid rgba(15, 32, 66, 0.08);
+    border-bottom: 1px solid rgba(15, 30, 45, 0.06);
     border-radius: 0;
     box-shadow: none;
   }
 
   header:has(.brand-logo) .brand-logo img {
-    height: 42px;
-    max-width: 110px;
+    height: 36px;
+    max-width: 104px;
   }
 
   header:has(.brand-logo) nav {
-    order: 3;
-    flex: 1 0 100%;
-    width: 100%;
-    margin-left: 0;
-    overflow-x: auto;
-    gap: 4px;
-    justify-content: space-between;
-    padding-bottom: 2px;
-  }
-
-  header:has(.brand-logo) nav a {
-    height: 32px;
-    font-size: 0.8125rem;
-    padding: 0 7px;
-  }
-
-  header:has(.brand-logo) nav a.partner-link {
-    margin-left: 0;
-    height: 32px;
-    padding: 0 10px;
+    display: none;
   }
 
   header:has(.brand-logo) .navcta {
-    height: 34px;
-    font-size: var(--text-ui);
+    margin-left: auto;
+    height: 36px;
+    font-size: 0.8125rem;
     padding: 0 14px;
+    border-radius: 9px;
+  }
+
+  header:has(.brand-logo) .nav-mobile {
+    display: block;
+    position: static;
+    flex-shrink: 0;
+  }
+
+  header:has(.brand-logo) .nav-toggle {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border: 1px solid rgba(15, 30, 45, 0.1);
+    border-radius: 9px;
+    background: #ffffff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    list-style: none;
+    transition: background-color 0.18s ease, border-color 0.18s ease;
+  }
+
+  header:has(.brand-logo) .nav-toggle::-webkit-details-marker {
+    display: none;
+  }
+
+  header:has(.brand-logo) .nav-toggle::marker {
+    content: "";
+  }
+
+  header:has(.brand-logo) .nav-toggle:hover,
+  header:has(.brand-logo) .nav-mobile[open] .nav-toggle {
+    background: #f6f9fc;
+    border-color: rgba(15, 30, 45, 0.18);
+  }
+
+  header:has(.brand-logo) .nav-toggle span {
+    position: relative;
+    display: block;
+    width: 16px;
+    height: 1.5px;
+    border-radius: 2px;
+    background: var(--btn-bg);
+    transition: background-color 0.18s ease;
+  }
+
+  header:has(.brand-logo) .nav-toggle span::before,
+  header:has(.brand-logo) .nav-toggle span::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 16px;
+    height: 1.5px;
+    border-radius: 2px;
+    background: var(--btn-bg);
+    transition: transform 0.2s ease, top 0.2s ease;
+  }
+
+  header:has(.brand-logo) .nav-toggle span::before {
+    top: -5px;
+  }
+
+  header:has(.brand-logo) .nav-toggle span::after {
+    top: 5px;
+  }
+
+  header:has(.brand-logo) .nav-mobile[open] .nav-toggle span {
+    background: transparent;
+  }
+
+  header:has(.brand-logo) .nav-mobile[open] .nav-toggle span::before {
+    top: 0;
+    transform: rotate(45deg);
+  }
+
+  header:has(.brand-logo) .nav-mobile[open] .nav-toggle span::after {
+    top: 0;
+    transform: rotate(-45deg);
+  }
+
+  header:has(.brand-logo) .nav-mobile-panel {
+    position: absolute;
+    top: calc(100% + 1px);
+    left: 0;
+    right: 0;
+    z-index: 110;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 10px var(--container-pad) 16px;
+    background: #ffffff;
+    border-bottom: 1px solid rgba(15, 30, 45, 0.08);
+    box-shadow: 0 18px 36px -16px rgba(15, 30, 45, 0.16);
+  }
+
+  header:has(.brand-logo) .nav-mobile-panel a {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 12px;
+    border-radius: 10px;
+    font-size: 0.9375rem;
+    font-weight: var(--weight-medium);
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: background-color 0.18s ease, color 0.18s ease;
+  }
+
+  header:has(.brand-logo) .nav-mobile-panel a:hover {
+    background: rgba(15, 30, 45, 0.04);
+  }
+
+  header:has(.brand-logo) .nav-mobile-panel a.current {
+    color: var(--text-eyebrow-color);
+    font-weight: var(--weight-semibold);
+    background: rgba(25, 124, 124, 0.06);
+  }
+
+  header:has(.brand-logo) .nav-mobile-panel a.partner-link {
+    margin-top: 6px;
+    padding-top: 6px;
+    border-top: 1px solid rgba(15, 30, 45, 0.06);
+    border-radius: 0;
+    color: var(--text-secondary);
   }
 
   .calculator-intro,

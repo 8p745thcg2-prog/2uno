@@ -95,7 +95,7 @@ section.block p{color:var(--muted);font-size:16px}
 .footer-bottom{margin-top:30px;padding-top:20px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
 @media(max-width:800px){.wrap{padding:0 16px}.site-footer{padding:30px 16px 20px}.footer-top{gap:28px}}
 </style>
-<link rel="stylesheet" href="/assets/typography.css?v=54">
+<link rel="stylesheet" href="/assets/typography.css?v=55">
 </head>
 <body>
 <header>
@@ -107,6 +107,7 @@ section.block p{color:var(--muted);font-size:16px}
 <a class="partner-link" href="/buhalteriams.html">Buhalteriams</a>
 </nav>
 <a class="navcta" href="/index.html#skaiciuokle">Rasti buhalterį</a>
+<details class="nav-mobile"><summary class="nav-toggle" aria-label="Meniu"><span aria-hidden="true"></span></summary><div class="nav-mobile-panel" aria-label="Navigacija"><a href="/kaip-tai-veikia.html">Kaip veikia</a> <a class="current" href="/imones.html">Įmonės</a> <a href="/index.html#duk">Klausimai</a> <a class="partner-link" href="/buhalteriams.html">Buhalteriams</a></div></details>
 </header>
 
 <main class="wrap page-company">
