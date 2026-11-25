@@ -669,6 +669,24 @@ main.wrap > .hero > p {
   margin: 0;
 }
 
+.calculator-intro {
+  text-align: center;
+}
+
+.calculator-intro > .eyebrow {
+  text-align: center;
+}
+
+.calculator-intro h1 {
+  margin-inline: auto;
+  text-align: center;
+}
+
+.calculator-intro p {
+  margin-inline: auto;
+  text-align: center;
+}
+
 /* ==========================================================================
    5. Skaičiuoklė (#skaiciuokle) – Mercury šilto akmens ir baltų paviršių estetika
    ========================================================================== */
