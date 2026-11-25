@@ -678,7 +678,11 @@ main.wrap > .hero > p {
 }
 
 .calculator-intro h1 {
-  margin-inline: auto;
+  font-size: clamp(40px, 4.7vw, 65px);
+  letter-spacing: -2.8px;
+  line-height: 1.14;
+  margin: 22px auto;
+  max-width: 1110px;
   text-align: center;
 }
 
