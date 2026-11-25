@@ -66,38 +66,45 @@
   --container-max: calc(var(--container-width) + var(--container-pad) * 2);
   --page-top-space: 48px;
 
-  /* Griežta, vienoda 5 žingsnių tipografijos skalė visai svetainei */
-  --text-h1: clamp(1.875rem, 2.4vw, 2.25rem);   /* 30px – 36px */
-  --text-h2: clamp(1.4375rem, 1.8vw, 1.75rem);  /* 23px – 28px */
-  --text-h3: 1.125rem;                          /* 18px */
-  --text-base: 1rem;                            /* 16px – visi aprašymai ir pastraipos vienodi */
-  --text-ui: 0.875rem;                          /* 14px – navigacija, mygtukai, formos, kortelės */
-  --text-xs: 0.75rem;                           /* 12px – žymos, pastabos, meta */
+  /* Vieninga tipografijos skalė visai svetainei (keisti vienoje vietoje) */
+  --text-h1-hero: clamp(36px, 4.2vw, 56px);     /* Pagrindinė hero H1 antraštė */
+  --text-h1: clamp(2rem, 2.8vw, 2.5rem);        /* 32px – 40px antrinių puslapių H1 */
+  --text-h2: clamp(1.5rem, 1.9vw, 1.875rem);    /* 24px – 30px sekcijų H2 */
+  --text-h3: 1.125rem;                          /* 18px kortelių ir žingsnių H3 */
+  --text-base: 1rem;                            /* 16px – visi aprašymai ir pastraipos */
+  --text-ui: 0.875rem;                          /* 14px – navigacija, mygtukai, formos */
+  --text-xs: 0.75rem;                           /* 12px – viršantraštės, žymos, meta */
 
-  /* Šriftų storiai (Inter: 400 / 500 / 600 / 700) */
+  /* Šriftų storiai (Manrope: 400 / 500 / 600 / 700) */
   --weight-regular: 400;
   --weight-medium: 500;
   --weight-semibold: 600;
   --weight-bold: 700;
-  --weight-h1: var(--weight-bold);
-  --weight-h2: var(--weight-semibold);
-  --weight-h3: var(--weight-semibold);
+  --weight-h1: var(--weight-medium);            /* 500 – lengva, švari H1 */
+  --weight-h2: var(--weight-medium);            /* 500 – rami, moderni H2 */
+  --weight-h3: var(--weight-semibold);          /* 600 – aiškus H3 / kortelių pavadinimas */
   --weight-h4: var(--weight-semibold);
 
-  /* Eilučių aukščiai ir tarpai */
-  --leading-tight: 1.18;
+  /* Eilučių aukščiai ir saugus letter-spacing lietuviškoms raidėms */
+  --leading-tight: 1.16;
   --leading-snug: 1.26;
   --leading-h3: 1.35;
   --leading-base: 1.7;
-  --tracking-h1: -0.028em;
-  --tracking-h2: -0.022em;
-  --tracking-h3: -0.015em;
-  --tracking-h4: -0.008em;
+  --tracking-h1-hero: -1.4px;
+  --tracking-h1: -0.022em;
+  --tracking-h2: -0.016em;
+  --tracking-h3: -0.01em;
+  --tracking-h4: -0.006em;
   --tracking-eyebrow: 0.08em;
+
+  /* Tolygus vertikalus sekcijų ir antraščių „oro“ ritmas */
+  --section-gap: 76px;
+  --section-gap-mobile: 52px;
+  --eyebrow-gap: 12px;
 }
 
 /* ==========================================================================
-   1. Bazinė tipografija (vienodi dydžiai visuose puslapiuose)
+   1. Bazinė tipografija (vienintelė antraščių, viršantraščių ir pastraipų bazė)
    ========================================================================== */
 
 html {
@@ -130,7 +137,9 @@ textarea {
   font-family: var(--font-sans);
 }
 
-h1 {
+h1,
+.calculator-intro h1,
+.company-hero h1 {
   font-family: var(--font-heading);
   font-size: var(--text-h1);
   font-weight: var(--weight-h1);
@@ -141,7 +150,10 @@ h1 {
 
 h2,
 .section-head h2,
-.faq h2 {
+.faq h2,
+#duk .faq h2,
+.closing h2,
+section.block h2 {
   font-family: var(--font-heading);
   font-size: var(--text-h2);
   font-weight: var(--weight-h2);
@@ -151,8 +163,11 @@ h2,
 }
 
 h3,
-.step h3 {
-  font-family: var(--font-sans);
+.step h3,
+.step h2,
+.card h2,
+.company-id h2 {
+  font-family: var(--font-heading);
   font-size: var(--text-h3);
   font-weight: var(--weight-h3);
   line-height: var(--leading-h3);
@@ -169,16 +184,9 @@ h4 {
   color: var(--text-primary);
 }
 
-.step h2,
-.card h2,
-.company-id h2 {
-  font-size: var(--text-h3);
-  font-weight: var(--weight-h3);
-  line-height: var(--leading-h3);
-  letter-spacing: var(--tracking-h3);
-}
-
-.eyebrow {
+.eyebrow,
+.calculator-intro > .eyebrow {
+  display: block;
   font-family: var(--font-sans);
   font-size: var(--text-xs);
   font-weight: var(--weight-semibold);
@@ -186,13 +194,12 @@ h4 {
   letter-spacing: var(--tracking-eyebrow);
   text-transform: uppercase;
   color: var(--text-eyebrow-color);
-  margin-bottom: 10px;
+  margin: 0 0 var(--eyebrow-gap);
 }
 
 /* Visi aprašymai, pastraipos ir sąrašai visoje svetainėje – erdvūs, vienodo 16px dydžio */
 .lead,
 .hero > p,
-.calculator-intro > p,
 section.block > p,
 .section-head p,
 .step p,
@@ -607,10 +614,15 @@ main.authshell {
    4. Vienodas puslapio pradžios (H1 ir aprašymo) aukštis visuose puslapiuose
    ========================================================================== */
 
-.calculator-intro,
 main.wrap > .hero {
   padding: var(--page-top-space) 0 28px;
   text-align: left;
+  display: block;
+}
+
+.calculator-intro {
+  padding: var(--page-top-space) 0 28px;
+  text-align: center;
   display: block;
 }
 
@@ -628,49 +640,18 @@ main.authshell {
   margin-top: var(--page-top-space);
 }
 
-.calculator-intro > .eyebrow,
-main.wrap > .hero > .eyebrow,
-.account > .eyebrow,
-main > .eyebrow,
-#form-area > .eyebrow,
-#appView > .eyebrow,
-#loginView > .eyebrow,
-#setupView > .eyebrow,
-#totpView > .eyebrow,
-#done > .eyebrow,
-section.block > .eyebrow,
-.closing .eyebrow,
-.panel .tab > .eyebrow {
-  display: block;
-  margin-bottom: 10px;
-}
-
-.calculator-intro h1,
 main.wrap > .hero h1,
 .account > h1,
 main > h1,
 #form-area > h1,
 #appView > h1 {
-  font-size: var(--text-h1);
-  font-weight: var(--weight-h1);
-  line-height: var(--leading-tight);
-  letter-spacing: var(--tracking-h1);
-  color: var(--text-primary);
-  margin: 0 0 12px;
+  margin: 0 0 14px;
   max-width: 900px;
 }
 
-.calculator-intro p,
 main.wrap > .hero > p {
-  font-size: var(--text-base);
-  line-height: var(--leading-base);
-  color: var(--text-secondary);
   max-width: 720px;
   margin: 0;
-}
-
-.calculator-intro {
-  text-align: center;
 }
 
 .calculator-intro > .eyebrow {
@@ -678,21 +659,20 @@ main.wrap > .hero > p {
 }
 
 .calculator-intro h1 {
-  font-weight: 500;
-  font-size: clamp(36px, 4.2vw, 56px);
-  letter-spacing: -1.4px;
-  line-height: 1.16;
+  font-size: var(--text-h1-hero);
+  letter-spacing: var(--tracking-h1-hero);
   margin: 22px auto;
   max-width: 1110px;
   text-align: center;
 }
 
 .calculator-intro p {
-  font-size: 17px;
-  font-weight: 400;
+  font-size: 1.0625rem;
+  font-weight: var(--weight-regular);
   line-height: 1.6;
+  color: var(--text-secondary);
   max-width: 680px;
-  margin-inline: auto;
+  margin: 0 auto;
   text-align: center;
 }
 
@@ -1295,11 +1275,15 @@ main.wrap > .hero > p {
    ========================================================================== */
 
 #kaip {
-  padding: 64px 0;
+  padding: var(--section-gap) 0;
 }
 
 #kaip .section-head {
-  margin-bottom: 32px;
+  margin-bottom: 36px;
+}
+
+#kaip .section-head h2 {
+  margin: 0 0 14px;
 }
 
 #kaip .steps {
@@ -1313,7 +1297,7 @@ main.wrap > .hero > p {
   min-width: 0;
   background: transparent;
   border: 0;
-  border-top: 1px solid #dce6f0;
+  border-top: 1px solid transparent;
   border-radius: 0;
   padding: 24px 0 0;
   box-shadow: none;
@@ -1407,7 +1391,7 @@ main.wrap > .hero > p {
 }
 
 #duk {
-  padding: 60px 0 !important;
+  padding: var(--section-gap) 0 !important;
   margin-bottom: 0 !important;
 }
 
@@ -1428,12 +1412,9 @@ main.wrap > .hero > p {
 }
 
 #duk .faq h2 {
-  font-size: var(--text-h2) !important;
-  font-weight: var(--weight-h2) !important;
-  line-height: var(--leading-snug) !important;
   color: var(--btn-bg);
   text-align: left;
-  margin-bottom: 24px !important;
+  margin-bottom: 32px;
 }
 
 #duk .faq details {
@@ -1525,14 +1506,15 @@ main.wrap > .hero > p {
 
 /* Šviesus, lengvas CTA blokas – suderintas su puslapio švara, #142e52 ir #38b3b3 akcentais */
 .closing {
+  position: relative;
   width: 100%;
-  margin: 28px 0 36px;
+  margin: 48px 0 56px;
   padding: 26px 32px;
   min-height: 0;
-  background: linear-gradient(135deg, #f8fafc 0%, #f1f7f8 100%);
-  border: 1px solid #e6eef5;
-  border-radius: var(--radius-panel);
-  box-shadow: 0 1px 3px rgba(20, 46, 82, 0.03);
+  background: linear-gradient(180deg, #ffffff 0%, #fafcfd 100%);
+  border: 1px solid rgba(15, 30, 45, 0.08);
+  border-radius: 18px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.94), 0 8px 24px -12px rgba(15, 30, 45, 0.06);
   color: var(--text-primary);
   display: flex;
   flex-direction: row;
@@ -1568,9 +1550,6 @@ main.wrap > .hero > p {
 }
 
 .closing h2 {
-  font-size: var(--text-h2);
-  font-weight: var(--weight-h2);
-  line-height: var(--leading-snug);
   color: var(--btn-bg);
   margin: 0;
 }
@@ -1795,7 +1774,11 @@ main.wrap > .hero > p {
   }
 
   #kaip {
-    padding: 44px 0;
+    padding: var(--section-gap-mobile) 0;
+  }
+
+  #kaip .section-head {
+    margin-bottom: 28px;
   }
 
   #kaip .steps {
@@ -1819,11 +1802,16 @@ main.wrap > .hero > p {
   }
 
   #duk {
-    padding: 40px 0 !important;
+    padding: var(--section-gap-mobile) 0 !important;
+  }
+
+  #duk .faq h2 {
+    margin-bottom: 24px;
   }
 
   #duk .faq details {
-    padding: 18px 0 !important;
+    padding: 16px 18px !important;
+    border-radius: 14px;
   }
 
   #duk .faq summary {
@@ -1836,7 +1824,7 @@ main.wrap > .hero > p {
     align-items: flex-start;
     text-align: left;
     min-height: 0;
-    margin: 24px 0 32px;
+    margin: 32px 0 40px;
     padding: 22px 20px;
     gap: 14px;
   }
@@ -1860,10 +1848,6 @@ main.wrap > .hero > p {
 main.wrap.page-how > .hero {
   text-align: left;
   padding: var(--page-top-space) 0 44px;
-}
-
-main.wrap.page-how > .hero > .eyebrow {
-  margin-bottom: 10px;
 }
 
 main.wrap.page-how > .hero h1 {
@@ -1900,7 +1884,7 @@ main.wrap.page-how > .steps .step {
   padding: 24px 0 0;
   background: transparent;
   border: 0;
-  border-top: 1px solid #dce6f0;
+  border-top: 1px solid transparent;
   border-radius: 0;
   box-shadow: none;
   transition: border-color 0.2s ease;
@@ -1937,9 +1921,6 @@ main.wrap.page-how > .steps .step:hover .num {
 }
 
 main.wrap.page-how > .steps .step h2 {
-  font-size: var(--text-h3);
-  font-weight: var(--weight-semibold);
-  line-height: var(--leading-h3);
   color: var(--btn-bg);
   margin: 0 0 10px;
 }
@@ -1953,22 +1934,18 @@ main.wrap.page-how > .steps .step p {
 }
 
 main.wrap.page-how > .steps-actions {
-  margin: 32px 0 64px;
+  margin: 34px 0 var(--section-gap);
 }
 
 main.wrap.page-how > section.block {
   text-align: left;
-  padding: 64px 0;
+  padding: var(--section-gap) 0;
   border-top: 1px solid #edf2f7;
-}
-
-main.wrap.page-how > section.block > .eyebrow {
-  margin-bottom: 10px;
 }
 
 main.wrap.page-how > section.block > h2 {
   color: var(--btn-bg);
-  margin: 0 0 14px;
+  margin: 0 0 16px;
   max-width: 720px;
 }
 
@@ -1985,27 +1962,28 @@ main.wrap.page-how > section.block .grid2 {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 20px 24px;
   max-width: none;
-  margin: 32px 0 0;
+  margin: 36px 0 0;
 }
 
 main.wrap.page-how > section.block .card {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   text-align: left;
   gap: 0;
   padding: 26px 28px;
-  background: #f8fafc;
-  border: 0;
-  border-left: 2px solid rgba(56, 179, 179, 0.5);
-  border-radius: 0 12px 12px 0;
-  box-shadow: none;
-  transition: background-color 0.2s ease, border-color 0.2s ease;
+  background: #ffffff;
+  border: 1px solid rgba(15, 30, 45, 0.08);
+  border-radius: 16px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.92), 0 8px 24px -12px rgba(15, 30, 45, 0.06);
+  transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 main.wrap.page-how > section.block .card:hover {
-  background: #f1f5f9;
-  border-left-color: var(--brand-teal);
+  background: #ffffff;
+  border-color: rgba(15, 30, 45, 0.14);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.96), 0 12px 28px -12px rgba(15, 30, 45, 0.1);
 }
 
 main.wrap.page-how > section.block .card h3 {
@@ -2033,17 +2011,17 @@ main.wrap.page-how > section.block .card p {
   }
 
   main.wrap.page-how > .steps-actions {
-    margin: 24px 0 48px;
+    margin: 28px 0 var(--section-gap-mobile);
   }
 
   main.wrap.page-how > section.block {
-    padding: 48px 0;
+    padding: var(--section-gap-mobile) 0;
   }
 
   main.wrap.page-how > section.block .grid2 {
     grid-template-columns: 1fr;
     gap: 16px;
-    margin-top: 24px;
+    margin-top: 28px;
   }
 }
 
@@ -2146,20 +2124,21 @@ body:not(:has(#skaiciuokle)) .companies {
 }
 
 body:not(:has(#skaiciuokle)) .companies .company {
+  position: relative;
   display: flex;
   flex-direction: column;
   background: #ffffff;
-  border: 1px solid #e8eef5;
-  border-radius: 14px;
+  border: 1px solid rgba(15, 30, 45, 0.08);
+  border-radius: 18px;
   padding: 28px 30px;
-  box-shadow: 0 1px 2px rgba(20, 46, 82, 0.03);
-  transition: background-color 0.2s ease, border-color 0.2s ease;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.94), 0 8px 24px -12px rgba(15, 30, 45, 0.06);
+  transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 body:not(:has(#skaiciuokle)) .companies .company:hover {
-  background: #f8fafc;
-  border-color: #d2dfec;
-  box-shadow: 0 1px 3px rgba(20, 46, 82, 0.04);
+  background: #ffffff;
+  border-color: rgba(15, 30, 45, 0.14);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.96), 0 12px 28px -12px rgba(15, 30, 45, 0.1);
 }
 
 body:not(:has(#skaiciuokle)) .companies .company .company-head {
@@ -2275,8 +2254,9 @@ body:not(:has(#skaiciuokle)) .companies .company .company-meta {
   gap: 6px;
   margin: auto 0 18px;
   padding: 12px 16px;
-  border-radius: 10px;
-  background: #f8fafc;
+  border-radius: 14px;
+  background: #fafcfd;
+  border: 1px solid rgba(15, 30, 45, 0.06);
 }
 
 body:not(:has(#skaiciuokle)) .companies .company .company-meta > span {
@@ -2302,13 +2282,19 @@ body:not(:has(#skaiciuokle)) .companies .company .company-meta b {
 }
 
 body:not(:has(#skaiciuokle)) main.wrap:not(.page-how, .page-company) > section.block {
-  padding: 52px 0;
+  padding: var(--section-gap) 0;
   border-top: 1px solid #edf2f7;
+}
+
+@media (max-width: 800px) {
+  body:not(:has(#skaiciuokle)) main.wrap:not(.page-how, .page-company) > section.block {
+    padding: var(--section-gap-mobile) 0;
+  }
 }
 
 body:not(:has(#skaiciuokle)) main.wrap:not(.page-how, .page-company) > section.block > h2 {
   color: var(--btn-bg);
-  margin-bottom: 14px;
+  margin: 0 0 16px;
 }
 
 body:not(:has(#skaiciuokle)) main.wrap:not(.page-how, .page-company) > section.block > p {
@@ -2320,8 +2306,11 @@ body:not(:has(#skaiciuokle)) main.wrap:not(.page-how, .page-company) > section.b
 }
 
 body:not(:has(#skaiciuokle)) main.authshell {
-  border: 1px solid #e8eef5;
-  box-shadow: 0 2px 8px rgba(20, 46, 82, 0.04);
+  position: relative;
+  background: #ffffff;
+  border: 1px solid rgba(15, 30, 45, 0.08);
+  border-radius: 18px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.94), 0 8px 24px -12px rgba(15, 30, 45, 0.06);
 }
 
 body:not(:has(#skaiciuokle)) .authstory .step {
@@ -2335,14 +2324,18 @@ body:not(:has(#skaiciuokle)) .authstory .step p {
 }
 
 body:not(:has(#skaiciuokle)) .account .panel {
-  border: 1px solid #e8eef5;
-  box-shadow: 0 1px 3px rgba(20, 46, 82, 0.03);
+  position: relative;
+  background: #ffffff;
+  border: 1px solid rgba(15, 30, 45, 0.08);
+  border-radius: 18px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.94), 0 8px 24px -12px rgba(15, 30, 45, 0.06);
   padding: 34px 36px;
 }
 
 body:not(:has(#skaiciuokle)) .accountstats .stat {
-  background: #f8fafc;
-  border: 1px solid #edf2f7;
+  background: #fafcfd;
+  border: 1px solid rgba(15, 30, 45, 0.06);
+  border-radius: 14px;
   padding: 20px 22px;
 }
 
@@ -2408,9 +2401,6 @@ main.wrap.page-company .monogram {
 }
 
 main.wrap.page-company .company-hero h1 {
-  font-size: var(--text-h1);
-  font-weight: var(--weight-h1);
-  line-height: var(--leading-tight);
   color: var(--btn-bg);
   margin: 0 0 8px;
 }
@@ -2443,20 +2433,18 @@ main.wrap.page-company .stats b {
 }
 
 main.wrap.page-company > section.block {
-  background: #f8fafc;
-  border: 0;
-  border-left: 2px solid rgba(56, 179, 179, 0.5);
-  border-radius: 0 12px 12px 0;
+  position: relative;
+  background: #ffffff;
+  border: 1px solid rgba(15, 30, 45, 0.08);
+  border-radius: 16px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.92), 0 8px 24px -12px rgba(15, 30, 45, 0.06);
   padding: 30px 34px;
   margin: 0 0 28px;
 }
 
 main.wrap.page-company > section.block h2 {
-  font-size: var(--text-h2);
-  font-weight: var(--weight-h2);
-  line-height: var(--leading-snug);
   color: var(--btn-bg);
-  margin: 0 0 14px;
+  margin: 0 0 16px;
 }
 
 main.wrap.page-company > section.block p {
@@ -2466,10 +2454,6 @@ main.wrap.page-company > section.block p {
   max-width: 68ch;
   margin: 0;
   text-align: left;
-}
-
-main.wrap.page-company > section.block.company-about .eyebrow {
-  margin-bottom: 8px;
 }
 
 main.wrap.page-company > section.block .features {
@@ -2498,20 +2482,13 @@ main.wrap.page-company > section.block .features li::before {
 }
 
 main.wrap.page-company > .company-section {
-  padding: 52px 0;
+  padding: var(--section-gap) 0;
   border-top: 1px solid #edf2f7;
 }
 
-main.wrap.page-company > .company-section .eyebrow {
-  margin-bottom: 10px;
-}
-
 main.wrap.page-company > .company-section > h2 {
-  font-size: var(--text-h2);
-  font-weight: var(--weight-h2);
-  line-height: var(--leading-snug);
   color: var(--btn-bg);
-  margin: 0 0 12px;
+  margin: 0 0 16px;
 }
 
 main.wrap.page-company > .company-section .section-intro {
@@ -2526,7 +2503,7 @@ main.wrap.page-company .specs-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 36px;
-  margin-top: 28px;
+  margin-top: 34px;
 }
 
 main.wrap.page-company .spec-item {
@@ -2536,9 +2513,6 @@ main.wrap.page-company .spec-item {
 }
 
 main.wrap.page-company .spec-item h3 {
-  font-size: var(--text-h3);
-  font-weight: var(--weight-semibold);
-  line-height: var(--leading-h3);
   color: var(--btn-bg);
   margin: 0 0 12px;
 }
@@ -2583,14 +2557,15 @@ main.wrap.page-company .pricing-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 24px;
-  margin-top: 28px;
+  margin-top: 34px;
 }
 
 main.wrap.page-company .pricing-panel {
-  background: #f8fafc;
-  border: 0;
-  border-left: 2px solid rgba(56, 179, 179, 0.5);
-  border-radius: 0 12px 12px 0;
+  position: relative;
+  background: #ffffff;
+  border: 1px solid rgba(15, 30, 45, 0.08);
+  border-radius: 16px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.92), 0 8px 24px -12px rgba(15, 30, 45, 0.06);
   padding: 26px 28px;
   min-width: 0;
 }
@@ -2609,9 +2584,6 @@ main.wrap.page-company .pricing-badge {
 }
 
 main.wrap.page-company .pricing-panel h3 {
-  font-size: var(--text-h3);
-  font-weight: var(--weight-semibold);
-  line-height: var(--leading-h3);
   color: var(--btn-bg);
   margin: 0 0 12px;
 }
@@ -2675,12 +2647,12 @@ main.wrap.page-company .pricing-footnote {
 }
 
 main.wrap.page-company > section.block.company-cta {
-  background: linear-gradient(135deg, #f8fafc 0%, #f1f7f8 100%);
-  border: 1px solid #e6eef5;
-  border-radius: var(--radius-panel);
-  box-shadow: 0 1px 3px rgba(20, 46, 82, 0.03);
+  background: linear-gradient(180deg, #ffffff 0%, #fafcfd 100%);
+  border: 1px solid rgba(15, 30, 45, 0.08);
+  border-radius: 18px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.94), 0 8px 24px -12px rgba(15, 30, 45, 0.06);
   padding: 28px 34px;
-  margin: 28px 0 40px;
+  margin: 44px 0 56px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -2767,7 +2739,12 @@ main.wrap.page-company .company-cta .btn:hover {
   }
 
   main.wrap.page-company > .company-section {
-    padding: 36px 0;
+    padding: var(--section-gap-mobile) 0;
+  }
+
+  main.wrap.page-company .specs-grid,
+  main.wrap.page-company .pricing-grid {
+    margin-top: 26px;
   }
 
   main.wrap.page-company .pricing-panel {
@@ -2786,43 +2763,16 @@ main.wrap.page-company .company-cta .btn:hover {
   main.wrap.page-company > section.block.company-cta {
     flex-direction: column;
     align-items: flex-start;
+    margin: 32px 0 40px;
     padding: 22px 20px;
     gap: 16px;
   }
 }
 
 /* ==========================================================================
-   11. Minimalistinis, švarus „daug oro“ kortelių ir blokų paviršius
-       Subtilus 1px rėmelis, švelnus šešėlis, 14–18px apvalinimas ir lengvas
-       viršutinis sidabro atspindys. Griežtai neliečia #skaiciuokle ar <header>.
+   11. Bendri subtilūs šlifuoto sidabro 1px akcentai kortelėms ir žingsniams
+       Griežtai neliečia #skaiciuokle ar <header>.
    ========================================================================== */
-
-body:not(:has(#skaiciuokle)) .companies .company,
-body:not(:has(#skaiciuokle)) .account .panel,
-body:not(:has(#skaiciuokle)) main.authshell,
-.closing,
-main.wrap.page-company > section.block.company-cta {
-  position: relative;
-  background: #ffffff;
-  border: 1px solid rgba(15, 30, 45, 0.08);
-  border-radius: 18px;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.94), 0 8px 24px -12px rgba(15, 30, 45, 0.06);
-}
-
-.closing,
-main.wrap.page-company > section.block.company-cta {
-  background: linear-gradient(180deg, #ffffff 0%, #fafcfd 100%);
-}
-
-main.wrap.page-how > section.block .card,
-main.wrap.page-company > section.block:not(.company-cta),
-main.wrap.page-company .pricing-panel {
-  position: relative;
-  background: #ffffff;
-  border: 1px solid rgba(15, 30, 45, 0.08);
-  border-radius: 16px;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.92), 0 8px 24px -12px rgba(15, 30, 45, 0.06);
-}
 
 body:not(:has(#skaiciuokle)) .companies .company::before,
 body:not(:has(#skaiciuokle)) .account .panel::before,
@@ -2839,25 +2789,6 @@ main.wrap.page-company .pricing-panel::before {
   height: 1px;
   background: var(--silver-sheen);
   pointer-events: none;
-}
-
-body:not(:has(#skaiciuokle)) .companies .company:hover,
-main.wrap.page-how > section.block .card:hover {
-  background: #ffffff;
-  border-color: rgba(15, 30, 45, 0.14);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.96), 0 12px 28px -12px rgba(15, 30, 45, 0.1);
-}
-
-body:not(:has(#skaiciuokle)) .companies .company .company-meta,
-body:not(:has(#skaiciuokle)) .accountstats .stat {
-  background: #fafcfd;
-  border: 1px solid rgba(15, 30, 45, 0.06);
-  border-radius: 14px;
-}
-
-#kaip .step,
-main.wrap.page-how > .steps .step {
-  border-top-color: transparent;
 }
 
 #kaip .step::before,
@@ -2877,144 +2808,3 @@ main.wrap.page-how > .steps .step::before {
 main.wrap.page-how > .steps .step:hover::before {
   background: var(--brand-teal);
 }
-
-@media (max-width: 800px) {
-  #duk .faq details {
-    padding: 16px 18px !important;
-    border-radius: 14px;
-  }
-}
-
-/* ==========================================================================
-   12. Tolygus vertikalus „oro“ ritmas sekcijoms ir h2 antraščių blokams
-       Griežtai neliečia #skaiciuokle, formų ar fiksuotos <header> navigacijos.
-   ========================================================================== */
-
-#kaip {
-  padding: 78px 0;
-}
-
-#kaip .section-head {
-  margin-bottom: 36px;
-}
-
-#kaip .section-head .eyebrow,
-#duk .faq .eyebrow,
-main.wrap.page-how > section.block > .eyebrow,
-body:not(:has(#skaiciuokle)) main.wrap:not(.page-how, .page-company) > section.block > .eyebrow,
-main.wrap.page-company > section.block.company-about .eyebrow,
-main.wrap.page-company > .company-section .eyebrow {
-  margin-bottom: 12px;
-}
-
-#kaip .section-head h2 {
-  margin: 0 0 14px;
-}
-
-#duk {
-  padding: 78px 0 !important;
-}
-
-#duk .faq h2 {
-  margin-bottom: 32px !important;
-}
-
-.closing {
-  margin: 48px 0 56px;
-}
-
-main.wrap.page-how > .steps-actions {
-  margin: 34px 0 76px;
-}
-
-main.wrap.page-how > section.block {
-  padding: 76px 0;
-}
-
-main.wrap.page-how > section.block > h2 {
-  margin: 0 0 16px;
-}
-
-main.wrap.page-how > section.block .grid2 {
-  margin: 36px 0 0;
-}
-
-body:not(:has(#skaiciuokle)) main.wrap:not(.page-how, .page-company) > section.block {
-  padding: 72px 0;
-}
-
-body:not(:has(#skaiciuokle)) main.wrap:not(.page-how, .page-company) > section.block > h2 {
-  margin: 0 0 16px;
-}
-
-main.wrap.page-company > section.block.company-about h2,
-main.wrap.page-company > .company-section > h2 {
-  margin: 0 0 16px;
-}
-
-main.wrap.page-company > .company-section {
-  padding: 72px 0;
-}
-
-main.wrap.page-company .specs-grid,
-main.wrap.page-company .pricing-grid {
-  margin-top: 34px;
-}
-
-main.wrap.page-company > section.block.company-cta {
-  margin: 44px 0 56px;
-}
-
-@media (max-width: 960px) {
-  main.wrap.page-how > .steps-actions {
-    margin: 28px 0 52px;
-  }
-
-  main.wrap.page-how > section.block {
-    padding: 52px 0;
-  }
-
-  main.wrap.page-how > section.block .grid2 {
-    margin-top: 28px;
-  }
-}
-
-@media (max-width: 800px) {
-  #kaip {
-    padding: 52px 0;
-  }
-
-  #kaip .section-head {
-    margin-bottom: 28px;
-  }
-
-  #duk {
-    padding: 52px 0 !important;
-  }
-
-  #duk .faq h2 {
-    margin-bottom: 24px !important;
-  }
-
-  .closing,
-  main.wrap.page-company > section.block.company-cta {
-    margin: 32px 0 40px;
-  }
-
-  body:not(:has(#skaiciuokle)) main.wrap:not(.page-how, .page-company) > section.block,
-  main.wrap.page-company > .company-section {
-    padding: 48px 0;
-  }
-
-  main.wrap.page-company .specs-grid,
-  main.wrap.page-company .pricing-grid {
-    margin-top: 26px;
-  }
-}
-
-
-
-
-
-
-
