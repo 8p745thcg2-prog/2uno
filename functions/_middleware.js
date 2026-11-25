@@ -28,11 +28,11 @@ const SECURITY_HEADERS = {
   // tai tikrina test/csp.test.mjs).
   'Content-Security-Policy': [
     "default-src 'self'",
-    "script-src 'self' " + INLINE_SCRIPT_HASHES.join(' ') + " https://challenges.cloudflare.com",
+    "script-src 'self' " + INLINE_SCRIPT_HASHES.join(' ') + " https://challenges.cloudflare.com https://eu-assets.i.posthog.com",
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
     "font-src 'self' https://fonts.gstatic.com",
-    "img-src 'self' data:",
-    "connect-src 'self'",
+    "img-src 'self' data: https://eu.i.posthog.com",
+    "connect-src 'self' https://eu.i.posthog.com https://eu-assets.i.posthog.com",
     "form-action 'self' https://www.paysera.com https://bank.paysera.com",
     "frame-src 'self' https://challenges.cloudflare.com https://gateway-sandbox.dokobit.com https://gateway.dokobit.com https://signa.mitsoft.lt",
     "frame-ancestors 'none'",
