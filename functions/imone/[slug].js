@@ -65,7 +65,7 @@ section.block p{color:var(--muted);font-size:16px}
 .footer-bottom{margin-top:30px;padding-top:20px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
 @media(max-width:800px){.wrap{padding:0 16px}.site-footer{padding:30px 16px 20px}.footer-top{gap:28px}}
 </style>
-<link rel="stylesheet" href="/assets/typography.css?v=33">
+<link rel="stylesheet" href="/assets/typography.css?v=34">
 </head>
 <body>
 <header>
@@ -88,7 +88,7 @@ section.block p{color:var(--muted);font-size:16px}
 <div class="stats"><span><span class="star">★</span> <b>${ratingStr}</b> · ${p.reviews} atsiliepimai</span><span>Pasirinko <b>${p.clients}</b> klientai</span></div>
 
 <section class="block">
-<h2>Apie ${esc(p.name)}</h2>
+<h2>Apie įmonę: ${esc(p.name)}</h2>
 <p>${esc(p.desc)}</p>
 <ul class="features">
 ${featuresHtml}
