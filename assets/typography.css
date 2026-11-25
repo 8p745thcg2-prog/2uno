@@ -223,27 +223,36 @@ header img,
 }
 
 body > header {
-  height: 68px;
-  min-height: 68px;
+  height: 64px;
+  min-height: 64px;
   background: var(--surface-page);
   border-bottom: 0;
   padding-inline: max(var(--container-pad), calc((100vw - var(--container-width)) / 2));
   box-shadow: none;
 }
 
+/* Suveržta vienos eilutės navigacija + sklandus pasikeitimas į plaukiojančią kapsulę slenkant žemyn */
 header:has(.brand-logo) {
   position: sticky;
   top: 0;
   z-index: 40;
-  height: 68px;
-  min-height: 68px;
-  max-width: none;
-  margin: 0;
+  width: 100%;
+  height: 64px;
+  min-height: 64px;
+  max-width: var(--container-max);
+  margin: 0 auto;
   padding-block: 0;
-  padding-inline: max(var(--container-pad), calc((100vw - var(--container-width)) / 2));
+  padding-inline: var(--container-pad);
   display: flex;
   align-items: center;
-  gap: 10px;
+  flex-wrap: nowrap;
+  gap: 8px;
+  background: rgba(247, 249, 252, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid transparent;
+  border-radius: 0;
+  box-shadow: none;
 }
 
 header:has(.brand-logo) .brand-logo {
@@ -254,85 +263,138 @@ header:has(.brand-logo) .brand-logo {
 
 header:has(.brand-logo) .brand-logo img {
   display: block;
-  height: 42px;
+  height: 40px;
   width: auto;
-  max-width: 140px;
+  max-width: 132px;
   object-fit: contain;
+  transform-origin: left center;
 }
 
-/* Mercury 3 zonų navigacija: logotipas kairėje | pagrindinės nuorodos centre | veiksmai dešinėje */
+/* Dešinėje sugrupuotos nuorodos + veiksmų mygtukai vienoje eilutėje */
 header:has(.brand-logo) nav {
-  flex: 1;
+  order: 0;
+  width: auto;
+  margin-left: auto;
+  padding-bottom: 0;
   display: flex;
   align-items: center;
-  gap: 6px;
-}
-
-header:has(.brand-logo) nav a:first-child {
-  margin-left: auto;
+  gap: 4px;
 }
 
 header:has(.brand-logo) nav a {
   height: 36px;
-  padding: 0 14px;
+  padding: 0 12px;
   display: inline-flex;
   align-items: center;
   font-size: var(--text-ui);
   font-weight: var(--weight-medium);
   line-height: 1;
-  border-radius: var(--radius-pill);
+  border-radius: 10px;
   color: var(--text-primary);
   background: transparent;
   white-space: nowrap;
   flex-shrink: 0;
-  transition: background-color 0.25s var(--ease-mercury), color 0.25s var(--ease-mercury);
+  transition: background-color 0.2s var(--ease-mercury), color 0.2s var(--ease-mercury), border-color 0.2s var(--ease-mercury);
 }
 
 header:has(.brand-logo) nav a:hover {
-  background: var(--surface-tonal);
+  background: rgba(11, 37, 105, 0.05);
   color: var(--brand-navy);
 }
 
 header:has(.brand-logo) nav a.current {
-  background: var(--surface-tonal);
-  color: var(--brand-navy);
-}
-
-/* Dešinės pusės antrinis pill mygtukas šalia pagrindinio CTA (kaip Mercury „Launch demo“) */
-header:has(.brand-logo) nav a.partner-link {
-  margin-left: auto;
-  padding: 0 16px;
   background: var(--brand-teal-soft);
-  color: var(--brand-navy);
-  border: 0;
+  color: var(--brand-teal-text);
 }
 
-header:has(.brand-logo) nav a.partner-link:hover {
-  background: var(--brand-teal-tint);
+/* Antrinis mygtukas („Buhalteriams“) – tvarkingai atskirtas šalia pagrindinio CTA */
+header:has(.brand-logo) nav a.partner-link {
+  margin-left: 10px;
+  height: 38px;
+  padding: 0 14px;
+  border-radius: 10px;
+  background: #ffffff;
+  color: var(--brand-navy);
+  border: 1px solid var(--border-input);
+}
+
+header:has(.brand-logo) nav a.partner-link:hover,
+header:has(.brand-logo) nav a.partner-link.current {
+  background: var(--brand-teal-soft);
+  border-color: var(--brand-teal);
   color: var(--brand-navy);
 }
 
+/* Pagrindinis CTA mygtukas („Rasti buhalterį“) */
 header:has(.brand-logo) .navcta {
-  height: 36px;
+  height: 38px;
   padding: 0 18px;
-  border-radius: var(--radius-pill);
+  border-radius: 10px;
   background: var(--brand-navy);
   color: #ffffff;
   font-size: var(--text-ui);
   font-weight: var(--weight-medium);
   line-height: 1;
-  border: 0;
+  border: 1px solid var(--brand-navy);
   box-shadow: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   white-space: nowrap;
   flex-shrink: 0;
-  transition: background-color 0.25s var(--ease-mercury);
+  transition: background-color 0.2s var(--ease-mercury), border-color 0.2s var(--ease-mercury);
 }
 
 header:has(.brand-logo) .navcta:hover {
   background: var(--brand-navy-hover);
+  border-color: var(--brand-navy-hover);
+}
+
+@keyframes header-float {
+  from {
+    max-width: var(--container-max);
+    padding-inline: var(--container-pad);
+    transform: translateY(0);
+    background-color: rgba(247, 249, 252, 0);
+    border-color: transparent;
+    border-radius: 0;
+    box-shadow: 0 0 0 rgba(11, 37, 105, 0);
+  }
+  to {
+    max-width: min(1120px, calc(100% - 32px));
+    padding-inline: 20px;
+    transform: translateY(10px);
+    background-color: rgba(255, 255, 255, 0.94);
+    border-color: rgba(11, 37, 105, 0.09);
+    border-radius: 16px;
+    box-shadow: 0 10px 30px -10px rgba(11, 37, 105, 0.16), 0 2px 8px rgba(11, 37, 105, 0.06);
+  }
+}
+
+@keyframes header-logo-compact {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(0.92);
+  }
+}
+
+@supports (animation-timeline: scroll()) {
+  @media (min-width: 801px) and (prefers-reduced-motion: no-preference) {
+    header:has(.brand-logo) {
+      background-color: rgba(247, 249, 252, 0);
+      animation: header-float linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0px 72px;
+    }
+
+    header:has(.brand-logo) .brand-logo img {
+      animation: header-logo-compact linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0px 72px;
+    }
+  }
 }
 
 /* ==========================================================================
@@ -1191,28 +1253,35 @@ main.wrap > .hero > p {
    7. Prisitaikymas prie mažesnių ekranų (tablet ir mobilieji)
    ========================================================================== */
 
-@media (max-width: 1100px) {
+@media (min-width: 801px) and (max-width: 1100px) {
   header:has(.brand-logo) {
-    height: auto;
-    min-height: 60px;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    padding-block: 10px;
+    height: 64px;
+    min-height: 64px;
+    flex-wrap: nowrap;
+    padding-block: 0;
     padding-inline: var(--container-pad);
-    gap: 8px 16px;
+    gap: 6px;
   }
 
   header:has(.brand-logo) nav {
-    order: 3;
-    flex: 1 0 100%;
-    width: 100%;
-    overflow-x: auto;
-    padding-bottom: 2px;
+    order: 0;
+    width: auto;
+    margin-left: auto;
+    padding-bottom: 0;
+    gap: 2px;
   }
 
-  header:has(.brand-logo) nav a:first-child,
+  header:has(.brand-logo) nav a {
+    padding: 0 10px;
+  }
+
   header:has(.brand-logo) nav a.partner-link {
-    margin-left: 0;
+    margin-left: 6px;
+    padding: 0 12px;
+  }
+
+  header:has(.brand-logo) .navcta {
+    padding: 0 14px;
   }
 }
 
@@ -1224,9 +1293,17 @@ main.wrap > .hero > p {
 
   header:has(.brand-logo) {
     position: static;
+    height: auto;
+    min-height: 60px;
+    flex-wrap: wrap;
+    justify-content: space-between;
     padding-block: 10px;
     padding-inline: var(--container-pad);
     gap: 8px 12px;
+    background: var(--surface-page);
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
   }
 
   header:has(.brand-logo) .brand-logo img {
@@ -1235,13 +1312,25 @@ main.wrap > .hero > p {
   }
 
   header:has(.brand-logo) nav {
-    gap: 2px;
+    order: 3;
+    flex: 1 0 100%;
+    width: 100%;
+    margin-left: 0;
+    overflow-x: auto;
+    gap: 4px;
     justify-content: space-between;
+    padding-bottom: 2px;
   }
 
   header:has(.brand-logo) nav a {
     height: 32px;
-    font-size: var(--text-ui);
+    font-size: 0.8125rem;
+    padding: 0 7px;
+  }
+
+  header:has(.brand-logo) nav a.partner-link {
+    margin-left: 0;
+    height: 32px;
     padding: 0 10px;
   }
 
