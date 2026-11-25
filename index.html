@@ -439,4 +439,4 @@ const button=document.createElement('button');button.type='button';button.classN
 button.onclick=()=>{target=input;const now=new Date(),parts=input.value.split('-');year=Number(parts[0])||now.getFullYear();month=parts[1]?Number(parts[1])-1:now.getMonth();if(month<0||month>11)month=now.getMonth();year=Math.max(1970,Math.min(2090,year));render();dialog.showModal()};
 });
 })();
-</script></body></html>
+</script><link rel="stylesheet" href="assets/cookie-consent.css"><script src="assets/cookie-consent.js" defer></script></body></html>
