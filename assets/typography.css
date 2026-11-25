@@ -2876,6 +2876,134 @@ main.wrap.page-how > .steps .step:hover::before {
   }
 }
 
+/* ==========================================================================
+   12. Tolygus vertikalus „oro“ ritmas sekcijoms ir h2 antraščių blokams
+       Griežtai neliečia #skaiciuokle, formų ar fiksuotos <header> navigacijos.
+   ========================================================================== */
+
+#kaip {
+  padding: 78px 0;
+}
+
+#kaip .section-head {
+  margin-bottom: 36px;
+}
+
+#kaip .section-head .eyebrow,
+#duk .faq .eyebrow,
+main.wrap.page-how > section.block > .eyebrow,
+body:not(:has(#skaiciuokle)) main.wrap:not(.page-how, .page-company) > section.block > .eyebrow,
+main.wrap.page-company > section.block.company-about .eyebrow,
+main.wrap.page-company > .company-section .eyebrow {
+  margin-bottom: 12px;
+}
+
+#kaip .section-head h2 {
+  margin: 0 0 14px;
+}
+
+#duk {
+  padding: 78px 0 !important;
+}
+
+#duk .faq h2 {
+  margin-bottom: 32px !important;
+}
+
+.closing {
+  margin: 48px 0 56px;
+}
+
+main.wrap.page-how > .steps-actions {
+  margin: 34px 0 76px;
+}
+
+main.wrap.page-how > section.block {
+  padding: 76px 0;
+}
+
+main.wrap.page-how > section.block > h2 {
+  margin: 0 0 16px;
+}
+
+main.wrap.page-how > section.block .grid2 {
+  margin: 36px 0 0;
+}
+
+body:not(:has(#skaiciuokle)) main.wrap:not(.page-how, .page-company) > section.block {
+  padding: 72px 0;
+}
+
+body:not(:has(#skaiciuokle)) main.wrap:not(.page-how, .page-company) > section.block > h2 {
+  margin: 0 0 16px;
+}
+
+main.wrap.page-company > section.block.company-about h2,
+main.wrap.page-company > .company-section > h2 {
+  margin: 0 0 16px;
+}
+
+main.wrap.page-company > .company-section {
+  padding: 72px 0;
+}
+
+main.wrap.page-company .specs-grid,
+main.wrap.page-company .pricing-grid {
+  margin-top: 34px;
+}
+
+main.wrap.page-company > section.block.company-cta {
+  margin: 44px 0 56px;
+}
+
+@media (max-width: 960px) {
+  main.wrap.page-how > .steps-actions {
+    margin: 28px 0 52px;
+  }
+
+  main.wrap.page-how > section.block {
+    padding: 52px 0;
+  }
+
+  main.wrap.page-how > section.block .grid2 {
+    margin-top: 28px;
+  }
+}
+
+@media (max-width: 800px) {
+  #kaip {
+    padding: 52px 0;
+  }
+
+  #kaip .section-head {
+    margin-bottom: 28px;
+  }
+
+  #duk {
+    padding: 52px 0 !important;
+  }
+
+  #duk .faq h2 {
+    margin-bottom: 24px !important;
+  }
+
+  .closing,
+  main.wrap.page-company > section.block.company-cta {
+    margin: 32px 0 40px;
+  }
+
+  body:not(:has(#skaiciuokle)) main.wrap:not(.page-how, .page-company) > section.block,
+  main.wrap.page-company > .company-section {
+    padding: 48px 0;
+  }
+
+  main.wrap.page-company .specs-grid,
+  main.wrap.page-company .pricing-grid {
+    margin-top: 26px;
+  }
+}
+
+
 
 
 
