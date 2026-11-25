@@ -1410,8 +1410,19 @@ main.wrap > .hero > p {
 }
 
 #duk .faq details {
-  border-bottom-color: #edf2f7;
-  padding: 22px 0 !important;
+  background: #ffffff;
+  border: 1px solid rgba(15, 30, 45, 0.08);
+  border-radius: 16px;
+  box-shadow: 0 8px 24px -12px rgba(15, 30, 45, 0.06);
+  padding: 20px 24px !important;
+  margin-bottom: 12px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#duk .faq details:hover,
+#duk .faq details[open] {
+  border-color: rgba(15, 30, 45, 0.14);
+  box-shadow: 0 10px 26px -12px rgba(15, 30, 45, 0.09);
 }
 
 #duk .faq details p {
@@ -1424,7 +1435,8 @@ main.wrap > .hero > p {
 }
 
 #duk .faq details:last-child {
-  border-bottom: 0;
+  margin-bottom: 0;
+  border-bottom: 1px solid rgba(15, 30, 45, 0.08);
 }
 
 #duk .faq summary {
@@ -2753,36 +2765,67 @@ main.wrap.page-company .company-cta .btn:hover {
 }
 
 /* ==========================================================================
-   11. Subtilus šalto sidabro / šlifuoto metalo 1px viršutinis akcentas
-       Išlaiko tamsų, gerai įskaitomą tekstą ir neliečia #skaiciuokle ar <header>.
+   11. Minimalistinis, švarus „daug oro“ kortelių ir blokų paviršius
+       Subtilus 1px rėmelis, švelnus šešėlis, 14–18px apvalinimas ir lengvas
+       viršutinis sidabro atspindys. Griežtai neliečia #skaiciuokle ar <header>.
    ========================================================================== */
 
 body:not(:has(#skaiciuokle)) .companies .company,
 body:not(:has(#skaiciuokle)) .account .panel,
+body:not(:has(#skaiciuokle)) main.authshell,
 .closing,
 main.wrap.page-company > section.block.company-cta {
   position: relative;
-  border-color: var(--silver-border);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.92), 0 2px 10px -4px rgba(20, 46, 82, 0.06);
+  background: #ffffff;
+  border: 1px solid rgba(15, 30, 45, 0.08);
+  border-radius: 18px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.94), 0 8px 24px -12px rgba(15, 30, 45, 0.06);
+}
+
+.closing,
+main.wrap.page-company > section.block.company-cta {
+  background: linear-gradient(180deg, #ffffff 0%, #fafcfd 100%);
+}
+
+main.wrap.page-how > section.block .card,
+main.wrap.page-company > section.block:not(.company-cta),
+main.wrap.page-company .pricing-panel {
+  position: relative;
+  background: #ffffff;
+  border: 1px solid rgba(15, 30, 45, 0.08);
+  border-radius: 16px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.92), 0 8px 24px -12px rgba(15, 30, 45, 0.06);
 }
 
 body:not(:has(#skaiciuokle)) .companies .company::before,
 body:not(:has(#skaiciuokle)) .account .panel::before,
 .closing::before,
-main.wrap.page-company > section.block.company-cta::before {
+main.wrap.page-company > section.block.company-cta::before,
+main.wrap.page-how > section.block .card::before,
+main.wrap.page-company > section.block:not(.company-cta)::before,
+main.wrap.page-company .pricing-panel::before {
   content: "";
   position: absolute;
   top: 0;
-  left: 16px;
-  right: 16px;
+  left: 18px;
+  right: 18px;
   height: 1px;
   background: var(--silver-sheen);
   pointer-events: none;
 }
 
-body:not(:has(#skaiciuokle)) .companies .company:hover {
-  border-color: var(--silver-border-hover);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.96), 0 6px 18px -8px rgba(20, 46, 82, 0.1);
+body:not(:has(#skaiciuokle)) .companies .company:hover,
+main.wrap.page-how > section.block .card:hover {
+  background: #ffffff;
+  border-color: rgba(15, 30, 45, 0.14);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.96), 0 12px 28px -12px rgba(15, 30, 45, 0.1);
+}
+
+body:not(:has(#skaiciuokle)) .companies .company .company-meta,
+body:not(:has(#skaiciuokle)) .accountstats .stat {
+  background: #fafcfd;
+  border: 1px solid rgba(15, 30, 45, 0.06);
+  border-radius: 14px;
 }
 
 #kaip .step,
@@ -2807,6 +2850,14 @@ main.wrap.page-how > .steps .step::before {
 main.wrap.page-how > .steps .step:hover::before {
   background: var(--brand-teal);
 }
+
+@media (max-width: 800px) {
+  #duk .faq details {
+    padding: 16px 18px !important;
+    border-radius: 14px;
+  }
+}
+
 
 
 
