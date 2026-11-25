@@ -527,10 +527,10 @@ main.wrap > .hero > p {
   background: #ffffff;
 }
 
-/* Kairė klausimyno panelė – tamsiai mėlyna pagal 2UNO logotipą (#0b2569) */
+/* Kairė klausimyno panelė – originali 2UNO tamsiai mėlyna (#142e52 -> #1b4661) */
 #formview {
-  background: var(--brand-navy);
-  border: 0;
+  background: linear-gradient(145deg, #142e52, #1b4661);
+  border: 1px solid #1e4663;
   border-radius: var(--radius-panel);
   color: #ffffff;
   box-shadow: none;
@@ -542,7 +542,7 @@ main.wrap > .hero > p {
 
 #formview .question-section {
   padding: 18px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 #formview .question-section:first-child {
@@ -564,7 +564,7 @@ main.wrap > .hero > p {
 
 #formview .field label,
 #formview .branch > .field label {
-  color: rgba(255, 255, 255, 0.88);
+  color: #ccdde7;
   font-size: var(--text-ui);
   font-weight: var(--weight-medium);
   line-height: 1.4;
