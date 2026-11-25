@@ -748,12 +748,12 @@ main.wrap > .hero > p {
   background: #ffffff;
 }
 
-/* Kairė klausimyno panelė – originali 2UNO tamsiai mėlyna (#142e52 -> #1b4661) */
+/* Kairė klausimyno panelė – švelnus šviesiai pilkas fonas (#f6f6f5) ir tamsus kontrastas */
 #formview {
-  background: linear-gradient(145deg, #142e52, #1b4661);
-  border: 1px solid #1e4663;
-  border-radius: var(--radius-panel);
-  color: #ffffff;
+  background: #f6f6f5;
+  border: 1px solid rgba(15, 30, 45, 0.05);
+  border-radius: 16px;
+  color: #334155;
   box-shadow: none;
 }
 
@@ -771,7 +771,7 @@ main.wrap > .hero > p {
 
 #formview .question-section {
   padding: 18px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  border-bottom: 1px solid rgba(15, 30, 45, 0.08);
 }
 
 #formview .question-section:first-child {
@@ -787,13 +787,13 @@ main.wrap > .hero > p {
   font-size: 0.9375rem;
   font-weight: var(--weight-semibold);
   letter-spacing: -0.014em;
-  color: #ffffff;
+  color: #142e52;
   padding: 0 0 12px;
 }
 
 #formview .field label,
 #formview .branch > .field label {
-  color: #ccdde7;
+  color: #334155;
   font-size: var(--text-ui);
   font-weight: var(--weight-medium);
   line-height: 1.4;
@@ -801,20 +801,20 @@ main.wrap > .hero > p {
 }
 
 #formview .micro {
-  color: rgba(255, 255, 255, 0.72);
+  color: #64748b;
 }
 
 #formview .field-msg {
-  color: #ffb4be;
+  color: #b91c1c;
 }
 
 #formview .field input,
 #formview .field select,
 #formview .branch > .field select {
   background: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(15, 30, 45, 0.12);
   border-radius: var(--radius-input);
-  color: var(--text-primary);
+  color: #142e52;
   font-size: var(--text-ui);
   height: 42px;
   min-height: 42px;
@@ -831,7 +831,7 @@ main.wrap > .hero > p {
 #formview .field input:hover,
 #formview .field select:hover,
 #formview .branch > .field select:hover {
-  border-color: var(--brand-teal);
+  border-color: rgba(20, 46, 82, 0.32);
 }
 
 #formview .field input:focus,
@@ -840,20 +840,20 @@ main.wrap > .hero > p {
 #formview .field select:focus-visible {
   background: #ffffff;
   border-color: var(--brand-teal);
-  outline: 2px solid rgba(56, 179, 179, 0.45);
+  outline: 2px solid rgba(56, 179, 179, 0.35);
   outline-offset: 0;
   box-shadow: none;
 }
 
 #formview .field input.invalid,
 #formview .field select.invalid {
-  border-color: #f0657d;
+  border-color: #dc2626;
   background: #fff6f7;
 }
 
 #formview .branch {
   padding: 11px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  border-bottom: 1px solid rgba(15, 30, 45, 0.08);
 }
 
 #formview .branch:last-child {
@@ -868,7 +868,7 @@ main.wrap > .hero > p {
 }
 
 #formview .toggle-slider {
-  background: rgba(255, 255, 255, 0.28);
+  background: #cbd5e1;
 }
 
 #formview .toggle-switch input:checked + .toggle-slider {
@@ -881,16 +881,23 @@ main.wrap > .hero > p {
 }
 
 #formview .extra-fields {
-  border-color: rgba(255, 255, 255, 0.16);
+  border-color: rgba(15, 30, 45, 0.1);
 }
 
 #formview .extra-fields summary {
-  color: var(--brand-teal-tint);
+  color: #142e52;
 }
 
 #formview .form-footer button {
-  background: var(--brand-teal);
-  color: var(--brand-navy);
+  background: #142e52;
+  border: 1px solid #142e52;
+  color: #ffffff;
+}
+
+#formview .form-footer button:hover {
+  background: #1b4661;
+  border-color: #1b4661;
+  color: #ffffff;
 }
 
 #formview .date-entry input {
@@ -2784,7 +2791,28 @@ main.wrap.page-company > section.block.company-cta {
 
 .closing,
 main.wrap.page-company > section.block.company-cta {
-  background: linear-gradient(180deg, #ffffff 0%, #fafcfd 100%);
+  background: #f6f6f5;
+  border: 1px solid rgba(15, 30, 45, 0.05);
+  border-radius: 16px;
+  box-shadow: none;
+  color: #334155;
+}
+
+.closing h2,
+main.wrap.page-company > section.block.company-cta h2 {
+  color: #142e52;
+}
+
+.closing p,
+main.wrap.page-company > section.block.company-cta p {
+  color: #334155;
+}
+
+.closing .btn,
+main.wrap.page-company > section.block.company-cta .btn {
+  background: #142e52;
+  border-color: #142e52;
+  color: #ffffff;
 }
 
 main.wrap.page-how > section.block .card,
