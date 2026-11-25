@@ -935,10 +935,6 @@ main.wrap > .hero > p {
 }
 
 @media (min-width: 801px) {
-  #formview {
-    top: 84px;
-  }
-
   #resultview {
     top: 84px;
     max-height: calc(100dvh - 100px);
