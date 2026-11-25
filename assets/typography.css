@@ -60,19 +60,25 @@
   --text-ui: 0.875rem;                          /* 14px – navigacija, mygtukai, formos, kortelės */
   --text-xs: 0.75rem;                           /* 12px – žymos, pastabos, meta */
 
-  /* Šriftų storiai */
+  /* Šriftų storiai (Inter: 400 / 500 / 600 / 700) */
   --weight-regular: 400;
   --weight-medium: 500;
   --weight-semibold: 600;
   --weight-bold: 700;
+  --weight-h1: var(--weight-bold);
+  --weight-h2: var(--weight-semibold);
+  --weight-h3: var(--weight-semibold);
+  --weight-h4: var(--weight-semibold);
 
   /* Eilučių aukščiai ir tarpai */
-  --leading-tight: 1.15;
-  --leading-snug: 1.28;
-  --leading-base: 1.55;
+  --leading-tight: 1.18;
+  --leading-snug: 1.26;
+  --leading-h3: 1.32;
+  --leading-base: 1.6;
   --tracking-h1: -0.028em;
   --tracking-h2: -0.022em;
-  --tracking-h3: -0.014em;
+  --tracking-h3: -0.015em;
+  --tracking-h4: -0.008em;
   --tracking-eyebrow: 0.08em;
 }
 
@@ -113,7 +119,7 @@ textarea {
 h1 {
   font-family: var(--font-heading);
   font-size: var(--text-h1);
-  font-weight: var(--weight-medium);
+  font-weight: var(--weight-h1);
   line-height: var(--leading-tight);
   letter-spacing: var(--tracking-h1);
   color: var(--text-primary);
@@ -124,7 +130,7 @@ h2,
 .faq h2 {
   font-family: var(--font-heading);
   font-size: var(--text-h2);
-  font-weight: var(--weight-medium);
+  font-weight: var(--weight-h2);
   line-height: var(--leading-snug);
   letter-spacing: var(--tracking-h2);
   color: var(--text-primary);
@@ -134,8 +140,8 @@ h3,
 .step h3 {
   font-family: var(--font-heading);
   font-size: var(--text-h3);
-  font-weight: var(--weight-medium);
-  line-height: 1.3;
+  font-weight: var(--weight-h3);
+  line-height: var(--leading-h3);
   letter-spacing: var(--tracking-h3);
   color: var(--text-primary);
 }
@@ -143,8 +149,9 @@ h3,
 h4 {
   font-family: var(--font-heading);
   font-size: var(--text-ui);
-  font-weight: var(--weight-semibold);
+  font-weight: var(--weight-h4);
   line-height: 1.4;
+  letter-spacing: var(--tracking-h4);
   color: var(--text-primary);
 }
 
@@ -152,8 +159,9 @@ h4 {
 .card h2,
 .company-id h2 {
   font-size: var(--text-h3);
-  font-weight: var(--weight-semibold);
-  line-height: 1.3;
+  font-weight: var(--weight-h3);
+  line-height: var(--leading-h3);
+  letter-spacing: var(--tracking-h3);
 }
 
 .eyebrow {
@@ -164,7 +172,7 @@ h4 {
   letter-spacing: var(--tracking-eyebrow);
   text-transform: uppercase;
   color: var(--brand-teal-text);
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
 /* Visi aprašymai ir pastraipos visoje svetainėje – vienodo 15px dydžio */
@@ -190,7 +198,7 @@ details p,
 #duk .faq summary {
   font-family: var(--font-heading);
   font-size: var(--text-base);
-  font-weight: var(--weight-medium);
+  font-weight: var(--weight-semibold);
   line-height: 1.45;
   color: var(--text-primary);
 }
@@ -452,7 +460,7 @@ section.block > .eyebrow,
 .closing .eyebrow,
 .panel .tab > .eyebrow {
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
 .calculator-intro h1,
@@ -462,11 +470,11 @@ main > h1,
 #form-area > h1,
 #appView > h1 {
   font-size: var(--text-h1);
-  font-weight: var(--weight-medium);
+  font-weight: var(--weight-h1);
   line-height: var(--leading-tight);
   letter-spacing: var(--tracking-h1);
   color: var(--text-primary);
-  margin: 0 0 10px;
+  margin: 0 0 12px;
   max-width: 900px;
 }
 
@@ -523,7 +531,8 @@ main.wrap > .hero > p {
 
 #skaiciuokle .workspace-heading h2 {
   font-size: var(--text-h3);
-  font-weight: var(--weight-medium);
+  font-weight: var(--weight-h2);
+  line-height: var(--leading-h3);
   letter-spacing: var(--tracking-h3);
   color: var(--text-primary);
 }
@@ -1088,8 +1097,9 @@ main.wrap > .hero > p {
 
 #duk .faq h2 {
   font-size: var(--text-h2) !important;
-  font-weight: var(--weight-medium) !important;
-  margin-bottom: 18px !important;
+  font-weight: var(--weight-h2) !important;
+  line-height: var(--leading-snug) !important;
+  margin-bottom: 20px !important;
 }
 
 #duk .faq details {
@@ -1126,7 +1136,8 @@ main.wrap > .hero > p {
 
 .closing h2 {
   font-size: var(--text-h2);
-  font-weight: var(--weight-medium);
+  font-weight: var(--weight-h2);
+  line-height: var(--leading-snug);
 }
 
 .authstory p,
