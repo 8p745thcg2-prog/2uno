@@ -2235,3 +2235,107 @@ main.wrap.page-how > section.block .card p {
   }
 }
 
+/* ==========================================================================
+   9. Švarus antrinių puslapių stilius (mėlyni teksto mygtukai su #edf3fa
+      pažymėjimu užvedus ir švari, rami išvaizda be įėjimo animacijų).
+      Griežtai netaikoma homepage (body:has(#skaiciuokle)), #skaiciuokle,
+      navigacijai (<header>) ar sticky elgesiui.
+   ========================================================================== */
+
+body:not(:has(#skaiciuokle)) main.wrap > .hero,
+body:not(:has(#skaiciuokle)) .companies,
+body:not(:has(#skaiciuokle)) main.authshell,
+body:not(:has(#skaiciuokle)) .account {
+  animation: none !important;
+}
+
+/* Mėlyni teksto mygtukai su švariu #edf3fa pažymėjimu užvedus */
+body:not(:has(#skaiciuokle)) main .btn.light,
+body:not(:has(#skaiciuokle)) main button.light,
+body:not(:has(#skaiciuokle)) .jumplist a {
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-btn);
+  color: var(--btn-bg);
+  font-weight: var(--weight-medium);
+  box-shadow: none;
+  transform: none;
+  transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+body:not(:has(#skaiciuokle)) .jumplist a {
+  padding: 9px 14px;
+}
+
+body:not(:has(#skaiciuokle)) main .btn.light:hover:not(:disabled),
+body:not(:has(#skaiciuokle)) main button.light:hover:not(:disabled),
+body:not(:has(#skaiciuokle)) .jumplist a:hover {
+  background: #edf3fa;
+  border-color: transparent;
+  color: var(--btn-bg);
+  box-shadow: none;
+  transform: none;
+}
+
+body:not(:has(#skaiciuokle)) .account .menu button,
+body:not(:has(#skaiciuokle)) .account .menu a {
+  border-radius: var(--radius-btn);
+  color: var(--btn-bg);
+  font-weight: var(--weight-medium);
+  transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+body:not(:has(#skaiciuokle)) .account .menu button:hover,
+body:not(:has(#skaiciuokle)) .account .menu a:hover {
+  background: #edf3fa;
+  color: var(--btn-bg);
+}
+
+body:not(:has(#skaiciuokle)) .account .menu button.active {
+  background: #eaf7f7;
+  border-left: 3px solid var(--brand-teal);
+  color: var(--btn-bg);
+  font-weight: var(--weight-semibold);
+}
+
+body:not(:has(#skaiciuokle, header)) > a:first-of-type {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 12px;
+  margin-left: -12px;
+  border-radius: var(--radius-btn);
+  color: var(--btn-bg);
+  font-weight: var(--weight-medium);
+  transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+body:not(:has(#skaiciuokle, header)) > a:first-of-type:hover {
+  background: #edf3fa;
+  color: var(--btn-bg);
+}
+
+/* Ramūs pagrindiniai mygtukai antriniuose puslapiuose – be šokinėjimo */
+body:not(:has(#skaiciuokle)) main .btn:not(.light):hover:not(:disabled),
+body:not(:has(#skaiciuokle)) main button.primary:hover:not(:disabled) {
+  transform: none;
+  box-shadow: none;
+}
+
+/* Vienoda rami švara antrinių puslapių paviršiuose */
+body:not(:has(#skaiciuokle)) .companies .company {
+  border-color: #e8eef4;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+body:not(:has(#skaiciuokle)) .companies .company:hover {
+  border-color: #cfdce8;
+  box-shadow: 0 2px 8px rgba(20, 46, 82, 0.06);
+}
+
+body:not(:has(#skaiciuokle)) main.wrap.page-how > .steps .step:hover,
+body:not(:has(#skaiciuokle)) main.wrap.page-how > section.block .card:hover {
+  background: #f3f7fc;
+  border-color: transparent;
+}
+
+
