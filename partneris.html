@@ -46,13 +46,14 @@ dl{display:grid;grid-template-columns:190px 1fr;gap:9px 14px;font-size:14px;marg
   #grid.show-detail .back-btn{display:inline-block}
 }
 </style>
-<link rel="stylesheet" href="assets/typography.css?v=6">
+<link rel="stylesheet" href="assets/typography.css?v=7">
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
 <header><img src="assets/2uno-logo.jpg" alt="2uno.lt"><div class="who" id="who" hidden><span id="whoName"></span><button class="light" id="logout">Atsijungti</button></div></header>
 <main>
   <section id="loginView" class="login card" hidden>
+    <div class="eyebrow">Prisijungimas</div>
     <h1>Partnerio paskyra</h1>
     <p class="lead">Prisijungimui naudojamas vienkartinis kodas, siunčiamas į jūsų el. paštą.</p>
     <form id="emailForm">
@@ -69,6 +70,7 @@ dl{display:grid;grid-template-columns:190px 1fr;gap:9px 14px;font-size:14px;marg
   </section>
 
   <section id="appView" hidden>
+    <div class="eyebrow">Partnerio paskyra</div>
     <h1>Klientų užklausos</h1>
     <p class="lead">Kliento duomenys ir sutartis atrakinami automatiškai, kai tik apmokamas komisinis.</p>
     <div class="grid" id="grid">

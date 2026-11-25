@@ -46,13 +46,14 @@ ol.steps{padding-left:20px;line-height:1.7;font-size:14px}.warnl{color:var(--err
 .check{display:flex;gap:8px;align-items:center;margin-top:14px;font-size:14px}.check input{width:auto;margin:0}
 .log{font-size:12px;color:var(--muted);line-height:1.7}
 </style>
-<link rel="stylesheet" href="assets/typography.css?v=6">
+<link rel="stylesheet" href="assets/typography.css?v=7">
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
 <header><img src="assets/2uno-logo.jpg" alt="2uno.lt"><div class="who" id="who" hidden><span id="whoName"></span><button class="light" id="logout">Atsijungti</button></div></header>
 <main>
   <section id="loginView" class="login card" hidden>
+    <div class="eyebrow">Vidinė sistema</div>
     <h1>Administravimas</h1>
     <p class="lead">1 žingsnis – kodas el. paštu, 2 žingsnis – kodas iš autentifikavimo programėlės telefone.</p>
     <form id="emailForm">
@@ -68,6 +69,7 @@ ol.steps{padding-left:20px;line-height:1.7;font-size:14px}.warnl{color:var(--err
   </section>
 
   <section id="setupView" class="login card" hidden>
+    <div class="eyebrow">Saugumas</div>
     <h1>Telefono programėlės nustatymas</h1>
     <p class="lead">Tai daroma tik vieną kartą. Vėliau prisijungiant reikės kodo iš šios programėlės.</p>
     <ol class="steps">
@@ -86,6 +88,7 @@ ol.steps{padding-left:20px;line-height:1.7;font-size:14px}.warnl{color:var(--err
   </section>
 
   <section id="totpView" class="login card" hidden>
+    <div class="eyebrow">Patvirtinimas</div>
     <h1>2 žingsnis</h1>
     <p class="lead">Įveskite kodą iš autentifikavimo programėlės telefone.</p>
     <form id="totpForm">
