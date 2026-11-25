@@ -224,9 +224,7 @@ header img,
 body > header {
   height: 68px;
   min-height: 68px;
-  background: rgba(247, 249, 252, 0.92);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: var(--surface-page);
   border-bottom: 0;
   padding-inline: max(var(--container-pad), calc((100vw - var(--container-width)) / 2));
   box-shadow: none;
@@ -529,12 +527,12 @@ main.wrap > .hero > p {
   background: #ffffff;
 }
 
-/* Kairė klausimyno panelė – Mercury šilto akmens toninis paviršius (#eeede9) */
+/* Kairė klausimyno panelė – tamsiai mėlyna pagal 2UNO logotipą (#0b2569) */
 #formview {
-  background: var(--surface-tonal);
+  background: var(--brand-navy);
   border: 0;
   border-radius: var(--radius-panel);
-  color: var(--text-primary);
+  color: #ffffff;
   box-shadow: none;
 }
 
@@ -544,7 +542,7 @@ main.wrap > .hero > p {
 
 #formview .question-section {
   padding: 18px 0;
-  border-bottom: 1px solid var(--border-subtle);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.16);
 }
 
 #formview .question-section:first-child {
@@ -560,24 +558,32 @@ main.wrap > .hero > p {
   font-size: var(--text-base);
   font-weight: var(--weight-semibold);
   letter-spacing: -0.014em;
-  color: var(--text-primary);
+  color: #ffffff;
   padding: 0 0 12px;
 }
 
 #formview .field label,
 #formview .branch > .field label {
-  color: var(--text-secondary);
+  color: rgba(255, 255, 255, 0.88);
   font-size: var(--text-ui);
   font-weight: var(--weight-medium);
   line-height: 1.4;
   margin-bottom: 6px;
 }
 
+#formview .micro {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+#formview .field-msg {
+  color: #ffb4be;
+}
+
 #formview .field input,
 #formview .field select,
 #formview .branch > .field select {
   background: #ffffff;
-  border: 1px solid var(--border-input);
+  border: 1px solid rgba(255, 255, 255, 0.92);
   border-radius: var(--radius-input);
   color: var(--text-primary);
   font-size: var(--text-ui);
@@ -590,13 +596,13 @@ main.wrap > .hero > p {
 }
 
 #formview .field input::placeholder {
-  color: #8c9ab0;
+  color: #7c8ca3;
 }
 
 #formview .field input:hover,
 #formview .field select:hover,
 #formview .branch > .field select:hover {
-  border-color: var(--border-strong);
+  border-color: var(--brand-teal);
 }
 
 #formview .field input:focus,
@@ -605,20 +611,20 @@ main.wrap > .hero > p {
 #formview .field select:focus-visible {
   background: #ffffff;
   border-color: var(--brand-teal);
-  outline: 2px solid rgba(56, 179, 179, 0.28);
+  outline: 2px solid rgba(56, 179, 179, 0.45);
   outline-offset: 0;
   box-shadow: none;
 }
 
 #formview .field input.invalid,
 #formview .field select.invalid {
-  border-color: #c22e4e;
+  border-color: #f0657d;
   background: #fff6f7;
 }
 
 #formview .branch {
   padding: 11px 0;
-  border-bottom: 1px solid var(--border-subtle);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 #formview .branch:last-child {
@@ -633,7 +639,7 @@ main.wrap > .hero > p {
 }
 
 #formview .toggle-slider {
-  background: #cbd5e1;
+  background: rgba(255, 255, 255, 0.28);
 }
 
 #formview .toggle-switch input:checked + .toggle-slider {
@@ -645,6 +651,19 @@ main.wrap > .hero > p {
   outline-offset: 2px;
 }
 
+#formview .extra-fields {
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+#formview .extra-fields summary {
+  color: var(--brand-teal-tint);
+}
+
+#formview .form-footer button {
+  background: var(--brand-teal);
+  color: var(--brand-navy);
+}
+
 #formview .date-toggle {
   color: var(--text-muted);
   border-radius: 7px;
@@ -652,7 +671,7 @@ main.wrap > .hero > p {
 
 #formview .date-toggle:hover {
   background: var(--surface-tonal);
-  color: var(--text-primary);
+  color: var(--brand-navy);
 }
 
 #lt-calendar {
