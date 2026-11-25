@@ -96,7 +96,7 @@
    ========================================================================== */
 
 html {
-  scroll-padding-top: 84px;
+  scroll-padding-top: 24px;
   background-color: var(--surface-page);
 }
 
@@ -251,10 +251,9 @@ body > header {
   box-shadow: none;
 }
 
-/* Suveržta vienos eilutės navigacija su permatomu baltu fonu */
+/* Suveržta vienos eilutės navigacija su švariu baltu fonu (neslankioja ant turinio) */
 header:has(.brand-logo) {
-  position: sticky;
-  top: 0;
+  position: relative;
   z-index: 40;
   width: 100%;
   height: 64px;
@@ -974,22 +973,15 @@ main.wrap > .hero > p {
   color: #ffffff;
 }
 
-/* Dešinė pasiūlymų panelė (#resultview) – grynos baltos kortelės ant #f6f5f2 */
+/* Dešinė pasiūlymų panelė (#resultview) – grynos baltos kortelės ant #ffffff */
 #resultview {
   color: var(--text-primary);
 }
 
-@media (min-width: 1101px) {
+@media (min-width: 801px) {
   #resultview {
-    top: 84px;
-    max-height: calc(100dvh - 100px);
-  }
-}
-
-@media (min-width: 801px) and (max-width: 1100px) {
-  #resultview {
-    top: 116px;
-    max-height: calc(100dvh - 132px);
+    top: 20px;
+    max-height: calc(100dvh - 40px);
   }
 }
 
@@ -1000,9 +992,15 @@ main.wrap > .hero > p {
   scroll-padding-inline: 0;
 }
 
+#resultview .cards:has(details[open]) {
+  align-items: flex-start;
+}
+
 #resultview .provider {
   flex: 0 0 calc((100% - 2 * var(--cards-gap)) / 3);
   min-width: 0;
+  display: flex;
+  flex-direction: column;
   background: #ffffff;
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-panel);
@@ -1090,6 +1088,7 @@ main.wrap > .hero > p {
   line-height: 1.55;
   color: var(--text-secondary);
   gap: 8px;
+  min-height: 96px;
 }
 
 #resultview .provider li:before {
@@ -1104,6 +1103,12 @@ main.wrap > .hero > p {
   border: 1px solid var(--border-subtle);
   border-radius: 12px;
   font-variant-numeric: tabular-nums;
+  display: flex;
+  flex-direction: column;
+}
+
+#resultview .cards:not(:has(details[open])) .provider .price {
+  flex: 1 0 auto;
 }
 
 #resultview .provider .price-main > strong {
@@ -1143,6 +1148,10 @@ main.wrap > .hero > p {
   line-height: 1.45;
 }
 
+#resultview .cardactions {
+  margin-top: 0;
+}
+
 #resultview .cardactions .btn {
   width: 100%;
   height: 40px;
@@ -1166,6 +1175,10 @@ main.wrap > .hero > p {
   background: var(--surface-pill);
   border-color: transparent;
   color: #7b8ca4;
+}
+
+#resultview .provider-more {
+  margin-top: 0;
 }
 
 #resultview .price-breakdown summary,
@@ -1221,7 +1234,7 @@ main.wrap > .hero > p {
 }
 
 #contractview .contract-navigation {
-  top: 64px;
+  top: 0;
   background: rgba(255, 255, 255, 0.94);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border-subtle);
