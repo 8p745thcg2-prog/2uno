@@ -27,8 +27,13 @@
     const metaHtml = metaItems.length ? `<div class="company-meta">${metaItems.join('')}</div>` : '';
     return `<article class="company" id="imone-${esc(p.slug)}">
 <div class="company-head">
-<div class="company-id"><div class="monogram">${esc(p.mark)}</div><div><h2>${esc(p.name)}</h2><span class="tag">${esc(p.tag)}</span></div></div>
+<div class="company-id">
+<div class="monogram">${esc(p.mark)}</div>
+<div class="company-title">
+<div class="company-name-row"><h2>${esc(p.name)}</h2><span class="tag">${esc(p.tag)}</span></div>
 <div class="stats"><span><span class="star">★</span> <b>${ratingStr}</b> · ${p.reviews} atsiliepimai</span><span>Pasirinko <b>${p.clients}</b> klientai</span></div>
+</div>
+</div>
 </div>
 <p class="desc">${esc(p.desc)}</p>
 <ul class="features">${featuresHtml}</ul>
