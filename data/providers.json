@@ -8,10 +8,10 @@
     "summary": "Skaitmenizuota buhalterinė apskaita augančioms paslaugų, IT ir konsultacijų įmonėms, kurios vertina greitą komunikaciją ir popierinių dokumentų nebuvimą. Visi pirkimo, pardavimo ir banko duomenys apdorojami nuotoliniu būdu per vieną sistemą.",
     "features": [
       "Asmeninis buhalteris ir atsakymas per 1 darbo dieną",
-      "Dokumentai pateikiami vienoje sistemoje"
+      "Dokumentai pateikiami vienoje sistemoje",
+      "Automatinis banko išrašų importas ir skaitmeninis archyvas"
     ],
     "highlights": [
-      "Automatinis banko išrašų importas ir skaitmeninis dokumentų archyvas",
       "Metinės finansinės ataskaitos ir deklaracijos įskaičiuotos į mėnesio planą"
     ],
     "software": ["Rivilė", "B1"],
@@ -44,11 +44,11 @@
     "summary": "Praktiškas ir lankstus sprendimas neseniai įsteigtoms mažosioms bendrijoms, mažoms UAB bei verslams su kintančiu dokumentų srautu. Mokate nedidelį bazinį mokestį ir tik už faktiškai per mėnesį atliktas operacijas.",
     "features": [
       "Specializacija naujose MB ir mažose UAB",
-      "Pagalba perimant apskaitą iš ankstesnio tiekėjo"
+      "Pagalba perimant apskaitą iš ankstesnio tiekėjo",
+      "Lanksti kainodara – mokate tik už faktines mėnesio operacijas"
     ],
     "highlights": [
-      "Aiškus pirmųjų veiklos mėnesių nustatymas ir PVM registracijos konsultacija",
-      "Lanksti vienetinė kainodara – nepermokate mažesnio aktyvumo mėnesiais"
+      "Aiškus pirmųjų veiklos mėnesių nustatymas ir PVM registracijos konsultacija"
     ],
     "software": ["B1", "Site.pro"],
     "legalForms": ["MB", "UAB", "Individuali veikla"],
@@ -80,10 +80,10 @@
     "summary": "Specializuota apskaita didmeninės, mažmeninės ir elektroninės prekybos įmonėms, dirbančioms su sandėliu, mokėjimų tarpininkais ir tarptautiniais pardavimais. Planas pritaikytas didesniam pirminių dokumentų kiekiui.",
     "features": [
       "E. parduotuvių ir prekybos apskaitos patirtis",
-      "Mokėjimų ir sandėlio duomenų suderinimas"
+      "Mokėjimų ir sandėlio duomenų suderinimas",
+      "Darbas su ES pardavimais, OSS / IOSS ir keliomis valiutomis"
     ],
     "highlights": [
-      "Darbas su ES pardavimais, OSS / IOSS deklaravimu ir kelių valiutų operacijomis",
       "Į mėnesio planą įskaičiuota didesnė sąskaitų apimtis (iki 40 vnt.)"
     ],
     "software": ["Rivilė", "ROBO"],
@@ -116,10 +116,10 @@
     "summary": "Buhalterinės apskaitos priežiūra kartu su nuolatinėmis mokesčių bei veiklos planavimo konsultacijomis. Tinka vadovams, norintiems iš anksto žinoti mokestines prievoles ir pasitarti prieš priimant finansinius sprendimus.",
     "features": [
       "Mėnesinė konsultacija su buhalteriu",
-      "Mokestinių terminų priminimai iš anksto"
+      "Mokestinių terminų priminimai iš anksto",
+      "Pagalba planuojant mokesčius ir veiklos kaštus"
     ],
     "highlights": [
-      "Platus palaikomų apskaitos programų pasirinkimas (Rivilė, B1, Site.pro)",
       "Metinės deklaracijos įskaičiuotos į mėnesinę kainą be atskiro metinio mokesčio"
     ],
     "software": ["Rivilė", "B1", "Site.pro"],
@@ -152,11 +152,11 @@
     "summary": "Apskaita orientuota į aiškų verslo rezultatų matomumą kiekvieną mėnesį: šalia standartinių deklaracijų paruošiamos suprantamos pelno, sąnaudų ir pinigų srautų suvestinės vadovybei.",
     "features": [
       "Aiškios mėnesinės pelno ir pinigų srautų ataskaitos",
-      "Rezultatų aptarimas su finansų specialistu"
+      "Rezultatų aptarimas su finansų specialistu",
+      "Struktūrizuota mėnesio uždarymo ir vadovybės atskaitomybė"
     ],
     "highlights": [
-      "Mėnesio plane įskaičiuota 30 sąskaitų, 20 banko operacijų ir 1 darbuotojas",
-      "Struktūrizuota vadovybės atskaitomybė finansiniams sprendimams ir augimui"
+      "Mėnesio plane įskaičiuota 30 sąskaitų, 20 banko operacijų ir 1 darbuotojas"
     ],
     "software": ["B1"],
     "legalForms": ["UAB", "MB"],

@@ -95,7 +95,7 @@ section.block p{color:var(--muted);font-size:16px}
 .footer-bottom{margin-top:30px;padding-top:20px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
 @media(max-width:800px){.wrap{padding:0 16px}.site-footer{padding:30px 16px 20px}.footer-top{gap:28px}}
 </style>
-<link rel="stylesheet" href="/assets/typography.css?v=38">
+<link rel="stylesheet" href="/assets/typography.css?v=39">
 </head>
 <body>
 <header>
