@@ -1391,21 +1391,40 @@ main.wrap > .hero > p {
   transition: transform 0.2s var(--ease-mercury), color 0.2s var(--ease-mercury);
 }
 
-/* Tamsūs prekės ženklo blokai (rami tamsiai mėlyna kaip #formview, vienodas mygtukų stilius) */
-.closing,
+/* Tamsus partnerių pasakojimo blokas (buhalteriams.html) */
 .authstory {
   background: linear-gradient(145deg, #142e52, #1b4661);
   border: 1px solid #1e4663;
   box-shadow: none;
 }
 
+.authstory h1,
+.authstory h2,
+.authstory h3 {
+  color: #ffffff;
+}
+
+.authstory p,
+.authstory .lead,
+.authstory .step p {
+  color: #ccdde7;
+}
+
+.authstory .eyebrow {
+  color: #ccdde7 !important;
+}
+
+/* Šviesus, lengvas CTA blokas – suderintas su puslapio švara, #142e52 ir #38b3b3 akcentais */
 .closing {
   width: 100%;
   margin: 28px 0 36px;
-  padding: 24px 32px;
+  padding: 26px 32px;
   min-height: 0;
+  background: linear-gradient(135deg, #f8fafd 0%, #f1f8f8 100%);
+  border: 1px solid var(--border-subtle);
   border-radius: var(--radius-panel);
   box-shadow: var(--shadow-card);
+  color: var(--text-primary);
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -1422,39 +1441,35 @@ main.wrap > .hero > p {
   min-width: 0;
 }
 
-.closing h2,
-.authstory h1,
-.authstory h2,
-.authstory h3 {
-  color: #ffffff;
+.closing .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--brand-teal-text) !important;
+  margin: 0 0 6px !important;
+}
+
+.closing .eyebrow::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--brand-teal);
+  flex-shrink: 0;
 }
 
 .closing h2 {
   font-size: var(--text-h2);
   font-weight: var(--weight-h2);
   line-height: var(--leading-snug);
+  color: var(--btn-bg);
   margin: 0;
 }
 
-.authstory p,
-.authstory .lead,
-.authstory .step p {
-  color: #ccdde7;
-}
-
-.closing .eyebrow,
-.authstory .eyebrow {
-  color: #ccdde7 !important;
-}
-
-.closing .eyebrow {
-  margin: 0 0 4px !important;
-}
-
 .closing .btn {
-  background: #ffffff;
-  color: var(--btn-bg);
-  border: 1px solid #ffffff;
+  background: var(--btn-bg);
+  color: #ffffff;
+  border: 1px solid var(--btn-bg);
   border-radius: var(--radius-btn);
   font-size: var(--text-ui);
   font-weight: var(--weight-medium);
@@ -1466,9 +1481,9 @@ main.wrap > .hero > p {
 }
 
 .closing .btn:hover {
-  background: var(--surface-pill);
-  border-color: var(--surface-pill);
-  color: var(--btn-bg);
+  background: var(--btn-bg-hover);
+  border-color: var(--btn-bg-hover);
+  color: #ffffff;
 }
 
 /* Poraštė */
