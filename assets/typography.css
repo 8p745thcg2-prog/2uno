@@ -23,15 +23,18 @@
   --brand-teal-soft: #e6f5f5;
   --brand-teal-tint: #d4eeee;
 
-  /* Mercury tipo plokšti paviršiai, spalviškai pritaikyti prie 2UNO logotipo */
-  --surface-page: #f7f9fc;
+  /* Švarūs, šviesūs B2B fintech paviršiai ir švelnūs šešėliai */
+  --surface-page: #f6f8fc;
   --surface-card: #ffffff;
-  --surface-tonal: #edf2f7;
-  --surface-pill: #e3edf5;
-  --surface-hover: #d7e5f0;
-  --border-subtle: #dfe7f0;
-  --border-input: #d2dce8;
-  --border-strong: #b6c5d8;
+  --surface-tonal: #f1f5fb;
+  --surface-pill: #eef3fa;
+  --surface-hover: #e2ebf6;
+  --border-subtle: #e2e8f0;
+  --border-input: #cbd5e1;
+  --border-strong: #94a3b8;
+  --shadow-card: 0 1px 2px rgba(15, 23, 42, 0.04), 0 4px 16px -4px rgba(11, 37, 105, 0.06);
+  --shadow-card-hover: 0 4px 12px rgba(15, 23, 42, 0.06), 0 12px 28px -8px rgba(11, 37, 105, 0.12);
+  --shadow-panel: 0 2px 6px rgba(15, 23, 42, 0.04), 0 12px 32px -10px rgba(11, 37, 105, 0.08);
 
   /* Ramus, prie logotipo priderintas teksto kontrastas */
   --text-primary: #0f2042;
@@ -361,7 +364,7 @@ header:has(.brand-logo) .navcta:hover {
 }
 
 /* ==========================================================================
-   3. Mercury mygtukai ir plokšti šilti paviršiai visuose puslapiuose
+   3. Mygtukai, švarūs balti kortelių paviršiai, antrinių puslapių proporcijos ir mikro-animacijos
    ========================================================================== */
 
 .btn,
@@ -371,7 +374,7 @@ main button:where(:not(.item, .carousel-prev, .carousel-next, .date-toggle, .cal
   font-size: var(--text-ui);
   font-weight: var(--weight-medium);
   box-shadow: none;
-  transition: background-color 0.25s var(--ease-mercury), border-color 0.25s var(--ease-mercury), color 0.25s var(--ease-mercury);
+  transition: background-color 0.2s var(--ease-mercury), border-color 0.2s var(--ease-mercury), color 0.2s var(--ease-mercury), transform 0.18s var(--ease-mercury), box-shadow 0.2s var(--ease-mercury);
 }
 
 .btn:where(:not(.closing *, .light)),
@@ -382,43 +385,223 @@ button.primary {
   padding: 0 20px;
 }
 
-.btn:where(:not(.closing *, .light)):hover,
-button.primary:hover {
+.btn:where(:not(.closing *, .light)):hover:not(:disabled),
+button.primary:hover:not(:disabled) {
   background: var(--brand-navy-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px -6px rgba(11, 37, 105, 0.35);
+}
+
+.btn:active:not(:disabled),
+button.primary:active:not(:disabled),
+header:has(.brand-logo) .navcta:active {
+  transform: translateY(0);
 }
 
 .btn.light,
 button.light {
-  background: var(--surface-pill);
-  color: var(--text-primary);
-  border: 0;
+  background: #ffffff;
+  color: var(--brand-navy);
+  border: 1px solid var(--border-subtle);
   height: 40px;
   padding: 0 20px;
 }
 
-.btn.light:hover,
-button.light:hover {
-  background: var(--surface-hover);
+.btn.light:hover:not(:disabled),
+button.light:hover:not(:disabled) {
+  background: var(--surface-pill);
+  border-color: var(--border-input);
+  transform: translateY(-1px);
 }
 
+header:has(.brand-logo) .navcta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px -6px rgba(11, 37, 105, 0.35);
+}
+
+/* Visos kortelės ir panelės – švarus baltas paviršius, 1px #e2e8f0 rėmelis ir švelnus šešėlis */
 .card,
 .company,
 .panel,
 .authshell {
-  box-shadow: none;
-  border-color: var(--border-subtle);
+  background: var(--surface-card);
+  border: 1px solid var(--border-subtle);
   border-radius: var(--radius-panel);
+  box-shadow: var(--shadow-card);
+}
+
+.panel,
+.authshell {
+  box-shadow: var(--shadow-panel);
 }
 
 .steps .step:where(.wrap .step),
 .card:where(.grid2 .card),
 .company {
-  background: var(--surface-tonal);
-  border: 1px solid transparent;
+  background: var(--surface-card);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-card);
+  transition: transform 0.22s var(--ease-mercury), box-shadow 0.22s var(--ease-mercury), border-color 0.22s var(--ease-mercury);
 }
 
+.steps .step:where(.wrap .step):hover,
+.card:where(.grid2 .card):hover,
 .company:hover {
-  border-color: var(--border-subtle);
+  transform: translateY(-2px);
+  border-color: var(--border-input);
+  box-shadow: var(--shadow-card-hover);
+}
+
+/* Antriniai puslapiai – subalansuotos kortelių proporcijos ir erdvė */
+main.wrap > .steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  margin: 24px 0 48px;
+}
+
+main.wrap > .steps .step {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+  padding: 28px;
+}
+
+main.wrap > .steps .step .num {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--brand-teal-soft);
+  color: var(--brand-teal-text);
+  font-size: var(--text-ui);
+  font-weight: var(--weight-bold);
+}
+
+main.wrap > section.block {
+  padding: 44px 0;
+  border-top: 1px solid var(--border-subtle);
+}
+
+main.wrap > section.block .grid2 {
+  gap: 20px;
+  margin-top: 24px;
+}
+
+main.wrap > section.block .card {
+  padding: 26px 28px;
+}
+
+/* Įmonių katalogas (imones.html) – 2 subalansuoti stulpeliai ir švarūs filtrų mygtukai */
+.jumplist {
+  gap: 10px;
+  margin: 12px 0 32px;
+}
+
+.jumplist a {
+  background: var(--surface-card);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03);
+  transition: transform 0.18s var(--ease-mercury), border-color 0.2s var(--ease-mercury), background-color 0.2s var(--ease-mercury), box-shadow 0.2s var(--ease-mercury);
+}
+
+.jumplist a:hover {
+  background: var(--brand-teal-soft);
+  border-color: var(--brand-teal);
+  color: var(--brand-navy);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-card);
+}
+
+.companies {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+  margin-bottom: 52px;
+}
+
+.companies .company {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 26px 28px;
+}
+
+.companies .company .features {
+  grid-template-columns: 1fr;
+  gap: 8px;
+  margin: 14px 0 20px;
+}
+
+.companies .company .company-actions {
+  margin-top: auto;
+  padding-top: 18px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+/* Prisijungimo ir partnerio paskyros puslapiai */
+main.authshell {
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 56px;
+}
+
+.authform input,
+.account input,
+.account select {
+  border-color: var(--border-input);
+  transition: border-color 0.2s var(--ease-mercury), box-shadow 0.2s var(--ease-mercury), background-color 0.2s var(--ease-mercury);
+}
+
+.authform input:focus,
+.account input:focus,
+.account select:focus {
+  border-color: var(--brand-teal);
+  box-shadow: 0 0 0 3px rgba(56, 179, 179, 0.18);
+}
+
+.account .panel {
+  padding: 32px;
+}
+
+.accountstats .stat {
+  background: #f8fafd;
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  transition: border-color 0.2s var(--ease-mercury), box-shadow 0.2s var(--ease-mercury);
+}
+
+.accountstats .stat:hover {
+  border-color: var(--border-input);
+  box-shadow: var(--shadow-card);
+}
+
+.account .menu button {
+  border-radius: 10px;
+  transition: background-color 0.2s var(--ease-mercury), color 0.2s var(--ease-mercury);
+}
+
+/* Subtili įėjimo mikro-animacija (be poveikio #skaiciuokle / sticky) */
+@keyframes ui-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .calculator-intro,
+  main.wrap > .hero,
+  main.wrap > .steps,
+  .companies,
+  main.authshell,
+  .account {
+    animation: ui-fade-up 0.28s var(--ease-mercury) both;
+  }
 }
 
 /* ==========================================================================
@@ -774,7 +957,7 @@ main.wrap > .hero > p {
 #resultview .cards {
   --cards-gap: 12px;
   gap: var(--cards-gap);
-  padding: 2px 0 6px;
+  padding: 4px 0 10px;
   scroll-padding-inline: 0;
 }
 
@@ -786,9 +969,9 @@ main.wrap > .hero > p {
   border-radius: var(--radius-panel);
   padding: 16px;
   gap: 10px;
-  box-shadow: none;
+  box-shadow: var(--shadow-card);
   color: var(--text-primary);
-  transition: border-color 0.25s var(--ease-mercury);
+  transition: transform 0.22s var(--ease-mercury), box-shadow 0.22s var(--ease-mercury), border-color 0.22s var(--ease-mercury);
 }
 
 @media (max-width: 1259px) {
@@ -804,13 +987,15 @@ main.wrap > .hero > p {
 }
 
 #resultview .provider:hover {
-  border-color: var(--border-strong);
+  transform: translateY(-2px);
+  border-color: var(--border-input);
+  box-shadow: var(--shadow-card-hover);
 }
 
 #resultview .provider.is-selected {
   border: 1.5px solid var(--brand-teal);
   padding: 15.5px;
-  box-shadow: none;
+  box-shadow: 0 4px 16px -4px rgba(56, 179, 179, 0.24);
 }
 
 #resultview .providerhead {
@@ -972,27 +1157,31 @@ main.wrap > .hero > p {
   border: 1px solid var(--border-subtle);
   background: #ffffff;
   color: var(--text-primary);
-  box-shadow: none;
-  transition: background-color 0.2s var(--ease-mercury);
+  box-shadow: var(--shadow-card);
+  transition: background-color 0.2s var(--ease-mercury), border-color 0.2s var(--ease-mercury), transform 0.18s var(--ease-mercury), box-shadow 0.2s var(--ease-mercury);
 }
 
 #resultview .carousel-prev:hover,
 #resultview .carousel-next:hover {
-  background: var(--surface-tonal);
+  background: #ffffff;
+  border-color: var(--border-input);
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-50%) scale(1.04);
 }
 
 /* Sutarties peržiūra (#contractview) */
 #contractview {
-  background: var(--surface-tonal);
-  border: 0;
+  background: var(--surface-card);
+  border: 1px solid var(--border-subtle);
   border-radius: var(--radius-panel);
-  box-shadow: none;
+  box-shadow: var(--shadow-panel);
   padding: 28px;
 }
 
 #contractview .contract-navigation {
-  top: 68px;
-  background: var(--surface-tonal);
+  top: 64px;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border-subtle);
   padding: 12px 0 16px;
   margin-bottom: 20px;
@@ -1003,7 +1192,7 @@ main.wrap > .hero > p {
   border-radius: var(--radius-pill);
   background: #ffffff;
   color: var(--text-primary);
-  border: 1px solid var(--border-input);
+  border: 1px solid var(--border-subtle);
   font-size: var(--text-ui);
   height: 38px;
   min-height: 38px;
@@ -1012,7 +1201,8 @@ main.wrap > .hero > p {
 
 #contractview .contract-navigation .btn:hover,
 #contractview .contract-bottom-navigation .btn:hover {
-  background: var(--surface-hover);
+  background: var(--surface-pill);
+  border-color: var(--border-input);
 }
 
 #contractview .notice {
@@ -1028,6 +1218,7 @@ main.wrap > .hero > p {
   background: #ffffff;
   border: 1px solid var(--border-subtle) !important;
   border-radius: 16px !important;
+  box-shadow: var(--shadow-card);
 }
 
 #contractview #sign {
@@ -1046,7 +1237,7 @@ main.wrap > .hero > p {
 #nextsteps {
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-panel);
-  box-shadow: none;
+  box-shadow: var(--shadow-panel);
 }
 
 /* ==========================================================================
@@ -1069,10 +1260,18 @@ main.wrap > .hero > p {
 
 #kaip .step {
   min-width: 0;
-  background: var(--surface-tonal);
-  border: 0;
+  background: var(--surface-card);
+  border: 1px solid var(--border-subtle);
   border-radius: var(--radius-panel);
   padding: 28px;
+  box-shadow: var(--shadow-card);
+  transition: transform 0.22s var(--ease-mercury), box-shadow 0.22s var(--ease-mercury), border-color 0.22s var(--ease-mercury);
+}
+
+#kaip .step:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-input);
+  box-shadow: var(--shadow-card-hover);
 }
 
 #kaip .step > b {
@@ -1092,7 +1291,9 @@ main.wrap > .hero > p {
 }
 
 #duk::before {
-  background: var(--surface-tonal) !important;
+  background: var(--surface-card) !important;
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 #duk .faq h2 {
@@ -1103,7 +1304,7 @@ main.wrap > .hero > p {
 }
 
 #duk .faq details {
-  border-bottom-color: var(--border-input);
+  border-bottom-color: var(--border-subtle);
   padding: 20px 0 !important;
 }
 
@@ -1111,8 +1312,17 @@ main.wrap > .hero > p {
   border-bottom: 0;
 }
 
+#duk .faq summary {
+  transition: color 0.18s var(--ease-mercury);
+}
+
+#duk .faq summary:hover {
+  color: var(--brand-navy);
+}
+
 #duk .faq summary::after {
   color: var(--brand-teal);
+  transition: transform 0.2s var(--ease-mercury), color 0.2s var(--ease-mercury);
 }
 
 /* Tamsūs prekės ženklo blokai (logotipo #0b2569 + turkio CTA) */
@@ -1248,6 +1458,22 @@ main.wrap > .hero > p {
 
   header:has(.brand-logo) .navcta {
     padding: 0 14px;
+  }
+}
+
+@media (max-width: 960px) {
+  main.wrap > .steps,
+  .companies {
+    grid-template-columns: 1fr;
+  }
+
+  main.wrap > .steps .step,
+  .companies .company {
+    padding: 22px;
+  }
+
+  .account .panel {
+    padding: 22px;
   }
 }
 
