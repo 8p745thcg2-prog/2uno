@@ -31,6 +31,11 @@
   --surface-card: #ffffff;
   --border-subtle: #e1e8f2;
 
+  /* Vienodas visų puslapių plotis (keisti vienoje vietoje) */
+  --container-width: 1280px;
+  --container-pad: 32px;
+  --container-max: calc(var(--container-width) + var(--container-pad) * 2);
+
   /* Tipografinė skalė */
   --text-h1: clamp(1.75rem, 2.3vw, 2.25rem);         /* 28px – 36px */
   --text-h1-compact: clamp(1.5rem, 1.9vw, 1.875rem); /* 24px – 30px (kompaktiška pradžia) */
@@ -217,8 +222,12 @@ details p:where(:not(#skaiciuokle *)),
   background: #48c2c2;
 }
 
-/* Poraštės tipografija ir spalvos */
+/* Poraštės tipografija, spalvos ir vienodas plotis */
 .site-footer {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-pad);
   border-top-color: var(--border-subtle);
 }
 
@@ -252,6 +261,28 @@ details p:where(:not(#skaiciuokle *)),
   color: var(--text-muted);
 }
 
+/* Vienodas puslapių turinio plotis visuose puslapiuose */
+.wrap,
+.wrap-1200,
+.account,
+main:where(:not(.authshell, .wrap, .account, :has(> #signup))) {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-pad);
+}
+
+main.authshell {
+  width: min(var(--container-width), calc(100% - var(--container-pad) * 2));
+  max-width: var(--container-width);
+  margin-inline: auto;
+}
+
+/* Vienodas antraštės turinio plotis visuose puslapiuose */
+body > header {
+  padding-inline: max(var(--container-pad), calc((100vw - var(--container-width)) / 2));
+}
+
 /* Kompaktiška, lakoniška viešųjų puslapių antraštė */
 header:has(.brand-logo) {
   position: static;
@@ -259,7 +290,8 @@ header:has(.brand-logo) {
   min-height: 64px;
   max-width: none;
   margin: 0;
-  padding: 0 max(28px, calc((100vw - 1360px) / 2));
+  padding-block: 0;
+  padding-inline: max(var(--container-pad), calc((100vw - var(--container-width)) / 2));
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -350,7 +382,8 @@ header:has(.brand-logo) .navcta:hover {
     height: auto;
     min-height: 58px;
     flex-wrap: wrap;
-    padding: 8px 20px;
+    padding-block: 8px;
+    padding-inline: var(--container-pad);
     gap: 6px 16px;
   }
 
@@ -363,8 +396,13 @@ header:has(.brand-logo) .navcta:hover {
 }
 
 @media (max-width: 800px) {
+  :root {
+    --container-pad: 16px;
+  }
+
   header:has(.brand-logo) {
-    padding: 8px 16px;
+    padding-block: 8px;
+    padding-inline: var(--container-pad);
     gap: 6px 12px;
   }
 
