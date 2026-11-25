@@ -1317,7 +1317,7 @@ main.wrap > .hero > p {
 
 #duk {
   padding: 56px 0 !important;
-  margin-bottom: 44px !important;
+  margin-bottom: 0 !important;
 }
 
 #duk::before {
@@ -1359,7 +1359,7 @@ main.wrap > .hero > p {
   transition: transform 0.2s var(--ease-mercury), color 0.2s var(--ease-mercury);
 }
 
-/* Tamsūs prekės ženklo blokai (logotipo #0b2569 + turkio CTA) */
+/* Tamsūs prekės ženklo blokai (vienodi CTA blokai visuose puslapiuose) */
 .closing,
 .authstory {
   background: var(--brand-navy);
@@ -1367,8 +1367,25 @@ main.wrap > .hero > p {
 }
 
 .closing {
+  width: 100%;
+  margin: 56px 0;
+  padding: 56px 48px;
+  min-height: 224px;
   border-radius: 20px;
-  padding: 40px 44px;
+  box-shadow: var(--shadow-panel);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 24px;
+}
+
+.closing > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 680px;
 }
 
 .closing h2,
@@ -1382,6 +1399,7 @@ main.wrap > .hero > p {
   font-size: var(--text-h2);
   font-weight: var(--weight-h2);
   line-height: var(--leading-snug);
+  margin: 0;
 }
 
 .authstory p,
@@ -1392,17 +1410,22 @@ main.wrap > .hero > p {
 
 .closing .eyebrow,
 .authstory .eyebrow {
-  color: var(--brand-teal-tint);
+  color: var(--brand-teal-tint) !important;
+}
+
+.closing .eyebrow {
+  margin: 0 0 12px !important;
 }
 
 .closing .btn {
   background: var(--brand-teal);
   color: var(--brand-navy);
   border-radius: var(--radius-pill);
-  font-size: var(--text-ui);
+  font-size: var(--text-base);
   font-weight: var(--weight-semibold);
-  height: 42px;
-  padding: 0 22px;
+  height: 46px;
+  padding: 0 28px;
+  margin-top: 0;
 }
 
 .closing .btn:hover {
@@ -1626,7 +1649,15 @@ main.wrap > .hero > p {
   }
 
   .closing {
-    padding: 28px 22px;
+    display: flex;
+    min-height: 0;
+    margin: 36px 0 40px;
+    padding: 36px 24px;
+    gap: 20px;
+  }
+
+  .closing .btn {
+    margin-top: 0;
   }
 }
 
