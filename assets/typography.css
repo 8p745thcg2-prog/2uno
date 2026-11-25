@@ -215,10 +215,11 @@ main.authshell {
   margin-inline: auto;
 }
 
-/* Balto JPG logotipo fono suliejimas su šiltu #f6f5f2 fonu */
+/* Skaidraus fono logotipas antraštėje ir poraštėje */
 header img,
-.brand-logo img {
-  mix-blend-mode: multiply;
+.brand-logo img,
+.f-logo img {
+  background: transparent;
 }
 
 body > header {
@@ -253,7 +254,7 @@ header:has(.brand-logo) .brand-logo {
 
 header:has(.brand-logo) .brand-logo img {
   display: block;
-  height: 54px;
+  height: 42px;
   width: auto;
   max-width: 140px;
   object-fit: contain;
@@ -1100,9 +1101,18 @@ main.wrap > .hero > p {
 }
 
 .f-logo {
+  display: inline-flex;
+  align-items: center;
   color: var(--brand-navy);
   font-size: 20px;
   font-weight: var(--weight-bold);
+}
+
+.f-logo img {
+  display: block;
+  height: 42px;
+  width: auto;
+  object-fit: contain;
 }
 
 .footer-col h4 {
