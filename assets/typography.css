@@ -14,30 +14,30 @@
   --font-heading: var(--font-sans);
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
-  /* 2UNO logotipo spalvos (akcentai, CTA, aktyvios būsenos) */
+  /* 2UNO logotipo spalvos */
   --brand-navy: #0b2569;
   --brand-navy-hover: #14358a;
   --brand-teal: #38b3b3;
   --brand-teal-hover: #48c2c2;
-  --brand-teal-text: #176f74;
-  --brand-teal-soft: #e6f4f4;
-  --brand-teal-tint: #d6eeee;
+  --brand-teal-text: #166e73;
+  --brand-teal-soft: #e6f5f5;
+  --brand-teal-tint: #d4eeee;
 
-  /* Mercury šilti neutralūs paviršiai (be sunkių šešėlių) */
-  --surface-page: #f6f5f2;
+  /* Mercury tipo plokšti paviršiai, spalviškai pritaikyti prie 2UNO logotipo */
+  --surface-page: #f7f9fc;
   --surface-card: #ffffff;
-  --surface-tonal: #eeede9;
-  --surface-pill: #e4e3de;
-  --surface-hover: #dcdbd5;
-  --border-subtle: #e4e2dc;
-  --border-input: #dcdad3;
-  --border-strong: #c7c4bc;
+  --surface-tonal: #edf2f7;
+  --surface-pill: #e3edf5;
+  --surface-hover: #d7e5f0;
+  --border-subtle: #dfe7f0;
+  --border-input: #d2dce8;
+  --border-strong: #b6c5d8;
 
-  /* Mercury teksto kontrastas (šiltas grafitas vietoj ryškiai mėlyno visur) */
-  --text-primary: #242320;
-  --text-secondary: #5a5954;
-  --text-muted: #706f69;
-  --text-eyebrow-color: #6b6a64;
+  /* Ramus, prie logotipo priderintas teksto kontrastas */
+  --text-primary: #0f2042;
+  --text-secondary: #4a5b75;
+  --text-muted: #64748b;
+  --text-eyebrow-color: var(--brand-teal-text);
 
   /* Spinduliai ir judesys */
   --radius-pill: 999px;
@@ -220,7 +220,7 @@ header img,
 }
 
 body > header {
-  background: rgba(246, 245, 242, 0.92);
+  background: rgba(247, 249, 252, 0.92);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 0;
@@ -240,8 +240,7 @@ header:has(.brand-logo) {
   padding-inline: max(var(--container-pad), calc((100vw - var(--container-width)) / 2));
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 20px;
+  gap: 10px;
 }
 
 header:has(.brand-logo) .brand-logo {
@@ -258,10 +257,15 @@ header:has(.brand-logo) .brand-logo img {
   object-fit: contain;
 }
 
+/* Mercury 3 zonų navigacija: logotipas kairėje | pagrindinės nuorodos centre | veiksmai dešinėje */
 header:has(.brand-logo) nav {
+  flex: 1;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
+}
+
+header:has(.brand-logo) nav a:first-child {
   margin-left: auto;
 }
 
@@ -291,17 +295,17 @@ header:has(.brand-logo) nav a.current {
   color: var(--brand-navy);
 }
 
-/* Mercury „Launch demo“ stiliaus švelnus neutralus pill šalia pagrindinio CTA */
+/* Dešinės pusės antrinis pill mygtukas šalia pagrindinio CTA (kaip Mercury „Launch demo“) */
 header:has(.brand-logo) nav a.partner-link {
-  margin-left: 12px;
+  margin-left: auto;
   padding: 0 16px;
-  background: var(--surface-pill);
-  color: var(--text-primary);
+  background: var(--brand-teal-soft);
+  color: var(--brand-navy);
   border: 0;
 }
 
 header:has(.brand-logo) nav a.partner-link:hover {
-  background: var(--surface-hover);
+  background: var(--brand-teal-tint);
   color: var(--brand-navy);
 }
 
@@ -548,7 +552,7 @@ button.light:hover {
 }
 
 #formview .field input::placeholder {
-  color: #96948d;
+  color: #8c9ab0;
 }
 
 #formview .field input:hover,
@@ -591,7 +595,7 @@ button.light:hover {
 }
 
 #formview .toggle-slider {
-  background: #cfcdc6;
+  background: #cbd5e1;
 }
 
 #formview .toggle-switch input:checked + .toggle-slider {
@@ -807,7 +811,7 @@ button.light:hover {
 
 #resultview .cardactions .btn:disabled {
   background: var(--surface-pill);
-  color: #8c8a83;
+  color: #7b8ca4;
 }
 
 #resultview .price-breakdown summary,
@@ -1079,6 +1083,7 @@ button.light:hover {
     height: auto;
     min-height: 60px;
     flex-wrap: wrap;
+    justify-content: space-between;
     padding-block: 10px;
     padding-inline: var(--container-pad);
     gap: 8px 16px;
@@ -1086,12 +1091,13 @@ button.light:hover {
 
   header:has(.brand-logo) nav {
     order: 3;
+    flex: 1 0 100%;
     width: 100%;
-    margin-left: 0;
     overflow-x: auto;
     padding-bottom: 2px;
   }
 
+  header:has(.brand-logo) nav a:first-child,
   header:has(.brand-logo) nav a.partner-link {
     margin-left: 0;
   }
