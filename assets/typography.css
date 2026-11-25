@@ -767,12 +767,6 @@ main.authshell {
   border: 1px solid #e8eef4;
   border-radius: 12px;
   box-shadow: none;
-  transition: border-color 0.22s ease, background-color 0.22s ease;
-}
-
-.accountstats .stat:hover {
-  background: #f4f9fa;
-  border-color: rgba(56, 179, 179, 0.35);
 }
 
 .account .steps {
@@ -781,20 +775,13 @@ main.authshell {
 }
 
 .account .steps .step {
-  display: flex;
-  align-items: flex-start;
-  gap: 18px;
+  display: block;
   background: transparent;
   border: 0;
   border-top: 1px solid #e8eef4;
   border-radius: 0;
-  padding: 20px 10px;
+  padding: 18px 0;
   box-shadow: none;
-  transition: background-color 0.22s ease;
-}
-
-.account .steps .step:hover {
-  background: #fafcfd;
 }
 
 .account .steps .step b {
@@ -813,16 +800,15 @@ main.authshell {
 
 .account .steps .step p {
   margin: 0;
-  line-height: 1.72;
+  line-height: 1.7;
   max-width: 62ch;
 }
 
 .account .menu button {
   border-radius: 10px;
-  transition: background-color 0.2s var(--ease-mercury), color 0.2s var(--ease-mercury);
 }
 
-/* Ramus puslapio turinio atsiradimas (be poveikio #skaiciuokle / sticky) */
+/* Ramus puslapio turinio atsiradimas (be poveikio #skaiciuokle / sticky / .account) */
 @keyframes ui-fade-up {
   from {
     opacity: 0;
@@ -838,8 +824,7 @@ main.authshell {
   .calculator-intro,
   main.wrap > .hero,
   .companies,
-  main.authshell,
-  .account {
+  main.authshell {
     animation: ui-fade-up 0.28s var(--ease-mercury) both;
   }
 }
