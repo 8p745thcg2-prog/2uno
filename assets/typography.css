@@ -46,10 +46,11 @@
   --radius-input: 10px;
   --ease-mercury: cubic-bezier(0, 0, 0.2, 1);
 
-  /* Vienodas visų puslapių plotis (keisti vienoje vietoje) */
+  /* Vienodas visų puslapių plotis ir viršutinis tarpas (keisti vienoje vietoje) */
   --container-width: 1280px;
   --container-pad: 32px;
   --container-max: calc(var(--container-width) + var(--container-pad) * 2);
+  --page-top-space: 48px;
 
   /* Griežta, vienoda 5 žingsnių tipografijos skalė visai svetainei */
   --text-h1: clamp(1.75rem, 2.2vw, 2.125rem);   /* 28px – 34px */
@@ -401,7 +402,7 @@ button.light:hover {
 
 .calculator-intro,
 main.wrap > .hero {
-  padding: 24px 0 20px;
+  padding: var(--page-top-space) 0 28px;
   text-align: left;
   display: block;
 }
@@ -413,7 +414,11 @@ main.wrap > .hero {
 .account,
 main:where(:not(.authshell, .wrap, .account, :has(> #signup))) {
   margin-top: 0;
-  padding-top: 24px;
+  padding-top: var(--page-top-space);
+}
+
+main.authshell {
+  margin-top: var(--page-top-space);
 }
 
 .calculator-intro > .eyebrow,
@@ -433,7 +438,7 @@ main > h1,
   line-height: var(--leading-tight);
   letter-spacing: var(--tracking-h1);
   color: var(--text-primary);
-  margin: 0 0 8px;
+  margin: 0 0 10px;
   max-width: 900px;
 }
 
@@ -1127,6 +1132,7 @@ main.wrap > .hero > p {
 @media (max-width: 800px) {
   :root {
     --container-pad: 16px;
+    --page-top-space: 28px;
   }
 
   header:has(.brand-logo) {
@@ -1160,12 +1166,12 @@ main.wrap > .hero > p {
 
   .calculator-intro,
   main.wrap > .hero {
-    padding: 16px 0 16px;
+    padding: var(--page-top-space) 0 20px;
   }
 
   .account,
   main:where(:not(.authshell, .wrap, .account, :has(> #signup))) {
-    padding-top: 16px;
+    padding-top: var(--page-top-space);
   }
 
   #formview .formbody {
