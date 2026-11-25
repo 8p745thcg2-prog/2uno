@@ -6,27 +6,29 @@
 <meta name="robots" content="noindex,nofollow">
 <title>Partnerio paskyra | 2UNO</title>
 <style>
-:root{--ink:#10245f;--brand:#102b70;--teal:#279da7;--muted:#64758e;--paper:#f4f7fc;--line:#dce5f1;--err:#b42318;--ok:#0f6b46}
+:root{--ink:#0b2569;--brand:#0b2569;--teal:#38b3b3;--muted:#607089;--paper:#f5f8fc;--line:#e1e8f2;--err:#b42318;--ok:#0f6b46}
 [hidden]{display:none!important}
-*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,Helvetica,sans-serif}
-header{background:#fff;border-bottom:1px solid var(--line);padding:8px 24px;display:flex;align-items:center;gap:16px}
-header img{height:52px}header .who{margin-left:auto;font-size:13px;color:var(--muted);display:flex;gap:12px;align-items:center}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink)}
+header{background:#fff;border-bottom:1px solid var(--line);height:64px;padding:0 24px;display:flex;align-items:center;gap:16px}
+header img{height:42px;width:auto}header .who{margin-left:auto;font-size:13px;color:var(--muted);display:flex;gap:12px;align-items:center}
 main{max-width:1200px;margin:28px auto 60px;padding:0 32px}
-h1{font-size:28px;margin:0 0 6px}p.lead{color:var(--muted);margin:0 0 22px;line-height:1.6}
+h1{margin:0 0 8px}p.lead{margin:0 0 22px}
 .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px}
 .login{max-width:440px;margin:40px auto}
 label{display:block;font-size:13px;font-weight:600;margin-top:14px}
-input{width:100%;margin-top:6px;border:1px solid #c5d6e3;border-radius:8px;padding:12px;font:inherit;color:var(--ink)}
+input{width:100%;margin-top:6px;border:1px solid #cfdbe9;border-radius:8px;padding:11px 12px;font:inherit;color:var(--ink)}
 input.code{font-size:24px;letter-spacing:8px;text-align:center}
-button{border:0;background:var(--brand);color:#fff;border-radius:9px;padding:12px 18px;font:inherit;font-weight:600;cursor:pointer}
-button.light{background:#eaf5f8;color:var(--ink);border:1px solid #c8dfe8}button.danger{background:#fff;color:var(--err);border:1px solid #f1c3c0}
+button{border:0;background:var(--brand);color:#fff;border-radius:9px;padding:11px 18px;font:inherit;font-size:13px;font-weight:600;cursor:pointer}
+button:hover{background:#14358a}
+button.light{background:#edf3fa;color:var(--ink);border:1px solid #d4e0ef}button.light:hover{background:#e1ebf7}button.danger{background:#fff;color:var(--err);border:1px solid #f1c3c0}
 button:disabled{opacity:.6;cursor:wait}.full{width:100%;margin-top:16px}
 .msg{font-size:13px;padding:10px 13px;border-radius:8px;margin-top:12px;display:none;line-height:1.5}
 .msg.ok{display:block;background:#e9f8f1;color:var(--ok)}.msg.warn{display:block;background:#fff6e0;color:#7a5200}.msg.bad{display:block;background:#fdecec;color:var(--err)}
 .grid{display:grid;grid-template-columns:360px 1fr;gap:18px;align-items:start}
 .list{display:flex;flex-direction:column;gap:10px}
 .item{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px;cursor:pointer;text-align:left;color:var(--ink);font-weight:400}
-.item.active{border-color:var(--teal);box-shadow:0 0 0 2px #9fdde0}
+.item:hover{background:#f8fbff}
+.item.active{border-color:var(--teal);box-shadow:0 0 0 2px #b6e6e6}
 .item b{display:block;font-size:14px;margin-bottom:4px}.item small{color:var(--muted)}
 .badge{display:inline-block;font-size:11px;border-radius:20px;padding:4px 9px;margin-top:8px;background:#eef2f8;color:#3b4b66}
 .badge.wait{background:#fff4d6;color:#7a5200}.badge.open{background:#e3f6ee;color:var(--ok)}.badge.off{background:#f1f1f1;color:#777}
@@ -36,6 +38,7 @@ dl{display:grid;grid-template-columns:190px 1fr;gap:9px 14px;font-size:14px;marg
 .empty{color:var(--muted);font-size:14px}.testbox{margin-top:18px;font-size:12px;color:var(--muted);border-top:1px dashed var(--line);padding-top:14px}
 .back-btn{display:none;margin-bottom:14px}
 @media(max-width:820px){
+  main{padding:0 16px}
   .grid{grid-template-columns:1fr}
   dl{grid-template-columns:1fr}
   #grid.show-detail .list{display:none}
@@ -43,6 +46,7 @@ dl{display:grid;grid-template-columns:190px 1fr;gap:9px 14px;font-size:14px;marg
   #grid.show-detail .back-btn{display:inline-block}
 }
 </style>
+<link rel="stylesheet" href="assets/typography.css">
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>

@@ -10,48 +10,49 @@
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 <script src="assets/netrukus.js" defer></script>
 <style>
-:root{--ink:#152b59;--muted:#5f6d82;--line:#e8edf2;--accent:#279da7;--lime:#dff2f1}
+:root{--ink:#0b2569;--muted:#607089;--line:#e1e8f2;--accent:#38b3b3;--lime:#d8f1f1}
 *{box-sizing:border-box}
-body{margin:0;min-height:100vh;background:#f7f9fc;color:var(--ink);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;font-size:15px;line-height:1.55;overflow-x:hidden}
+body{margin:0;min-height:100vh;background:#f5f8fc;color:var(--ink);overflow-x:hidden}
 button,input{font:inherit}
 .hidden{display:none!important}
 /* Fonas: išblurinta palyginimo lentelė */
-.backdrop{position:fixed;inset:0;padding:110px 24px 24px;filter:blur(7px);opacity:.75;pointer-events:none;user-select:none;overflow:hidden}
+.backdrop{position:fixed;inset:0;padding:96px 24px 24px;filter:blur(7px);opacity:.75;pointer-events:none;user-select:none;overflow:hidden}
 .backdrop table{width:min(1100px,100%);margin:0 auto;border-collapse:separate;border-spacing:0 12px}
 .backdrop td{background:#fff;padding:22px 18px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-size:15px;white-space:nowrap}
 .backdrop td:first-child{border-left:1px solid var(--line);border-radius:14px 0 0 14px;font-weight:650}
 .backdrop td:last-child{border-right:1px solid var(--line);border-radius:0 14px 14px 0}
-.mark{display:inline-grid;place-items:center;width:38px;height:38px;border-radius:10px;background:var(--lime);color:#1d6f77;margin-right:12px;font-weight:700}
+.mark{display:inline-grid;place-items:center;width:38px;height:38px;border-radius:10px;background:#eaf7f7;color:#1c7e83;margin-right:12px;font-weight:700}
 .price{font-size:20px;font-weight:700}
-.pill{display:inline-block;padding:5px 10px;border-radius:99px;background:#eef8f7;color:#25818a;font-size:12px;font-weight:600}
+.pill{display:inline-block;padding:5px 10px;border-radius:99px;background:#eaf7f7;color:#1c7e83;font-size:12px;font-weight:600}
 .btn-fake{display:inline-block;padding:10px 16px;border-radius:9px;background:var(--ink);color:#fff;font-size:13px}
-header{position:relative;z-index:2;height:84px;display:flex;align-items:center;padding:0 max(24px,calc((100vw - 1100px)/2));background:#fff;border-bottom:1px solid var(--line)}
-header img{width:118px;height:68px;object-fit:contain}
+header{position:relative;z-index:2;height:64px;display:flex;align-items:center;padding:0 max(24px,calc((100vw - 1100px)/2));background:#fff;border-bottom:1px solid var(--line)}
+header img{height:42px;width:auto;object-fit:contain}
 /* Kortelė */
-main{position:relative;z-index:2;display:grid;place-items:center;padding:24px 16px 48px;min-height:calc(100vh - 84px)}
-.card{width:min(520px,100%);background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:0 20px 60px #152b591f;padding:34px 32px}
-.eyebrow{text-transform:uppercase;letter-spacing:1.8px;font-size:11px;font-weight:700;color:#38949d}
-h1{font-size:30px;line-height:1.2;letter-spacing:-.03em;margin:10px 0 12px;font-weight:650}
-.lead{color:var(--muted);margin:0 0 22px}
+main{position:relative;z-index:2;display:grid;place-items:center;padding:24px 16px 48px;min-height:calc(100vh - 64px)}
+.card{width:min(520px,100%);background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:0 20px 60px rgba(11,37,105,.12);padding:34px 32px}
+.card h1{font-size:var(--text-h1-compact);margin:10px 0 12px}
+.lead{margin:0 0 22px}
 ul.points{margin:0 0 24px;padding:0;list-style:none}
-ul.points li{padding-left:26px;position:relative;margin:7px 0}
-ul.points li::before{content:"";position:absolute;left:4px;top:8px;width:9px;height:9px;border-radius:50%;background:var(--accent)}
-label.field{display:block;font-size:12px;font-weight:600;color:#67768b;margin-bottom:7px}
-input[type=email]{width:100%;height:48px;padding:0 14px;border:1px solid #dfe5ec;background:#f9fafc;border-radius:10px;color:var(--ink);font-size:15px}
-input[type=email]:focus{outline:3px solid #79c6ce;outline-offset:2px;background:#fff}
+ul.points li{padding-left:26px;position:relative;margin:7px 0;font-size:14.5px;color:#42526b}
+ul.points li::before{content:"";position:absolute;left:4px;top:9px;width:8px;height:8px;border-radius:50%;background:var(--accent)}
+label.field{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:7px}
+input[type=email]{width:100%;height:48px;padding:0 14px;border:1px solid #cfdbe9;background:#f9fafc;border-radius:10px;color:var(--ink);font-size:15px}
+input[type=email]:focus{outline:3px solid rgba(56,179,179,.35);outline-offset:2px;background:#fff}
 .consent{display:flex;gap:10px;align-items:flex-start;margin:14px 0 4px;font-size:13px;color:var(--muted)}
 .consent input{margin-top:3px;width:17px;height:17px;flex:none}
-.consent a{color:#25818a}
+.consent a{color:#1c7e83}
 .cf-turnstile{margin-top:14px;min-height:65px}
-button.primary{width:100%;height:50px;margin-top:12px;border:0;border-radius:10px;background:var(--ink);color:#fff;font-weight:650;font-size:15px;cursor:pointer}
+button.primary{width:100%;height:50px;margin-top:12px;border:0;border-radius:10px;background:var(--ink);color:#fff;font-weight:600;font-size:15px;cursor:pointer}
+button.primary:hover{background:#14358a}
 button.primary:disabled{opacity:.6;cursor:default}
 .msg{margin-top:14px;padding:12px 14px;border-radius:10px;font-size:14px}
-.msg.ok{background:#eef8f7;color:#1d6f77}
+.msg.ok{background:#eaf7f7;color:#1c7e83}
 .msg.err{background:#fdf0f0;color:#9b2c2c}
-.foot{margin-top:18px;font-size:12px;color:#8a96a8}
-.foot a{color:#25818a}
-@media (max-width:560px){.card{padding:26px 20px;border-radius:16px}h1{font-size:25px}.backdrop{padding-top:90px}}
+.foot{margin-top:18px;font-size:12px;color:var(--muted)}
+.foot a{color:#1c7e83}
+@media (max-width:560px){.card{padding:26px 20px;border-radius:16px}.backdrop{padding-top:80px}}
 </style>
+<link rel="stylesheet" href="assets/typography.css">
 </head>
 <body>
 <div class="backdrop" aria-hidden="true">

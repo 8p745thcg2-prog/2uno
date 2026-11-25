@@ -6,27 +6,28 @@
 <meta name="robots" content="noindex,nofollow">
 <title>Administravimas | 2UNO</title>
 <style>
-:root{--ink:#10245f;--brand:#102b70;--teal:#279da7;--muted:#64758e;--paper:#f4f7fc;--line:#dce5f1;--err:#b42318;--ok:#0f6b46}
+:root{--ink:#0b2569;--brand:#0b2569;--teal:#38b3b3;--muted:#607089;--paper:#f5f8fc;--line:#e1e8f2;--err:#b42318;--ok:#0f6b46}
 [hidden]{display:none!important}
-*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,Helvetica,sans-serif}
-header{background:#fff;border-bottom:1px solid var(--line);padding:8px 24px;display:flex;align-items:center;gap:16px}
-header img{height:52px}header .who{margin-left:auto;font-size:13px;color:var(--muted);display:flex;gap:12px;align-items:center}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink)}
+header{background:#fff;border-bottom:1px solid var(--line);height:64px;padding:0 24px;display:flex;align-items:center;gap:16px}
+header img{height:42px;width:auto}header .who{margin-left:auto;font-size:13px;color:var(--muted);display:flex;gap:12px;align-items:center}
 main{max-width:1050px;margin:28px auto 60px;padding:0 18px}
-h1{font-size:28px;margin:0 0 6px}p.lead{color:var(--muted);margin:0 0 22px;line-height:1.6}
+h1{margin:0 0 8px}p.lead{margin:0 0 22px}
 .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px}
 .login{max-width:440px;margin:40px auto}
 label{display:block;font-size:13px;font-weight:600;margin-top:14px}
-input{width:100%;margin-top:6px;border:1px solid #c5d6e3;border-radius:8px;padding:12px;font:inherit;color:var(--ink)}
+input{width:100%;margin-top:6px;border:1px solid #cfdbe9;border-radius:8px;padding:11px 12px;font:inherit;color:var(--ink)}
 input.code{font-size:24px;letter-spacing:8px;text-align:center}
-button{border:0;background:var(--brand);color:#fff;border-radius:9px;padding:12px 18px;font:inherit;font-weight:600;cursor:pointer}
-button.light{background:#eaf5f8;color:var(--ink);border:1px solid #c8dfe8}button.danger{background:#fff;color:var(--err);border:1px solid #f1c3c0}
+button{border:0;background:var(--brand);color:#fff;border-radius:9px;padding:11px 18px;font:inherit;font-size:13px;font-weight:600;cursor:pointer}
+button:hover{background:#14358a}
+button.light{background:#edf3fa;color:var(--ink);border:1px solid #d4e0ef}button.light:hover{background:#e1ebf7}button.danger{background:#fff;color:var(--err);border:1px solid #f1c3c0}
 button:disabled{opacity:.6;cursor:wait}.full{width:100%;margin-top:16px}
 .msg{font-size:13px;padding:10px 13px;border-radius:8px;margin-top:12px;display:none;line-height:1.5}
 .msg.ok{display:block;background:#e9f8f1;color:var(--ok)}.msg.warn{display:block;background:#fff6e0;color:#7a5200}.msg.bad{display:block;background:#fdecec;color:var(--err)}
 .grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:18px;align-items:start}
 .list{display:flex;flex-direction:column;gap:10px}
 .item{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px;cursor:pointer;text-align:left;color:var(--ink);font-weight:400}
-.item.active{border-color:var(--teal);box-shadow:0 0 0 2px #9fdde0}
+.item.active{border-color:var(--teal);box-shadow:0 0 0 2px #b6e6e6}
 .item b{display:block;font-size:14px;margin-bottom:4px}.item small{color:var(--muted)}
 .badge{display:inline-block;font-size:11px;border-radius:20px;padding:4px 9px;margin-top:8px;background:#eef2f8;color:#3b4b66}
 .badge.wait{background:#fff4d6;color:#7a5200}.badge.open{background:#e3f6ee;color:var(--ok)}.badge.off{background:#f1f1f1;color:#777}
@@ -38,13 +39,14 @@ dl{display:grid;grid-template-columns:190px 1fr;gap:9px 14px;font-size:14px;marg
 .tabs{display:flex;gap:8px;margin:0 0 18px}.tabs button{background:#fff;color:var(--ink);border:1px solid var(--line)}.tabs button.on{background:var(--brand);color:#fff;border-color:var(--brand)}
 table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:13px}
 th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}th{background:#f6f8fc;color:var(--muted);font-weight:600}
-tr.row{cursor:pointer}tr.row:hover td{background:#f6fbfc}tr.row.active td{background:#e9f7f8}
-.toolbar{display:flex;gap:10px;align-items:center;margin-bottom:12px;flex-wrap:wrap}select{border:1px solid #c5d6e3;border-radius:8px;padding:9px;font:inherit;color:var(--ink);background:#fff}
-.secret{font-family:monospace;font-size:20px;letter-spacing:2px;background:#f6f8fc;border:1px dashed #b9c8de;border-radius:10px;padding:14px;text-align:center;word-break:break-all;margin:12px 0}
+tr.row{cursor:pointer}tr.row:hover td{background:#f4fbfb}tr.row.active td{background:#eaf7f7}
+.toolbar{display:flex;gap:10px;align-items:center;margin-bottom:12px;flex-wrap:wrap}select{border:1px solid #cfdbe9;border-radius:8px;padding:9px;font:inherit;color:var(--ink);background:#fff}
+.secret{font-family:var(--font-mono,monospace);font-size:20px;letter-spacing:2px;background:#f6f8fc;border:1px dashed #b9c8de;border-radius:10px;padding:14px;text-align:center;word-break:break-all;margin:12px 0}
 ol.steps{padding-left:20px;line-height:1.7;font-size:14px}.warnl{color:var(--err);font-weight:600}
 .check{display:flex;gap:8px;align-items:center;margin-top:14px;font-size:14px}.check input{width:auto;margin:0}
 .log{font-size:12px;color:var(--muted);line-height:1.7}
 </style>
+<link rel="stylesheet" href="assets/typography.css">
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
