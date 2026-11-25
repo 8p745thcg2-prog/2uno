@@ -678,15 +678,20 @@ main.wrap > .hero > p {
 }
 
 .calculator-intro h1 {
-  font-size: clamp(40px, 4.7vw, 65px);
-  letter-spacing: -2.8px;
-  line-height: 1.14;
+  font-weight: 500;
+  font-size: clamp(36px, 4.2vw, 56px);
+  letter-spacing: -1.4px;
+  line-height: 1.16;
   margin: 22px auto;
   max-width: 1110px;
   text-align: center;
 }
 
 .calculator-intro p {
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.6;
+  max-width: 680px;
   margin-inline: auto;
   text-align: center;
 }
