@@ -79,7 +79,7 @@ section.block p{margin:0}
 .note{font-size:12px;color:var(--muted);margin-top:12px}
 @media(max-width:800px){.wrap{padding:0 16px}}
 </style>
-<link rel="stylesheet" href="/assets/typography.css?v=59">
+<link rel="stylesheet" href="/assets/typography.css?v=60">
 </head>
 <body>
 <header>
@@ -188,7 +188,6 @@ ${annualDetailsHtml}
 <p>Buhalterinių paslaugų palyginimo ir sutarties pasirašymo platforma verslui.</p>
 <ul class="footer-meta">
 <li>Įmonės kodas: 308188308</li>
-<li>Reg. / PVM Nr.: [NR.]</li>
 </ul>
 </div>
 <div class="footer-col">
@@ -211,8 +210,11 @@ ${annualDetailsHtml}
 </div>
 </div>
 <div class="footer-bottom">
-<span>© 2026 MB „Duvienas“ · 2UNO. Visos teisės saugomos.</span>
+<a class="footer-logo" href="/index.html" aria-label="2UNO pradžia"><img src="/assets/2uno-logo-crop.jpg" alt="2UNO.lt"></a>
+<div class="footer-bottom-meta">
 <div class="footer-social" aria-label="Socialiniai tinklai"><!-- Vieta socialinių tinklų nuorodoms --></div>
+<span>© 2026 MB „Duvienas“ · 2UNO. Visos teisės saugomos.</span>
+</div>
 </div>
 </footer>
 
