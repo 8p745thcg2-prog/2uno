@@ -22,12 +22,6 @@ h1,h2,h3,h4{margin:0}
 .hero{padding:40px 0 18px}
 .hero h1{margin:10px 0 12px}
 .hero p{margin:0}
-.steps{display:grid;gap:20px;margin:32px 0 40px}
-.step{display:grid;grid-template-columns:52px 1fr;gap:20px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px}
-.step .num{width:52px;height:52px;border-radius:12px;background:#eaf7f7;color:#1c7e83;display:grid;place-items:center;font-weight:700;font-size:17px}
-.step h2{margin-bottom:8px}
-.step p{margin:0}
-.step ul{margin:10px 0 0;padding-left:18px;color:var(--muted);font-size:14px;line-height:1.7}
 section.block{padding:36px 0;border-top:1px solid var(--line)}
 section.block h2{margin-bottom:12px}
 section.block p{max-width:720px;margin:0}
@@ -39,9 +33,9 @@ section.block p{max-width:720px;margin:0}
 .btn{display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:9px;background:var(--brand);color:#fff;padding:12px 18px;font-weight:600;font-size:13px}
 .btn:hover{background:#14358a}
 .closing .btn{background:var(--accent)}
-@media(max-width:800px){.wrap{padding:0 16px}.hero{padding:28px 0 12px}.grid2{grid-template-columns:1fr}.closing{display:block;padding:24px}.closing .btn{margin-top:16px}.step{grid-template-columns:1fr;gap:10px;padding:20px}}
+@media(max-width:800px){.wrap{padding:0 16px}.hero{padding:28px 0 12px}.grid2{grid-template-columns:1fr}.closing{display:block;padding:24px}.closing .btn{margin-top:16px}}
 </style>
-<link rel="stylesheet" href="assets/typography.css?v=64"></head>
+<link rel="stylesheet" href="assets/typography.css?v=65"></head>
 <body>
 <header>
 <a class="logo brand-logo" href="index.html" aria-label="2UNO pradžia"><img src="assets/2uno-logo-crop.jpg" alt="2UNO.lt"></a>
@@ -70,19 +64,37 @@ section.block p{max-width:720px;margin:0}
 
 <section class="steps">
 <div class="step">
-<div class="num">01</div>
-<h2>Įveskite verslo duomenis</h2>
-<p>Vieną kartą pateikiate juridinę formą, PVM statusą ir mėnesio apimtis – sąskaitas, banko operacijas ir darbuotojų skaičių, be atskirų užklausų skirtingoms įmonėms.</p>
+<div class="num step-badge">01</div>
+<div class="step-body">
+<h2>Įveskite verslo duomenis vieną kartą</h2>
+<p>2UNO skirta Lietuvos verslui, kad nereikėtų ieškoti buhalterinių įmonių per Google ar Facebook ir pildyti atskirų užklausų formų. Vieną kartą pateikiate juridinę formą, PVM statusą, veiklos sritį ir mėnesio apimtis.</p>
+<ul class="step-points">
+<li>Vienas klausimynas visiems partneriams – duomenų nereikia kartoti kiekvienai įmonei atskirai</li>
+<li>Papildomi parametrai (kasa, ilgalaikis turtas, transportas, užsienio sandoriai, sandėlis) įtraukiami tik esant poreikiui</li>
+</ul>
+</div>
 </div>
 <div class="step">
-<div class="num">02</div>
-<h2>Palyginkite patikrintas įmones</h2>
-<p>Iškart matote tik partnerystės sutartį turinčių įmonių pasiūlymus: specializaciją, į bazinę kainą įskaičiuotus kiekius ir aiškius papildomų paslaugų įkainius.</p>
+<div class="num step-badge">02</div>
+<div class="step-body">
+<h2>Palyginkite tik patikrintus partnerius ir aiškius įkainius</h2>
+<p>Rodomos tik patikrintos buhalterinės įmonės, su kuriomis 2UNO yra pasirašiusi partnerystės sutartį. Iškart matote kiekvienos įmonės specializaciją, stipriąsias puses, į kainą įtrauktas paslaugas ir papildomų darbų įkainius.</p>
+<ul class="step-points">
+<li>Detali kainos išklotinė parodo bazinį mokestį, įskaičiuotus kiekius, papildomų darbų tarifus ir metinių deklaracijų sąlygas</li>
+<li>Prieš pasirenkant įmonę aiškiai pateikiamos visos bendradarbiavimo sąlygos ir palaikomos apskaitos programos</li>
+</ul>
+</div>
 </div>
 <div class="step">
-<div class="num">03</div>
-<h2>Pasirašykite sutartį čia pat</h2>
-<p>Peržiūrite pasirinktos įmonės paruoštą sutarties šabloną, suvedate rekvizitus ir pasirašote kvalifikuotu elektroniniu parašu tiesiai platformoje.</p>
+<div class="num step-badge">03</div>
+<div class="step-body">
+<h2>Peržiūrėkite šabloną ir pasirašykite sutartį čia pat</h2>
+<p>Pasirinkę buhalterinę įmonę, peržiūrite jos paruoštą paslaugų sutarties šabloną, suvedate įmonės rekvizitus ir pasirašote kvalifikuotu elektroniniu parašu čia pat. Pasirašyta sutartis iš karto perduodama pasirinktai įmonei.</p>
+<ul class="step-points">
+<li>Teisiškai galiojantis kvalifikuotas elektroninis parašas be popierinių dokumentų ir tarpinių derybų</li>
+<li>Pagal su 2UNO pasirašytą partnerystės sutartį buhalterinė įmonė įsipareigoja per 1 darbo dieną atsakyti ir susisiekti dėl sutarties</li>
+</ul>
+</div>
 </div>
 </section>
 
