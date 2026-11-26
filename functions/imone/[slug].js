@@ -84,6 +84,13 @@ footer{max-width:1420px;margin:40px auto 0;padding:25px 30px;display:flex;gap:22
 <a class="partner-link" href="/buhalteriams.html">Buhalteriams</a>
 </nav>
 <a class="navcta" href="/index.html#skaiciuokle">Rasti buhalterį</a>
+<details class="nav-mobile"><summary class="nav-toggle" aria-label="Meniu"><span aria-hidden="true"></span></summary><div class="nav-mobile-panel" aria-label="Navigacija">
+<a href="/index.html">Pradžia</a>
+<a href="/kaip-tai-veikia.html">Kaip tai veikia</a>
+<a class="current" href="/imones.html">Įmonės</a>
+<a href="/index.html#duk">Klausimai</a>
+<a class="partner-link" href="/buhalteriams.html">Buhalteriams</a>
+</div></details>
 </header>
 
 <main class="wrap page-company">
