@@ -154,6 +154,7 @@
 
   // Kvalifikuotas parašas: Dokobit langas puslapyje, o būsena tikrinama kas 3 s (iki 20 min.).
   function startQes(d) {
+    if (document.activeElement && typeof document.activeElement.blur === 'function') document.activeElement.blur();
     document.getElementById('form-area').style.display = 'none';
     document.getElementById('qes').hidden = false;
     document.getElementById('qesFrame').src = d.signUrl;
