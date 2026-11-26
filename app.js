@@ -244,7 +244,7 @@ syncConditionalFields();
   modalEl.setAttribute('aria-modal','true');
   modalEl.setAttribute('aria-labelledby','provider-modal-title');
   modalEl.hidden=true;
-  modalEl.innerHTML='<div class="provider-modal-card" tabindex="-1"><button type="button" class="provider-modal-close" aria-label="Uždaryti">×</button><div class="provider-modal-body"></div></div>';
+  modalEl.innerHTML='<div class="provider-modal-card" tabindex="-1"><div class="provider-modal-header"><div class="pm-head"></div><button type="button" class="provider-modal-close" aria-label="Uždaryti">×</button></div><div class="provider-modal-body"></div></div>';
   document.body.appendChild(modalEl);
   modalCardEl=modalEl.querySelector('.provider-modal-card');
   modalCloseEl=modalEl.querySelector('.provider-modal-close');
@@ -261,6 +261,10 @@ syncConditionalFields();
    }
   });
   return modalEl;
+ }
+
+ function buildModalHeadHtml(p){
+  return `<div class="pm-monogram">${esc(p.mark)}</div><div class="pm-head-text"><h2 id="provider-modal-title">${esc(p.name)}</h2><span class="pm-tag">${esc(p.tag)}</span></div>`;
  }
 
  function buildModalHtml(p){
@@ -285,13 +289,6 @@ syncConditionalFields();
    :`<p>Metinės deklaracijos skaičiuojamos kaip <strong>vienkartinis mokestis</strong> pagal jūsų veiklos apimtį deklaruojamu laikotarpiu.</p><dl class="pm-rates"><div><dt>Metinių deklaracijų bazė</dt><dd>${ann.base} € be PVM</dd></div><div><dt>MB narių metinės paslaugos</dt><dd>${fmtEurModal(ann.member)}</dd></div><div><dt>Darbuotojų metinės paslaugos</dt><dd>${fmtEurModal(ann.employee)}</dd></div><div><dt>Ilgalaikio turto metinės paslaugos</dt><dd>${fmtEurModal(ann.asset)}</dd></div><div><dt>Transporto priemonių metinės paslaugos</dt><dd>${fmtEurModal(ann.vehicle)}</dd></div></dl>`;
 
   return `
-   <div class="pm-head">
-    <div class="pm-monogram">${esc(p.mark)}</div>
-    <div class="pm-head-text">
-     <h2 id="provider-modal-title">${esc(p.name)}</h2>
-     <span class="pm-tag">${esc(p.tag)}</span>
-    </div>
-   </div>
    <div class="pm-stats">
     <span><span class="pm-star" aria-hidden="true">★</span> <b>${ratingStr}</b> · ${p.reviews} atsiliepimai</span>
     <span>Pasirinko <b>${p.clients}</b> klientai</span>
@@ -360,10 +357,11 @@ syncConditionalFields();
    ||fallbackProviderDetail(index);
   if(!detail)return;
   ensureModal();
+  modalCardEl.querySelector('.pm-head').innerHTML=buildModalHeadHtml(detail);
   modalBodyEl.innerHTML=buildModalHtml(detail);
   modalEl.hidden=false;
   document.body.classList.add('modal-open');
-  modalCardEl.scrollTop=0;
+  modalBodyEl.scrollTop=0;
   modalCloseEl.focus({preventScroll:true});
  }
 
