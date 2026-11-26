@@ -1251,6 +1251,12 @@ main.wrap > .hero > p {
   margin-bottom: 20px;
 }
 
+@media (max-width: 767px) {
+  #contractview .contract-navigation {
+    display: none;
+  }
+}
+
 #contractview .contract-navigation .btn,
 #contractview .contract-bottom-navigation .btn {
   border-radius: var(--radius-btn);
