@@ -539,8 +539,10 @@ header:has(.brand-logo) .navcta:hover {
 }
 
 .jumplist {
-  gap: 8px;
-  margin: 12px 0 28px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 12px 0 30px;
 }
 
 .authform input,
@@ -2278,8 +2280,7 @@ main.wrap.page-how > section.block .card p {
 
 /* Mėlyni teksto mygtukai su švariu #edf3fa pažymėjimu užvedus */
 body:not(:has(#skaiciuokle)) main .btn.light,
-body:not(:has(#skaiciuokle)) main button.light,
-body:not(:has(#skaiciuokle)) .jumplist a {
+body:not(:has(#skaiciuokle)) main button.light {
   background: transparent;
   border: 1px solid transparent;
   border-radius: var(--radius-btn);
@@ -2290,18 +2291,42 @@ body:not(:has(#skaiciuokle)) .jumplist a {
   transition: background-color 0.18s ease, color 0.18s ease;
 }
 
-body:not(:has(#skaiciuokle)) .jumplist a {
-  padding: 9px 14px;
-}
-
 body:not(:has(#skaiciuokle)) main .btn.light:hover:not(:disabled),
-body:not(:has(#skaiciuokle)) main button.light:hover:not(:disabled),
-body:not(:has(#skaiciuokle)) .jumplist a:hover {
+body:not(:has(#skaiciuokle)) main button.light:hover:not(:disabled) {
   background: #edf3fa;
   border-color: transparent;
   color: var(--btn-bg);
   box-shadow: none;
   transform: none;
+}
+
+/* Greito perėjimo mygtukai (pills) virš įmonių kortelių tinklelio */
+body:not(:has(#skaiciuokle)) .jumplist a {
+  display: inline-flex;
+  align-items: center;
+  padding: 9px 16px;
+  border-radius: var(--radius-pill);
+  background: #ffffff;
+  border: 1px solid var(--border-input);
+  color: var(--btn-bg);
+  font-size: var(--text-ui);
+  font-weight: var(--weight-semibold);
+  line-height: 1.25;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+}
+
+body:not(:has(#skaiciuokle)) .jumplist a:hover {
+  background: var(--brand-teal-soft);
+  border-color: var(--brand-teal);
+  color: var(--btn-bg);
+  box-shadow: 0 4px 12px -6px rgba(20, 46, 82, 0.18);
+  transform: translateY(-1px);
+}
+
+body:not(:has(#skaiciuokle)) .jumplist a:focus-visible {
+  outline: 2px solid var(--brand-teal);
+  outline-offset: 2px;
 }
 
 body:not(:has(#skaiciuokle)) .account .menu button,
