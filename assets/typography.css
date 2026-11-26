@@ -288,7 +288,7 @@ body:not(:has(#skaiciuokle, header)) > p {
 .wrap,
 .wrap-1200,
 .account,
-main:where(:not(.authshell, .wrap, .account, :has(> #signup))) {
+main:where(:not(.authshell, .wrap, .account, :has(> #signup, > #qes))) {
   width: 100%;
   max-width: var(--container-max);
   margin-inline: auto;
