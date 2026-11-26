@@ -71,8 +71,8 @@
   --text-h1: clamp(2rem, 2.8vw, 2.5rem);        /* 32px – 40px antrinių puslapių H1 */
   --text-h2: clamp(1.5rem, 1.9vw, 1.875rem);    /* 24px – 30px sekcijų H2 */
   --text-h3: 1.125rem;                          /* 18px kortelių ir žingsnių H3 */
-  --text-lead: 1.0625rem;                       /* 17px – pagrindinis hero įvadinis aprašas */
-  --text-base: 1rem;                            /* 16px – sekcijų įvadai ir pagrindinės pastraipos */
+  --text-lead: 1.125rem;                        /* 18px – pagrindinis hero įvadinis aprašas */
+  --text-base: 1.0625rem;                       /* 17px – sekcijų įvadai ir pagrindinės pastraipos */
   --text-body-sm: 0.9375rem;                    /* 15px – kortelių, žingsnių ir panelių aprašai */
   --text-ui: 0.875rem;                          /* 14px – navigacija, mygtukai, formos */
   --text-xs: 0.75rem;                           /* 12px – viršantraštės, žymos, meta */
@@ -82,8 +82,8 @@
   --weight-medium: 500;
   --weight-semibold: 600;
   --weight-bold: 700;
-  --weight-h1: var(--weight-medium);            /* 500 – lengva, švari H1 */
-  --weight-h2: var(--weight-medium);            /* 500 – rami, moderni H2 */
+  --weight-h1: var(--weight-bold);              /* 700 – ryški, aiški H1 */
+  --weight-h2: var(--weight-bold);              /* 700 – ryški sekcijų H2 */
   --weight-h3: var(--weight-semibold);          /* 600 – aiškus H3 / kortelių pavadinimas */
   --weight-h4: var(--weight-semibold);
 
@@ -231,9 +231,12 @@ section.block > h2,
   margin: 0 0 var(--eyebrow-gap);
 }
 
-/* Pagrindiniai įvadiniai aprašai ir pastraipos – vienodo 16px dydžio */
+/* Pagrindiniai įvadiniai aprašai ir pastraipos – vienodo 17px dydžio */
 .lead,
 .hero > p,
+.authstory > p,
+.authform > p,
+.account .panel > p,
 section.block > p,
 .section-head p,
 .section-intro,
