@@ -79,7 +79,7 @@ section.block p{margin:0}
 .note{font-size:12px;color:var(--muted);margin-top:12px}
 @media(max-width:800px){.wrap{padding:0 16px}}
 </style>
-<link rel="stylesheet" href="/assets/typography.css?v=62">
+<link rel="stylesheet" href="/assets/typography.css?v=63">
 </head>
 <body>
 <header>

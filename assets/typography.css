@@ -41,7 +41,7 @@
   --text-primary: #0f2042;
   --text-secondary: #4a5b75;
   --text-muted: #64748b;
-  --text-eyebrow-color: #197c7c;
+  --text-eyebrow-color: var(--brand-teal);
 
   /* Mygtukų akcentas – rami tamsiai mėlyna iš kairiojo formos bloko */
   --btn-bg: #142e52;
@@ -390,7 +390,7 @@ header:has(.brand-logo) nav a:hover {
 
 header:has(.brand-logo) nav a.current {
   background: transparent;
-  color: var(--text-eyebrow-color);
+  color: var(--brand-teal-text);
   font-weight: var(--weight-semibold);
 }
 
@@ -424,7 +424,7 @@ header:has(.brand-logo) nav a.partner-link:hover {
 
 header:has(.brand-logo) nav a.partner-link.current {
   background: transparent;
-  color: var(--text-eyebrow-color);
+  color: var(--brand-teal-text);
   font-weight: var(--weight-semibold);
 }
 
@@ -1455,10 +1455,6 @@ main.wrap > .hero > p {
   color: #ccdde7;
 }
 
-.authstory .eyebrow {
-  color: #ccdde7;
-}
-
 .authstory .step {
   display: block;
   padding-top: 22px;
@@ -1874,7 +1870,7 @@ main.wrap > .hero > p {
   }
 
   header:has(.brand-logo) .nav-mobile-panel a.current {
-    color: var(--text-eyebrow-color);
+    color: var(--brand-teal-text);
     font-weight: var(--weight-semibold);
     background: rgba(25, 124, 124, 0.06);
   }
