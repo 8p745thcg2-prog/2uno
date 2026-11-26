@@ -678,19 +678,24 @@ main.wrap > .hero > p {
   font-family: var(--font-sans);
   font-size: var(--text-ui);
   line-height: 1.5;
-  gap: 14px 20px;
-  margin-bottom: 16px;
+  gap: 18px 22px;
+  margin-bottom: 24px;
+  padding: 26px 24px 24px;
+  background: #ffffff;
+  border: 1px solid var(--border-subtle);
+  border-radius: 22px;
+  box-shadow: var(--shadow-panel);
 }
 
 @media (min-width: 1260px) {
   #skaiciuokle {
-    grid-template-columns: minmax(456px, 37.5%) minmax(0, 1fr);
+    grid-template-columns: minmax(432px, 37.5%) minmax(0, 1fr);
   }
 }
 
 @media (min-width: 1025px) and (max-width: 1259px) {
   #skaiciuokle {
-    grid-template-columns: minmax(410px, 42%) minmax(0, 1fr);
+    grid-template-columns: minmax(392px, 41.5%) minmax(0, 1fr);
   }
 }
 
@@ -950,8 +955,8 @@ main.wrap > .hero > p {
 #resultview .cards {
   --cards-gap: 12px;
   gap: var(--cards-gap);
-  padding: 4px 0 10px;
-  scroll-padding-inline: 0;
+  padding: 4px 2px 12px;
+  scroll-padding-inline: 2px;
 }
 
 #resultview .cards:has(details[open]) {
@@ -1970,6 +1975,15 @@ main.wrap.page-how > .steps .step-badge {
   .account,
   main:where(:not(.authshell, .wrap, .account, :has(> #signup))) {
     padding-top: var(--page-top-space);
+  }
+
+  #skaiciuokle {
+    padding: 18px 14px;
+    border-radius: 18px;
+  }
+
+  #skaiciuokle .heading-offers h2 {
+    white-space: normal;
   }
 
   #formview .formbody {
