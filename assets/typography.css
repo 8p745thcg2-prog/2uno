@@ -484,6 +484,9 @@ main button:where(:not(.item, .carousel-prev, .carousel-next, .date-toggle, .cal
 
 .btn:where(:not(.closing *, .light)),
 button.primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   background: var(--btn-bg);
   color: #ffffff;
   border: 1px solid var(--btn-bg);
@@ -2591,7 +2594,7 @@ main.wrap.page-company {
   padding-bottom: 16px;
 }
 
-main.wrap.page-company .backlink {
+main .backlink {
   display: inline-flex;
   align-items: center;
   margin: 0 0 24px -12px;
@@ -2603,7 +2606,7 @@ main.wrap.page-company .backlink {
   transition: background-color 0.18s ease, color 0.18s ease;
 }
 
-main.wrap.page-company .backlink:hover {
+main .backlink:hover {
   background: #edf3fa;
   color: var(--btn-bg);
 }

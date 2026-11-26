@@ -10,8 +10,7 @@
 [hidden]{display:none!important}
 .hidden{display:none!important}
 *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink)}
-header{background:#fff;border-bottom:1px solid var(--line);height:64px;padding:0 24px;display:flex;align-items:center;gap:16px}
-header img{height:52px;width:auto}header a{margin-left:auto;font-size:13px;font-weight:500;color:var(--ink);text-decoration:none}header a:hover{color:#1c7e83}
+a{color:inherit;text-decoration:none}
 main{max-width:860px;margin:28px auto 60px;padding:0 18px}
 h1{margin:0 0 8px}p.lead{margin:0 0 22px}
 .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;margin-bottom:16px}
@@ -39,14 +38,30 @@ dl{display:grid;grid-template-columns:200px 1fr;gap:8px 14px;font-size:14px;marg
 @media(max-width:700px){.grid{grid-template-columns:1fr}.row{flex-direction:column;align-items:stretch}dl{grid-template-columns:1fr}}
 
 </style>
-<link rel="stylesheet" href="assets/typography.css?v=67">
+<link rel="stylesheet" href="assets/typography.css?v=72">
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 <meta name="description" content="Buhalterinių paslaugų sutarties peržiūra ir pasirašymas kvalifikuotu elektroniniu parašu.">
 </head>
 <body>
-<header><img src="assets/2uno-logo.png" alt="2uno.lt"><a href="/">← Grįžti į palyginimą</a></header>
+<header>
+<a class="logo brand-logo" href="/" aria-label="2UNO pradžia"><img src="assets/2uno-logo.png" alt="2UNO.lt"></a>
+<nav>
+<a href="kaip-tai-veikia.html">Kaip veikia</a>
+<a href="imones.html">Įmonės</a>
+<a href="index.html#duk">Klausimai</a>
+<a class="partner-link" href="buhalteriams.html">Buhalteriams</a>
+</nav>
+<a class="navcta" href="index.html#skaiciuokle">Rasti buhalterį</a>
+<details class="nav-mobile"><summary class="nav-toggle" aria-label="Meniu"><span aria-hidden="true"></span></summary><div class="nav-mobile-panel" aria-label="Navigacija">
+<a href="kaip-tai-veikia.html">Kaip veikia</a>
+<a href="imones.html">Įmonės</a>
+<a href="index.html#duk">Klausimai</a>
+<a class="partner-link" href="buhalteriams.html">Buhalteriams</a>
+</div></details>
+</header>
 <main>
   <div id="form-area">
+    <a class="backlink" href="/">← Grįžti į palyginimą</a>
     <h1>Sutarties pasirašymas</h1>
     <p class="lead">Patikrinkite pasirinkimą, įveskite įmonės ir atstovo duomenis ir pasirašykite sutartį. Pasirinkta buhalterinė įmonė gaus užklausą iš karto.</p>
 
@@ -97,7 +112,7 @@ dl{display:grid;grid-template-columns:200px 1fr;gap:8px 14px;font-size:14px;marg
         <div class="err" data-for="consent"></div>
         <label style="margin-top:12px">Parašas: įrašykite savo vardą ir pavardę<input name="fullName" maxlength="120" autocomplete="off"><div class="err" data-for="fullName"></div></label>
       <div class="cf-turnstile" data-sitekey="0x4AAAAAAF_LsLYphbN-n8UU" data-language="lt" style="margin-top:14px"></div>
-        <button type="submit" id="signBtn" style="margin-top:10px">Pasirašyti sutartį</button>
+        <button type="submit" class="primary" id="signBtn" style="margin-top:10px">Pasirašyti sutartį</button>
         <div class="msg" id="signMsg"></div>
       </div>
     </form>
