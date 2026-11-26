@@ -79,11 +79,11 @@ section.block p{margin:0}
 .note{font-size:12px;color:var(--muted);margin-top:12px}
 @media(max-width:800px){.wrap{padding:0 16px}}
 </style>
-<link rel="stylesheet" href="/assets/typography.css?v=65">
+<link rel="stylesheet" href="/assets/typography.css?v=67">
 </head>
 <body>
 <header>
-<a class="logo brand-logo" href="/index.html" aria-label="2UNO pradžia"><img src="/assets/2uno-logo-crop.jpg" alt="2UNO.lt"></a>
+<a class="logo brand-logo" href="/index.html" aria-label="2UNO pradžia"><img src="/assets/2uno-logo.png" alt="2UNO.lt"></a>
 <nav>
 <a href="/index.html">Pradžia</a>
 <a href="/kaip-tai-veikia.html">Kaip tai veikia</a>
@@ -210,7 +210,7 @@ ${annualDetailsHtml}
 </div>
 </div>
 <div class="footer-bottom">
-<a class="footer-logo" href="/index.html" aria-label="2UNO pradžia"><img src="/assets/2uno-logo-crop.jpg" alt="2UNO.lt"></a>
+<a class="footer-logo" href="/index.html" aria-label="2UNO pradžia"><img src="/assets/2uno-logo.png" alt="2UNO.lt"></a>
 <div class="footer-bottom-meta">
 <div class="footer-social" aria-label="Socialiniai tinklai"><!-- Vieta socialinių tinklų nuorodoms --></div>
 <span>© 2026 MB „Duvienas“ · 2UNO. Visos teisės saugomos.</span>
