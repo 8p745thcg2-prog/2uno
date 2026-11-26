@@ -22,56 +22,42 @@ function renderPage(p, baseUrl) {
 <meta property="og:type" content="website">
 <meta property="og:url" content="${url}">
 <style>
-:root{--ink:#152b59;--muted:#64758e;--line:#e8edf2;--accent:#279da7;--brand:#173777;--lime:#dff2f1;--paper:#f7f9fc}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;line-height:1.6}
+:root{--ink:#0f2042;--muted:#4a5b75;--line:#e2e8f0;--accent:#38b3b3;--brand:#142e52;--lime:#e6f5f5;--paper:#ffffff}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink)}
 a{color:inherit;text-decoration:none}button{font:inherit;cursor:pointer}
-h1,h2,h3{letter-spacing:-.03em;margin:0}
+h1,h2,h3,h4{margin:0}
 .wrap{max-width:760px;margin:auto;padding:0 24px}
-header{height:88px;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:0 max(24px,calc((100vw - 1360px)/2));background:#fff;border-bottom:1px solid var(--line)}
-.brand-logo img{display:block;width:130px;height:76px;object-fit:contain}
-nav{display:flex;gap:6px;align-items:center}
-nav a{padding:10px 16px;font-size:13px;font-weight:600;border-radius:8px;color:#66758b}
-nav a:hover{background:#f5f7fa;color:var(--ink)}
-nav a.current{color:var(--brand);background:#eef3fb}
-nav a.partner-link{color:#25818a;background:#eef8f7}
-.navcta{padding:11px 19px;border-radius:9px;background:var(--ink);color:#fff;font-size:12px;font-weight:600}
 .backlink{display:inline-block;margin:28px 0 0;font-size:13px;font-weight:600;color:#3a5674}
 .backlink:hover{color:var(--brand)}
 .company-hero{display:flex;align-items:flex-start;gap:18px;margin:20px 0 10px;flex-wrap:wrap}
-.monogram{width:60px;height:60px;border-radius:14px;background:#eaf6f6;color:var(--accent);display:grid;place-items:center;font-weight:700;font-size:24px;flex-shrink:0}
-.company-hero h1{font-size:30px;margin-bottom:6px}
-.tag{display:inline-block;background:#f0f7f7;color:#378890;padding:5px 10px;border-radius:6px;font-size:12px;font-weight:600}
+.monogram{width:60px;height:60px;border-radius:14px;background:#e6f5f5;color:#166e73;display:grid;place-items:center;font-weight:700;font-size:24px;flex-shrink:0}
+.company-hero h1{margin-bottom:6px}
+.tag{display:inline-block;background:#e6f5f5;color:#166e73;padding:5px 10px;border-radius:6px;font-size:12px;font-weight:600}
 .stats{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin:16px 0 30px}
 .stats b{color:var(--ink);font-size:15px}
 .stats .star{color:#dfaa40}
 section.block{padding:26px 0;border-top:1px solid var(--line)}
-section.block h2{font-size:21px;margin-bottom:12px}
-section.block p{color:var(--muted);font-size:15px}
+section.block h2{margin-bottom:12px}
+section.block p{margin:0}
 .features{margin:10px 0 0;padding:0;list-style:none}
-.features li{padding-left:22px;position:relative;font-size:14px;color:#53677e;line-height:1.9}
-.features li:before{content:"✓";position:absolute;left:0;color:var(--accent)}
-.btn{display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:9px;background:var(--brand);color:#fff;padding:13px 20px;font-weight:600;font-size:14px;margin-top:6px}
-.btn:hover{background:#234c9b}
-.note{font-size:12px;color:#8a99a9;margin-top:10px}
-footer{max-width:1420px;margin:40px auto 0;padding:25px 30px;display:flex;gap:22px;align-items:center;justify-content:space-between;font-size:11px;color:var(--muted);border-top:1px solid var(--line)}
-@media(max-width:800px){header{height:auto;min-height:76px;flex-wrap:wrap;padding:8px 16px}nav{order:3;width:100%;overflow-x:auto;padding-bottom:6px}.company-hero h1{font-size:24px}}
-
-/* ===== 2UNO UNIFIED DESIGN SYSTEM (same block on every page, edit identically everywhere) ===== */
-.btn{border-radius:9px;padding:12px 18px;font-size:13px;padding:13px 20px}
-.monogram{background:#eaf6f6;color:var(--accent)}
+.features li{padding-left:22px;position:relative;font-size:14px;color:#4a5b75;line-height:1.9}
+.features li:before{content:"✓";position:absolute;left:0;color:var(--accent);font-weight:700}
+.btn{display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:9px;background:var(--brand);color:#fff;padding:12px 18px;font-weight:600;font-size:13px;margin-top:6px}
+.btn:hover{background:#1b4661}
+.note{font-size:12px;color:var(--muted);margin-top:10px}
 .site-footer{max-width:1420px;margin:40px auto 0;padding:40px 30px 25px;border-top:1px solid var(--line)}
 .footer-top{display:flex;gap:60px;flex-wrap:wrap;justify-content:space-between}
 .footer-brand{max-width:260px}
 .f-logo{font-weight:700;letter-spacing:-1px;font-size:20px;color:var(--ink)}
-.footer-brand p{margin:10px 0 0;font-size:13px;color:var(--muted)}
-.footer-col{display:flex;flex-direction:column;gap:10px;font-size:13px}
-.footer-col h4{font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:#8a99a9;margin:0 0 4px}
+.footer-brand p{margin:10px 0 0;color:var(--muted)}
+.footer-col{display:flex;flex-direction:column;gap:10px}
+.footer-col h4{margin:0 0 4px}
 .footer-col a,.footer-col span{color:var(--muted)}
 .footer-col a:hover{color:var(--ink)}
-.footer-bottom{margin-top:30px;padding-top:20px;border-top:1px solid var(--line);font-size:11px;color:var(--muted)}
-@media(max-width:800px){.site-footer{padding:30px 16px 20px}.footer-top{gap:28px}}
+.footer-bottom{margin-top:30px;padding-top:20px;border-top:1px solid var(--line);color:var(--muted)}
+@media(max-width:800px){.wrap{padding:0 16px}.site-footer{padding:30px 16px 20px}.footer-top{gap:28px}}
 </style>
-<link rel="stylesheet" href="/assets/typography.css?v=57">
+<link rel="stylesheet" href="/assets/typography.css?v=58">
 </head>
 <body>
 <header>

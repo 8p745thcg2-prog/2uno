@@ -9,51 +9,42 @@
 <link rel="canonical" href="https://2uno.lt/slapukai.html">
 <meta name="robots" content="noindex,follow">
 <style>
-:root{--ink:#152b59;--muted:#64758e;--line:#e8edf2;--accent:#279da7;--brand:#173777;--lime:#dff2f1;--paper:#f7f9fc}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;line-height:1.6}
+:root{--ink:#0b2569;--muted:#607089;--line:#e1e8f2;--accent:#38b3b3;--brand:#0b2569;--lime:#d8f1f1;--paper:#f5f8fc}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink)}
 a{color:inherit;text-decoration:none}button{font:inherit;cursor:pointer}
-h1,h2,h3{letter-spacing:-.03em;margin:0}
+h1,h2,h3,h4{margin:0}
 .wrap{max-width:1200px;margin:auto;padding:0 32px}
-header{height:88px;display:flex;align-items:center;justify-content:space-between;gap:28px;padding:0 max(28px,calc((100vw - 1360px)/2));background:#fff;border-bottom:1px solid var(--line)}
-.brand-logo img{display:block;width:130px;height:76px;object-fit:contain}nav{display:flex;gap:8px;align-items:center}nav a{padding:10px 16px;font-size:13px;font-weight:600;border-radius:8px;color:#66758b;white-space:nowrap;flex-shrink:0}nav a:hover{background:#f5f7fa;color:var(--ink)}nav a.current{color:var(--brand);background:#eef3fb}
-nav .partner-link{color:#25818a;background:#eef8f7}.navcta{padding:11px 19px;border-radius:9px;background:var(--ink);color:#fff;font-size:12px;font-weight:600}
-.hero{padding:56px 0 20px}
-.eyebrow{text-transform:uppercase;letter-spacing:1.8px;font-size:11px;font-weight:700;color:#38949d}
-.hero h1{font-size:40px;font-weight:650;line-height:1.15;margin:14px 0 16px}
-.hero p{max-width:720px;color:var(--muted);font-size:16px}
+.hero{padding:40px 0 18px}
+.hero h1{margin:10px 0 12px}
+.hero p{margin:0}
 section.block{padding:36px 0;border-top:1px solid var(--line)}
-section.block h2{font-size:26px;margin-bottom:14px}
-section.block h3{font-size:16px;margin:20px 0 8px}
-section.block p{color:var(--muted);font-size:15px;max-width:780px;margin:0 0 14px}
+section.block h2{margin-bottom:14px}
+section.block h3{margin:20px 0 8px}
+section.block p{max-width:780px;margin:0 0 14px}
 section.block ul{color:var(--muted);font-size:15px;max-width:780px;padding-left:20px;line-height:1.8;margin:0 0 14px}
 section.block li{margin-bottom:6px}
 .meta{font-size:13px;color:var(--muted);margin-top:10px}
 .cookie-table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;font-size:13px;margin:20px 0}
 .cookie-table th,.cookie-table td{padding:14px 16px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;color:var(--muted)}
-.cookie-table th{color:#8a99a9;text-transform:uppercase;letter-spacing:.4px;font-size:11px;font-weight:600;background:#fafbfd}
+.cookie-table th{color:var(--muted);text-transform:uppercase;letter-spacing:.04em;font-size:11px;font-weight:600;background:#f8fafd}
 .cookie-table tr:last-child td{border-bottom:0}
 .cookie-table td:first-child{color:var(--ink);font-weight:600;white-space:nowrap}
-.btn{display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:9px;background:var(--brand);color:#fff;padding:13px 20px;font-weight:600;font-size:14px}
-.btn:hover{background:#234c9b}
-.btn.light{background:#eef4f8;color:#2e526e}
-@media(max-width:800px){header{padding:4px 16px}.brand-logo img{width:110px;height:62px}.navcta{font-size:11px;padding:10px 12px}nav{gap:2px;justify-content:space-between}nav a{font-size:11px;padding:8px}.hero h1{font-size:30px}.cookie-table{font-size:12px}.cookie-table th,.cookie-table td{padding:10px}}
-
-/* ===== 2UNO UNIFIED DESIGN SYSTEM (same block on every page, edit identically everywhere) ===== */
-.btn{border-radius:9px;padding:12px 18px;font-size:13px}
+.btn{display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:9px;background:var(--brand);color:#fff;padding:12px 18px;font-weight:600;font-size:13px}
+.btn:hover{background:#14358a}
+.btn.light{background:#edf3fa;color:var(--ink)}
 .site-footer{max-width:1420px;margin:40px auto 0;padding:40px 30px 25px;border-top:1px solid var(--line)}
 .footer-top{display:flex;gap:60px;flex-wrap:wrap;justify-content:space-between}
 .footer-brand{max-width:260px}
 .f-logo{font-weight:700;letter-spacing:-1px;font-size:20px;color:var(--ink)}
-.footer-brand p{margin:10px 0 0;font-size:13px;color:var(--muted)}
-.footer-col{display:flex;flex-direction:column;gap:10px;font-size:13px}
-.footer-col h4{font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:#8a99a9;margin:0 0 4px}
+.footer-brand p{margin:10px 0 0;color:var(--muted)}
+.footer-col{display:flex;flex-direction:column;gap:10px}
+.footer-col h4{margin:0 0 4px}
 .footer-col a,.footer-col span{color:var(--muted)}
 .footer-col a:hover{color:var(--ink)}
-.footer-bottom{margin-top:30px;padding-top:20px;border-top:1px solid var(--line);font-size:11px;color:var(--muted)}
-@media(max-width:800px){.site-footer{padding:30px 16px 20px}.footer-top{gap:28px}}
-@media(max-width:800px){.cookie-table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}}
+.footer-bottom{margin-top:30px;padding-top:20px;border-top:1px solid var(--line);color:var(--muted)}
+@media(max-width:800px){.wrap{padding:0 16px}.hero{padding:28px 0 12px}.cookie-table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:12px}.cookie-table th,.cookie-table td{padding:10px}.site-footer{padding:30px 16px 20px}.footer-top{gap:28px}}
 </style>
-<link rel="stylesheet" href="assets/typography.css?v=57"></head>
+<link rel="stylesheet" href="assets/typography.css?v=58"></head>
 <body>
 <header>
 <a class="logo brand-logo" href="index.html" aria-label="2UNO pradžia"><img src="assets/2uno-logo-crop.jpg" alt="2UNO.lt"></a>
