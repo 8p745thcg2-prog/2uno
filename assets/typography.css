@@ -23,9 +23,13 @@
   --brand-teal-soft: #e6f5f5;
   --brand-teal-tint: #d4eeee;
 
-  /* Visiškai baltas puslapio fonas su aiškiais rėmeliais (#e2e8f0) ir švelniais šešėliais */
-  --surface-page: #ffffff;
-  --paper: #ffffff;
+  /* Švarus, švelniai pereinantis šviesus puslapio fonas su baltomis kortelėmis (#ffffff) */
+  --surface-page: #f6f8fb;
+  --paper: #f6f8fb;
+  --surface-page-bg:
+    radial-gradient(ellipse 80% 520px at 18% 0%, rgba(56, 179, 179, 0.065) 0%, rgba(56, 179, 179, 0) 68%),
+    radial-gradient(ellipse 75% 560px at 84% 0%, rgba(20, 46, 82, 0.055) 0%, rgba(20, 46, 82, 0) 70%),
+    linear-gradient(180deg, #f8fafc 0%, #f6f8fb 52%, #f4f7fb 100%);
   --surface-card: #ffffff;
   --surface-tonal: #f8fafd;
   --surface-pill: #f1f5fb;
@@ -128,7 +132,10 @@ body {
   font-weight: var(--weight-regular);
   line-height: var(--leading-base);
   color: var(--text-primary);
+  min-height: 100vh;
   background-color: var(--surface-page);
+  background-image: var(--surface-page-bg);
+  background-repeat: no-repeat;
   overflow-x: clip;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -297,8 +304,10 @@ main.authshell {
 /* Skaidraus fono logotipas antraštėje ir poraštėje */
 header img,
 .brand-logo img,
+.footer-logo img,
 .f-logo img {
   background: transparent;
+  mix-blend-mode: multiply;
 }
 
 body > header {
@@ -307,9 +316,9 @@ body > header {
   z-index: 100;
   height: 76px;
   min-height: 76px;
-  background: rgba(255, 255, 255, 0.94);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(248, 250, 252, 0.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border-bottom: 1px solid rgba(15, 30, 45, 0.06);
   padding-inline: max(var(--container-pad), calc((100vw - var(--container-width)) / 2));
   box-shadow: none;
@@ -331,9 +340,9 @@ header:has(.brand-logo) {
   align-items: center;
   flex-wrap: nowrap;
   gap: 12px;
-  background: rgba(255, 255, 255, 0.94);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(248, 250, 252, 0.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border: 0;
   border-bottom: 1px solid rgba(15, 30, 45, 0.06);
   border-radius: 0;
@@ -1368,9 +1377,8 @@ main.wrap > .hero > p {
 }
 
 #duk::before {
-  background: var(--surface-card) !important;
-  border-top: 1px solid #edf2f7;
-  border-bottom: 1px solid #edf2f7;
+  background: transparent;
+  border: 0;
 }
 
 #duk .faq {
@@ -1540,7 +1548,7 @@ main.wrap > .hero > p {
   max-width: var(--container-max);
   margin: var(--section-gap) auto 0;
   padding: 56px var(--container-pad) 32px;
-  background: var(--surface-page);
+  background: transparent;
   border-top: 1px solid var(--border-subtle);
 }
 
@@ -1734,7 +1742,9 @@ main.wrap > .hero > p {
     padding-block: 0;
     padding-inline: var(--container-pad);
     gap: 8px;
-    background: rgba(255, 255, 255, 0.96);
+    background: rgba(248, 250, 252, 0.88);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border: 0;
     border-bottom: 1px solid rgba(15, 30, 45, 0.06);
     border-radius: 0;
