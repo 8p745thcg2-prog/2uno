@@ -71,7 +71,7 @@ footer{max-width:1420px;margin:40px auto 0;padding:25px 30px;display:flex;gap:22
 .footer-bottom{margin-top:30px;padding-top:20px;border-top:1px solid var(--line);font-size:11px;color:var(--muted)}
 @media(max-width:800px){.site-footer{padding:30px 16px 20px}.footer-top{gap:28px}}
 </style>
-<link rel="stylesheet" href="/assets/typography.css?v=55">
+<link rel="stylesheet" href="/assets/typography.css?v=56">
 </head>
 <body>
 <header>
