@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /admin.html
+Disallow: /partneris.html
+Disallow: /partnerio-paskyra.html
+Disallow: /pasirasymas.html
+Disallow: /demo-sutartis.html
+Disallow: /api/
+
+Sitemap: https://2uno.lt/sitemap.xml

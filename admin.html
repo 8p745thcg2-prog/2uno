@@ -46,20 +46,10 @@ ol.steps{padding-left:20px;line-height:1.7;font-size:14px}.warnl{color:var(--err
 .check{display:flex;gap:8px;align-items:center;margin-top:14px;font-size:14px}.check input{width:auto;margin:0}
 .log{font-size:12px;color:var(--muted);line-height:1.7}
 
-.site-footer{max-width:1200px;margin:45px auto 0;padding:40px 32px 25px;border-top:1px solid var(--line)}
-.footer-top{display:flex;gap:60px;flex-wrap:wrap;justify-content:space-between}
-.footer-brand{max-width:260px}
-.f-logo{font-weight:700;letter-spacing:-1px;font-size:20px;color:var(--ink)}
-.footer-brand p{margin:10px 0 0;color:var(--muted)}
-.footer-col{display:flex;flex-direction:column;gap:10px}
-.footer-col h4{margin:0 0 4px}
-.footer-col a,.footer-col span{color:var(--muted)}
-.footer-col a:hover{color:var(--ink)}
-.footer-bottom{margin-top:30px;padding-top:20px;border-top:1px solid var(--line);color:var(--muted)}
-@media(max-width:800px){.site-footer{padding:30px 16px 20px}.footer-top{gap:28px}}
 </style>
-<link rel="stylesheet" href="assets/typography.css?v=58">
+<link rel="stylesheet" href="assets/typography.css?v=59">
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<meta name="description" content="2UNO administravimo sritis.">
 </head>
 <body>
 <header><img src="assets/2uno-logo-crop.jpg" alt="2uno.lt"><div class="who" id="who" hidden><span id="whoName"></span><button class="light" id="logout">Atsijungti</button></div></header>
@@ -132,26 +122,36 @@ ol.steps{padding-left:20px;line-height:1.7;font-size:14px}.warnl{color:var(--err
 </main>
 <footer class="site-footer">
 <div class="footer-top">
-<div class="footer-brand">
-<a class="f-logo" href="index.html">2UNO</a>
-<p>Atrinkti buhalteriai jūsų verslui.</p>
+<div class="footer-col footer-entity">
+<h4>MB „Duvienas“</h4>
+<p>Buhalterinių paslaugų palyginimo ir sutarties pasirašymo platforma verslui.</p>
+<ul class="footer-meta">
+<li>Įmonės kodas: 308188308</li>
+<li>Reg. / PVM Nr.: [NR.]</li>
+</ul>
 </div>
 <div class="footer-col">
-<h4>Naudinga informacija</h4>
-<a href="index.html">Grįžti į palyginimą</a>
+<h4>Platforma</h4>
+<a href="index.html#skaiciuokle">Skaičiuoklė</a>
 <a href="kaip-tai-veikia.html">Kaip veikia</a>
-<a href="imones.html">Įmonės</a>
-<a href="teisiniai-dokumentai.html">Privatumas ir taisyklės</a>
+<a href="imones.html">Buhalterinės įmonės</a>
+<a href="index.html#duk">Dažniausi klausimai</a>
 </div>
 <div class="footer-col">
-<h4>Kontaktai</h4>
-<span>Ežero g. 65, Šiauliai</span>
-<a href="tel:+37064111306">+370 641 11306</a>
-<a href="mailto:info@2uno.lt">info@2uno.lt</a>
+<h4>Partneriams</h4>
+<a href="buhalteriams.html">Buhalterinėms įmonėms</a>
+<a href="partnerio-paskyra.html">Partnerio paskyra</a>
+</div>
+<div class="footer-col">
+<h4>Teisinė informacija</h4>
+<a href="privatumo-politika.html">Privatumo politika</a>
+<a href="slapukai.html">Slapukų politika</a>
+<a href="teisiniai-dokumentai.html">Teisiniai dokumentai</a>
 </div>
 </div>
 <div class="footer-bottom">
-<span>© 2026 2UNO</span>
+<span>© 2026 MB „Duvienas“ · 2UNO. Visos teisės saugomos.</span>
+<div class="footer-social" aria-label="Socialiniai tinklai"><!-- Vieta socialinių tinklų nuorodoms --></div>
 </div>
 </footer>
 <script src="assets/admin.js"></script>
