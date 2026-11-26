@@ -141,7 +141,7 @@ function syncCards(markup){
 }
 let selectedProvider=null;
 
-function render(){let list=providers.map((p,i)=>({...p,i})).filter(p=>$('situation').value==='new'||$('keep-software').value!=='keep'||!$('software').value||$('software').value==='Nežinau'||supportedSoftware[p.i].includes($('software').value));if($('sort').value==='price-asc'||$('sort').value==='price-desc'){const direction=$('sort').value==='price-asc'?1:-1;list.sort((a,b)=>direction*((estimate(a.i))-(estimate(b.i)))||a.i-b.i);}if($('sort').value==='rating')list.sort((a,b)=>b.rating-a.rating||b.reviews-a.reviews);if($('sort').value==='clients')list.sort((a,b)=>b.clients-a.clients);if($('sort').value==='name')list.sort((a,b)=>a.name.localeCompare(b.name,'lt'));syncCards(list.map(p=>`<article class="provider" data-provider="${p.i}"><div class="providerhead"><div class="monogram">${p.mark}</div><h3>${p.name}</h3></div><span class="tag">${p.tag}</span><div class="review-stats"><span class="star" aria-hidden="true">★</span> <strong>${p.rating.toFixed(1).replace(".",",")}</strong> · ${p.reviews} atsiliepimai<br>Pasirinko ${p.clients} klientai</div><ul>${p.features.map(f=>`<li>${f}</li>`).join('')}</ul><div class="price"><span class="price-label">${historyOnly()?"Ankstesnio laikotarpio tvarkymas":"Mėnesinė apskaita"}</span><div class="price-main"><strong>${hasQuote?eur(estimate(p.i)):"-"}</strong><span>${historyOnly()?" už visą laikotarpį":" / mėn."}</span></div><small>${hasQuote?"Orientacinė kaina be PVM":(historyOnly()?"Įveskite laikotarpio kiekius":"Įveskite mėnesio apimtis")}</small>${annualMarkup(p.i)}</div><div class="cardactions"><button type="button" class="btn" data-select="${p.i}" ${hasQuote?"":"disabled"}>Peržiūrėti sutartį</button></div>${hasQuote?breakdownMarkup(p.i):""}<details class="provider-more"><summary>Apie įmonę</summary><p>${p.desc}</p></details></article>`).join('')||'<p>Šiam privalomos programos pasirinkimui atitinkančių įmonių nėra. Galite leisti keisti programą.</p>');$('price-table').innerHTML=`<table class="comparison-matrix"><caption>Buhalterinių įmonių palyginimas</caption><thead><tr><th scope="col">Jūsų pasirinkimas</th>${list.map(p=>`<th scope="col"><div class="matrix-brand"><span class="monogram">${p.mark}</span><h3>${p.name}</h3><div class="matrix-head-price"><strong>${hasQuote?eur(estimate(p.i)):"-"}</strong><small>${hasQuote?(historyOnly()?"be PVM už visą laikotarpį":"be PVM / mėn."):"Įveskite apimtis"}</small></div><button type="button" class="btn" data-select="${p.i}" ${hasQuote?"":"disabled"}>Peržiūrėti sutartį</button></div></th>`).join('')}</tr></thead><tbody><tr><th scope="row">Paslaugų kryptis</th>${list.map(p=>`<td><span class="tag">${p.tag}</span></td>`).join('')}</tr><tr><th scope="row">Kam tinka</th>${list.map(p=>`<td>${p.desc}</td>`).join('')}</tr><tr><th scope="row">Stiprioji pusė</th>${list.map(p=>`<td><span class="matrix-check">✓</span>${p.features[0]}</td>`).join('')}</tr><tr><th scope="row">Papildoma nauda</th>${list.map(p=>`<td><span class="matrix-check">✓</span>${p.features[1]}</td>`).join('')}</tr></tbody></table>`;document.querySelectorAll('[data-select]').forEach(b=>b.onclick=()=>{selected=Number(b.dataset.select);selectedProvider=selected;render();updateContract();view(2)});$('cards').querySelectorAll('[data-compare]').forEach(c=>c.onchange=()=>{c.checked?checked.add(Number(c.dataset.compare)):checked.delete(Number(c.dataset.compare));compare()});}function compare(){const ps=[...checked].map(i=>providers[i]);$('compare').classList.toggle('hidden',ps.length<2);$('compare').innerHTML=ps.length<2?'':`<table><caption style="text-align:left;padding:10px;font-weight:600">Pasirinktų įmonių palyginimas</caption><tr><th>Įmonė</th><th>Paslaugų kryptis</th><th>Kaina</th><th>Sutartis</th></tr>${ps.map(p=>`<tr><td>${p.name}</td><td>${p.tag}</td><td>${eur(estimate())} be PVM</td><td>Perižūrėti įkainius</td></tr>`).join('')}</table>`;}
+function render(){let list=providers.map((p,i)=>({...p,i})).filter(p=>$('situation').value==='new'||$('keep-software').value!=='keep'||!$('software').value||$('software').value==='Nežinau'||supportedSoftware[p.i].includes($('software').value));if($('sort').value==='price-asc'||$('sort').value==='price-desc'){const direction=$('sort').value==='price-asc'?1:-1;list.sort((a,b)=>direction*((estimate(a.i))-(estimate(b.i)))||a.i-b.i);}if($('sort').value==='rating')list.sort((a,b)=>b.rating-a.rating||b.reviews-a.reviews);if($('sort').value==='clients')list.sort((a,b)=>b.clients-a.clients);if($('sort').value==='name')list.sort((a,b)=>a.name.localeCompare(b.name,'lt'));syncCards(list.map(p=>`<article class="provider" data-provider="${p.i}"><div class="providerhead"><div class="monogram">${p.mark}</div><h3>${p.name}</h3></div><span class="tag">${p.tag}</span><div class="review-stats"><span class="star" aria-hidden="true">★</span> <strong>${p.rating.toFixed(1).replace(".",",")}</strong> · ${p.reviews} atsiliepimai<br>Pasirinko ${p.clients} klientai</div><ul>${p.features.map(f=>`<li>${f}</li>`).join('')}</ul><div class="price"><span class="price-label">${historyOnly()?"Ankstesnio laikotarpio tvarkymas":"Mėnesinė apskaita"}</span><div class="price-main"><strong>${hasQuote?eur(estimate(p.i)):"-"}</strong><span>${historyOnly()?" už visą laikotarpį":" / mėn."}</span></div><small>${hasQuote?"Orientacinė kaina be PVM":(historyOnly()?"Įveskite laikotarpio kiekius":"Įveskite mėnesio apimtis")}</small>${annualMarkup(p.i)}</div><div class="cardactions"><button type="button" class="btn" data-select="${p.i}" ${hasQuote?"":"disabled"}>Peržiūrėti sutartį</button></div>${hasQuote?breakdownMarkup(p.i):""}<button type="button" class="provider-more provider-more-btn" data-provider-info="${p.i}">Apie įmonę <span class="provider-more-plus" aria-hidden="true">+</span></button></article>`).join('')||'<p>Šiam privalomos programos pasirinkimui atitinkančių įmonių nėra. Galite leisti keisti programą.</p>');$('price-table').innerHTML=`<table class="comparison-matrix"><caption>Buhalterinių įmonių palyginimas</caption><thead><tr><th scope="col">Jūsų pasirinkimas</th>${list.map(p=>`<th scope="col"><div class="matrix-brand"><span class="monogram">${p.mark}</span><h3>${p.name}</h3><div class="matrix-head-price"><strong>${hasQuote?eur(estimate(p.i)):"-"}</strong><small>${hasQuote?(historyOnly()?"be PVM už visą laikotarpį":"be PVM / mėn."):"Įveskite apimtis"}</small></div><button type="button" class="btn" data-select="${p.i}" ${hasQuote?"":"disabled"}>Peržiūrėti sutartį</button></div></th>`).join('')}</tr></thead><tbody><tr><th scope="row">Paslaugų kryptis</th>${list.map(p=>`<td><span class="tag">${p.tag}</span></td>`).join('')}</tr><tr><th scope="row">Kam tinka</th>${list.map(p=>`<td>${p.desc}</td>`).join('')}</tr><tr><th scope="row">Stiprioji pusė</th>${list.map(p=>`<td><span class="matrix-check">✓</span>${p.features[0]}</td>`).join('')}</tr><tr><th scope="row">Papildoma nauda</th>${list.map(p=>`<td><span class="matrix-check">✓</span>${p.features[1]}</td>`).join('')}</tr></tbody></table>`;document.querySelectorAll('[data-select]').forEach(b=>b.onclick=()=>{selected=Number(b.dataset.select);selectedProvider=selected;render();updateContract();view(2)});$('cards').querySelectorAll('[data-compare]').forEach(c=>c.onchange=()=>{c.checked?checked.add(Number(c.dataset.compare)):checked.delete(Number(c.dataset.compare));compare()});}function compare(){const ps=[...checked].map(i=>providers[i]);$('compare').classList.toggle('hidden',ps.length<2);$('compare').innerHTML=ps.length<2?'':`<table><caption style="text-align:left;padding:10px;font-weight:600">Pasirinktų įmonių palyginimas</caption><tr><th>Įmonė</th><th>Paslaugų kryptis</th><th>Kaina</th><th>Sutartis</th></tr>${ps.map(p=>`<tr><td>${p.name}</td><td>${p.tag}</td><td>${eur(estimate())} be PVM</td><td>Perižūrėti įkainius</td></tr>`).join('')}</table>`;}
 function updateContract(){const p=providers[selected];$('contracttext').innerHTML=`<h4>1. Sutarties šalys</h4><p>Klientas: įmonės kodas, pavadinimas, PVM kodas, buveinės adresas ir įgaliotas atstovas bus įrašyti pasirašymo puslapyje prieš pasirašant.<br>Pasirinktas paslaugų teikėjas: <b>${p.name}</b>. Teikėjo rekvizitai ir įgaliotas atstovas turi būti patvirtinti.</p><h4>2. Paslaugų apimtis</h4><p>Veiklos forma: ${esc($('type').value)}. PVM mokėtojas: ${esc($('vat').value)}. Darbuotojai pagal darbo sutartį: ${esc($('employees').value)}. Pirkimo dokumentai: ${esc($('purchases').value)}, pardavimo dokumentai: ${esc($('sales').value)}, banko operacijos: ${esc($('bank').value)} ${historyOnly()?'per visą pasirinktą laikotarpį':'per mėnesį'}.</p><p>Kasos dokumentai: ${quoteData().cash}. Ilgalaikio turto vienetai: ${quoteData().asset}. Transporto priemonės: ${yes('has-vehicles')?amount('vehicles'):0}. Užsienio operacijos: ${yes('has-foreign')?esc($('foreign').value):'Nėra'}. Sandėlio apskaita: ${yes('has-stock')?esc($('stock').value):'Nereikalinga'}. Komandiruotės: ${quoteData().trip}.</p>${mixedPast()?'<p>Metinių deklaracijų laikotarpis: '+esc($('annual-from').value||'[pradžia]')+'–'+esc($('annual-to').value||'[pabaiga]')+'. Bendras darbuotojų skaičius: '+esc($('annual-employees').value||'[neįvesta]')+'. Bendras turto kiekis: '+esc($('annual-assets').value||'[neįvesta]')+'. Bendras transporto priemonių kiekis: '+esc($('annual-vehicles').value||'[neįvesta]')+'. '+($('type').value==='MB'?'Bendras MB narių skaičius: '+esc($('annual-members').value||'[neįvesta]')+'.':'')+'</p>':''}${mixedPast()?'<p>Ankstesnės apskaitos tvarkymas: '+esc($('backlog-from').value)+'–'+esc($('backlog-to').value)+'. Viso laikotarpio pirkimo dokumentai: '+esc($('backlog-purchases').value)+', pardavimo dokumentai: '+esc($('backlog-sales').value)+', banko operacijos: '+esc($('backlog-bank').value)+'. Šių darbų kaina vertinama atskirai.</p>':''}${historyOnly()?'<p>Tvarkomas laikotarpis: '+esc($('backlog-from').value)+'–'+esc($('backlog-to').value)+'.</p>':''}<h4>3. Kaina ir atsiskaitymas</h4><p>Orientacinė suma pagal nurodytas apimtis: <b>${eur(estimate(selected))}${historyOnly()?" už visą laikotarpį":" / mėn."} be PVM</b>. ${historyOnly()?"Suma už visą pasirinktą laikotarpį apima toliau nurodytus darbus ir metines deklaracijas.":"Mokėtina mėnesio suma kinta pagal faktįnį dokumentų ir kitų darbų kiekį bei žemiau nurodytus įkainius."} Taikomas PVM turi būti nurodytas tikroje sutartyje.</p>${annualMarkup(selected)}<p>${quoteIssues(selected).map(esc).join(" ")}</p>${rateTable()}<p></p><h4>4. Pradžia ir kitos sąlygos</h4><p>${historyOnly()?'Tvarkomas laikotarpis: '+esc($('backlog-from').value)+'–'+esc($('backlog-to').value)+'.':'Pageidaujama pradžia: '+esc($('startdate').value||'[data]')+'.'} Atsakomybė, dokumentų pateikimo terminai, konfidencialumas, duomenų tvarkymas ir nutraukimo sąlygos bus nustatyti tiekėjo patvirtintoje sutartyje.</p><h4>5. Pasirašymas</h4><p>Tai sutarties projektas. Šalių parašų nėra. Sutartis įsigalioja tik suderinus visas sąlygas ir ją pasirašius nustatyta tvarka.</p>`;}
 $('business').onsubmit=e=>{e.preventDefault();hasQuote=true;$('profile').textContent=`${$('type').value} · ${$('industry').value} · PVM: ${$('vat').value} · ${$('employees').value} darbuotojų · ${Number($('purchases').value)+Number($('sales').value)} sąskaitų / mėn.`;render();compare();view(1)};$('back').onclick=()=>view(1);$('back-bottom').onclick=()=>view(1);$('sort').onchange=render;
 $('startdate').oninput=()=>{$('service-start').value=$('startdate').value;$('startdate').classList.remove('invalid');$('startdate-msg').textContent='';updateContract();};
@@ -172,6 +172,220 @@ $('business').onsubmit=e=>{e.preventDefault();refreshPrices()};
 
 $('close-next').onclick=()=>$('nextsteps').close();
 
-
-
 syncConditionalFields();
+
+// Įmonės informacijos modalinis langas (nekeičia #skaiciuokle būsenos)
+(function initProviderInfoModal(){
+ let detailsCache=null;
+ let detailsPromise=null;
+ let modalEl=null;
+ let modalBodyEl=null;
+ let modalCardEl=null;
+ let modalCloseEl=null;
+ let lastTriggerEl=null;
+
+ function fmtEurModal(n){
+  return `${Number(n).toFixed(2).replace('.',',')} €`;
+ }
+
+ function fallbackProviderDetail(index){
+  const p=providers[index];
+  const t=tariffConfigs[index];
+  if(!p||!t)return null;
+  return {
+   slug:String(p.mark||'').toLowerCase(),
+   mark:p.mark,
+   name:p.name,
+   tag:p.tag,
+   desc:p.desc,
+   summary:p.desc,
+   features:p.features||[],
+   highlights:[],
+   software:t.software||[],
+   legalForms:['UAB','MB'],
+   workStyle:{
+    focus:p.desc,
+    documents:'Dokumentai perduodami elektroniniu būdu pagal suderintą grafiką.',
+    communication:'Tiesioginis ryšys su priskirtu buhalteriu darbo dienomis.'
+   },
+   pricing:{
+    model:t.model,
+    base:t.base,
+    included:t.included,
+    invoiceRate:t.rates.invoice,
+    bankImportRate:t.rates.bankImport,
+    bankPdfRate:t.rates.bankPdf,
+    employeeRate:t.rates.employee,
+    annual:t.annual
+   },
+   rating:p.rating,
+   reviews:p.reviews,
+   clients:p.clients
+  };
+ }
+
+ function loadProviderDetails(){
+  if(detailsCache)return Promise.resolve(detailsCache);
+  if(!detailsPromise){
+   detailsPromise=fetch('data/providers.json')
+    .then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.json();})
+    .then(list=>{detailsCache=Array.isArray(list)?list:null;return detailsCache;})
+    .catch(()=>null);
+  }
+  return detailsPromise;
+ }
+
+ function ensureModal(){
+  if(modalEl)return modalEl;
+  modalEl=document.createElement('div');
+  modalEl.className='provider-modal-backdrop';
+  modalEl.id='provider-modal';
+  modalEl.setAttribute('role','dialog');
+  modalEl.setAttribute('aria-modal','true');
+  modalEl.setAttribute('aria-labelledby','provider-modal-title');
+  modalEl.hidden=true;
+  modalEl.innerHTML='<div class="provider-modal-card" tabindex="-1"><button type="button" class="provider-modal-close" aria-label="Uždaryti">×</button><div class="provider-modal-body"></div></div>';
+  document.body.appendChild(modalEl);
+  modalCardEl=modalEl.querySelector('.provider-modal-card');
+  modalCloseEl=modalEl.querySelector('.provider-modal-close');
+  modalBodyEl=modalEl.querySelector('.provider-modal-body');
+
+  modalCloseEl.addEventListener('click',closeModal);
+  modalEl.addEventListener('click',e=>{
+   if(e.target===modalEl)closeModal();
+  });
+  document.addEventListener('keydown',e=>{
+   if(e.key==='Escape'&&modalEl&&!modalEl.hidden){
+    e.preventDefault();
+    closeModal();
+   }
+  });
+  return modalEl;
+ }
+
+ function buildModalHtml(p){
+  const ratingStr=Number(p.rating||0).toFixed(1).replace('.',',');
+  const allStrengths=[...(p.features||[]),...(p.highlights||[])];
+  const featuresHtml=allStrengths.map(f=>`<li>${esc(f)}</li>`).join('');
+  const software=Array.isArray(p.software)?p.software:[];
+  const softwareChips=software.map(s=>`<span class="pm-chip">${esc(s)}</span>`).join('');
+  const legalFormsStr=Array.isArray(p.legalForms)?p.legalForms.join(', '):'UAB, MB';
+  const ws=p.workStyle||{};
+  const pr=p.pricing||{};
+  const inc=pr.included||{invoices:0,bank:0,employees:0};
+  const ann=pr.annual||{included:false,base:0,member:8,employee:4,asset:2,vehicle:15};
+  const isPackage=pr.model==='package';
+  const modelLabel=isPackage?'Planas su įskaičiuotais kiekiais':'Bazinis mokestis ir atskiri darbai';
+  const includedText=isPackage
+   ?`${inc.invoices} sąskaitų, ${inc.bank} banko operacijų, ${inc.employees} darbuotojas`
+   :'0 (visi kiekiai skaičiuojami atskirai)';
+  const annualShort=ann.included?'įskaičiuotos į mėnesinę kainą':`vienkartinis mokestis (bazė ${ann.base} €)`;
+  const annualDetailsHtml=ann.included
+   ?`<p>Metinės finansinės atskaitomybės ir metinių deklaracijų parengimas nuolatiniams klientams yra <strong>įskaičiuotas į mėnesinį mokestį</strong> – atskiro metinio mokesčio nėra.</p><p class="pm-pricing-sub">Jei užsakomas tik ankstesnio laikotarpio apskaitos sutvarkymas (be nuolatinės mėnesinės apskaitos), skaičiuoklėje apskaičiuojama atskira bendra suma už pasirinktus laikotarpio metus ir kiekius.</p>`
+   :`<p>Metinės deklaracijos skaičiuojamos kaip <strong>vienkartinis mokestis</strong> pagal jūsų veiklos apimtį deklaruojamu laikotarpiu.</p><dl class="pm-rates"><div><dt>Metinių deklaracijų bazė</dt><dd>${ann.base} € be PVM</dd></div><div><dt>MB narių metinės paslaugos</dt><dd>${fmtEurModal(ann.member)}</dd></div><div><dt>Darbuotojų metinės paslaugos</dt><dd>${fmtEurModal(ann.employee)}</dd></div><div><dt>Ilgalaikio turto metinės paslaugos</dt><dd>${fmtEurModal(ann.asset)}</dd></div><div><dt>Transporto priemonių metinės paslaugos</dt><dd>${fmtEurModal(ann.vehicle)}</dd></div></dl>`;
+
+  return `
+   <div class="pm-head">
+    <div class="pm-monogram">${esc(p.mark)}</div>
+    <div class="pm-head-text">
+     <h2 id="provider-modal-title">${esc(p.name)}</h2>
+     <span class="pm-tag">${esc(p.tag)}</span>
+    </div>
+   </div>
+   <div class="pm-stats">
+    <span><span class="pm-star" aria-hidden="true">★</span> <b>${ratingStr}</b> · ${p.reviews} atsiliepimai</span>
+    <span>Pasirinko <b>${p.clients}</b> klientai</span>
+    <span>Bazinis mokestis nuo <b>${pr.base} € / mėn.</b></span>
+    <span>Metinės deklaracijos: <b>${esc(annualShort)}</b></span>
+   </div>
+   <section class="pm-section">
+    <div class="eyebrow">Apžvalga ir stiprybės</div>
+    <h3>Apie įmonę: ${esc(p.name)}</h3>
+    <p class="pm-lead">${esc(p.summary||p.desc)}</p>
+    <ul class="pm-features">${featuresHtml}</ul>
+   </section>
+   <section class="pm-section">
+    <div class="eyebrow">Darbo tvarka</div>
+    <h3>Darbo ir apskaitos parametrai</h3>
+    <div class="pm-specs-grid">
+     <div class="pm-spec-item">
+      <h4>Apskaitos programos</h4>
+      <div class="pm-chips">${softwareChips}</div>
+      <p>Jei jau naudojate vieną iš šių programų ir klausimyne pasirinksite jos nekeisti, šis partneris bus rodomas jūsų palyginime.</p>
+     </div>
+     <div class="pm-spec-item">
+      <h4>Aptarnaujamos formos ir sritys</h4>
+      <p class="pm-spec-lead">${esc(legalFormsStr)}</p>
+      <p>${esc(ws.focus||p.desc)}</p>
+     </div>
+     <div class="pm-spec-item">
+      <h4>Dokumentai ir komunikacija</h4>
+      <p>${esc(ws.documents||'Dokumentai perduodami elektroniniu būdu pagal suderintą grafiką.')}</p>
+      <p class="pm-spec-sub">${esc(ws.communication||'Tiesioginis ryšys su priskirtu buhalteriu darbo dienomis.')}</p>
+     </div>
+    </div>
+   </section>
+   <section class="pm-section">
+    <div class="eyebrow">Kainodaros principai</div>
+    <h3>Mėnesio ir metinių deklaracijų skaičiavimas</h3>
+    <p class="pm-section-intro">Skaičiuoklėje orientacinė kaina apskaičiuojama pagal tuos pačius tarifus, kurie pateikti žemiau, atsižvelgiant į jūsų įvestus mėnesio ar laikotarpio kiekius.</p>
+    <div class="pm-pricing-grid">
+     <div class="pm-panel">
+      <span class="pm-badge">${esc(modelLabel)}</span>
+      <h4>Mėnesinė apskaita</h4>
+      <dl class="pm-rates">
+       <div><dt>Bazinis mėnesio mokestis</dt><dd>nuo ${pr.base} € / mėn. be PVM</dd></div>
+       <div><dt>Įskaičiuota į bazę</dt><dd>${esc(includedText)}</dd></div>
+       <div><dt>${isPackage?'Sąskaita virš limito':'Sąskaita (pirkimo / pardavimo)'}</dt><dd>${fmtEurModal(pr.invoiceRate)}</dd></div>
+       <div><dt>Banko operacija</dt><dd>${fmtEurModal(pr.bankImportRate)} (importas) · ${fmtEurModal(pr.bankPdfRate)} (PDF)</dd></div>
+       <div><dt>Darbuotojo apskaita</dt><dd>${fmtEurModal(pr.employeeRate)} / mėn.</dd></div>
+      </dl>
+     </div>
+     <div class="pm-panel">
+      <span class="pm-badge">${ann.included?'Įskaičiuota į planą':'Vienkartinis mokestis'}</span>
+      <h4>Metinės deklaracijos</h4>
+      ${annualDetailsHtml}
+     </div>
+    </div>
+    <p class="pm-footnote">Papildomos paslaugos (PVM / SVS apskaita, kasa, ilgalaikis turtas, transporto priemonės, komandiruotės, valiutiniai ar ES / OSS sandoriai, sandėlio apskaita) skaičiuoklėje pridedamos tik tada, kai jas pažymite klausimyne. Visi įkainiai nurodyti be PVM.</p>
+   </section>`;
+ }
+
+ async function openModal(index,triggerEl){
+  lastTriggerEl=triggerEl||null;
+  const list=await loadProviderDetails();
+  const baseProvider=providers[index];
+  const detail=(list&&baseProvider&&list.find(item=>item.mark===baseProvider.mark||item.name===baseProvider.name))
+   ||(list&&list[index])
+   ||fallbackProviderDetail(index);
+  if(!detail)return;
+  ensureModal();
+  modalBodyEl.innerHTML=buildModalHtml(detail);
+  modalEl.hidden=false;
+  document.body.classList.add('modal-open');
+  modalCardEl.scrollTop=0;
+  modalCloseEl.focus({preventScroll:true});
+ }
+
+ function closeModal(){
+  if(!modalEl||modalEl.hidden)return;
+  modalEl.hidden=true;
+  document.body.classList.remove('modal-open');
+  if(lastTriggerEl&&typeof lastTriggerEl.focus==='function'){
+   lastTriggerEl.focus({preventScroll:true});
+  }
+  lastTriggerEl=null;
+ }
+
+ const cardsRoot=$('cards');
+ if(cardsRoot){
+  cardsRoot.addEventListener('click',e=>{
+   const btn=e.target.closest('[data-provider-info]');
+   if(!btn)return;
+   e.preventDefault();
+   openModal(Number(btn.dataset.providerInfo),btn);
+  });
+ }
+
+ loadProviderDetails();
+})();
